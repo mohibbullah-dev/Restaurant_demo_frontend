@@ -15,4 +15,6 @@ export const restaurant = {
   ],
   // Put a real Google Maps embed later for each client
   mapEmbedUrl: "https://www.google.com/maps?q=Cairo%20Egypt&output=embed",
+  googleReviewUrl: "https://g.page/r/XXXXXXXX/review", // replace for each client
+  publicSiteUrl: "http://localhost:5173", // replace after deploy (domain)
 };
