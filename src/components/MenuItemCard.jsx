@@ -1,6 +1,8 @@
 import { formatPriceEGP } from "../utils/menu";
-
+import { useSettings } from "../context/SettingsContext";
 export default function MenuItemCard({ item, onAdd }) {
+  const { settings } = useSettings();
+  const closed = !settings.isOpen;
   return (
     <div className="rounded-2xl border bg-white p-4 flex flex-col">
       {/* <div className="h-36 rounded-xl bg-gray-100 mb-4 flex items-center justify-center text-gray-500 text-sm">
@@ -49,11 +51,11 @@ export default function MenuItemCard({ item, onAdd }) {
       </div>
 
       <button
-        disabled={!item.available}
+        disabled={!item.available || closed}
         onClick={() => onAdd?.(item)}
         className="mt-4 w-full py-2 rounded-xl bg-black text-white disabled:bg-gray-300"
       >
-        Add to cart
+        {closed ? "Closed" : "Add to cart"}
       </button>
     </div>
   );
