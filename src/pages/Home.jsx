@@ -1,5 +1,9 @@
 import Section from "../components/Section";
 import { restaurant } from "../config/restaurant";
+import { useEffect, useState } from "react";
+import { API_BASE } from "../config/api";
+import MenuItemCard from "../components/MenuItemCard";
+import { useCart } from "../context/CartContext";
 
 const featured = [
   {
@@ -25,6 +29,16 @@ const featured = [
 ];
 
 export default function Home() {
+  const [featured, setFeatured] = useState([]);
+  const cart = useCart();
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/menu?featured=true`)
+      .then((r) => r.json())
+      .then((d) => setFeatured(d.items || []))
+      .catch(() => setFeatured([]));
+  }, []);
+
   return (
     <div className="pb-24 md:pb-0">
       {/* HERO */}
@@ -98,18 +112,21 @@ export default function Home() {
       >
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {featured.map((item) => (
-            <div key={item.name} className="rounded-2xl border p-4 bg-white">
-              <div className="h-32 rounded-xl bg-gray-100 mb-4" />
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-semibold">{item.name}</h3>
-                <span className="text-sm font-semibold">{item.price}</span>
-              </div>
-              <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
-              <button className="mt-4 w-full py-2 rounded-xl bg-black text-white">
-                Add to cart (demo)
-              </button>
-            </div>
+            <MenuItemCard
+              key={item._id}
+              item={item}
+              onAdd={(it) => {
+                cart.add(it);
+                cart.open();
+              }}
+            />
           ))}
+
+          {featured.length === 0 && (
+            <div className="text-gray-600">
+              No featured items yet. Mark items as featured in Admin → Menu.
+            </div>
+          )}
         </div>
       </Section>
 
