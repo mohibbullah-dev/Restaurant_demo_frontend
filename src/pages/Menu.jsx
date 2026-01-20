@@ -1,14 +1,25 @@
 import { useMemo, useState } from "react";
 import Section from "../components/Section";
 import MenuItemCard from "../components/MenuItemCard";
-import { menuItems } from "../data/menu";
+// import { menuItems } from "../data/menu";
 import { getCategories } from "../utils/menu";
 import { useCart } from "../context/CartContext";
+
+import { API_BASE } from "../config/api";
+import { useEffect, useState } from "react";
 
 export default function Menu() {
   const [category, setCategory] = useState("All");
   const [query, setQuery] = useState("");
   const cart = useCart();
+  const [menuItems, setMenuItems] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/menu`)
+      .then((r) => r.json())
+      .then((d) => setMenuItems(d.items || []))
+      .catch(() => setMenuItems([]));
+  }, []);
 
   const categories = useMemo(() => getCategories(menuItems), []);
 
