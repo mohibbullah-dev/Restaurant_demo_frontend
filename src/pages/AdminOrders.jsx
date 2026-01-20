@@ -190,6 +190,7 @@ const statuses = [
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState("");
+  const [lastCount, setLastCount] = useState(0);
 
   async function loadOrders() {
     setError("");
@@ -223,6 +224,19 @@ export default function AdminOrders() {
 
     setOrders((prev) => prev.map((o) => (o._id === id ? data.order : o)));
   }
+
+  useEffect(() => {
+    let timer;
+
+    async function init() {
+      await loadOrders(true);
+      timer = setInterval(() => loadOrders(false), 10000);
+    }
+
+    init();
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="pb-24 md:pb-0">
