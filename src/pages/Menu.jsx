@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Section from "../components/Section";
 import MenuItemCard from "../components/MenuItemCard";
 // import { menuItems } from "../data/menu";
@@ -6,7 +6,6 @@ import { getCategories } from "../utils/menu";
 import { useCart } from "../context/CartContext";
 
 import { API_BASE } from "../config/api";
-import { useEffect, useState } from "react";
 
 export default function Menu() {
   const [category, setCategory] = useState("All");
