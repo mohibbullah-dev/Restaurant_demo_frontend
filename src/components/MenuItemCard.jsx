@@ -3,8 +3,20 @@ import { formatPriceEGP } from "../utils/menu";
 export default function MenuItemCard({ item, onAdd }) {
   return (
     <div className="rounded-2xl border bg-white p-4 flex flex-col">
-      <div className="h-36 rounded-xl bg-gray-100 mb-4 flex items-center justify-center text-gray-500 text-sm">
+      {/* <div className="h-36 rounded-xl bg-gray-100 mb-4 flex items-center justify-center text-gray-500 text-sm">
         Item photo
+      </div> */}
+      <div className="h-36 rounded-xl bg-gray-100 mb-4 overflow-hidden flex items-center justify-center text-gray-500 text-sm">
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.name}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          "Item photo"
+        )}
       </div>
 
       <div className="flex items-start justify-between gap-3">
