@@ -2,8 +2,18 @@ import { Outlet, Link } from "react-router-dom";
 import { restaurant } from "../config/restaurant";
 import CartButton from "./CartButton";
 import CartDrawer from "./CartDrawer";
+import { useEffect, useState } from "react";
+import { API_BASE } from "../config/api";
 
 export default function Layout() {
+  const [settings, setSettings] = useState({ isOpen: true, notice: "" });
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/settings`)
+      .then((r) => r.json())
+      .then((d) => setSettings(d.settings || { isOpen: true, notice: "" }))
+      .catch(() => {});
+  }, []);
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b bg-white sticky top-0 z-50">
@@ -35,6 +45,15 @@ export default function Layout() {
           <CartDrawer />
         </div>
       </header>
+
+      {!settings.isOpen && (
+        <div className="border-b bg-black text-white">
+          <div className="max-w-6xl mx-auto px-4 py-2 text-sm">
+            We are currently closed.{" "}
+            {settings.notice ? settings.notice : "Please check back soon."}
+          </div>
+        </div>
+      )}
 
       <main className="flex-1">
         <Outlet />
