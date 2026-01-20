@@ -5,6 +5,7 @@ import { useCart } from "../context/CartContext";
 import { restaurant } from "../config/restaurant";
 import { formatPriceEGP } from "../utils/menu";
 import { buildWhatsAppOrderMessage, toWhatsAppUrl } from "../utils/whatsapp";
+import { API_BASE } from "../config/api";
 
 export default function Checkout() {
   const cart = useCart();
@@ -30,23 +31,52 @@ export default function Checkout() {
     return cart.items.length > 0;
   }, [customerName, customerPhone, isDelivery, address, cart.items.length]);
 
-  function onSendWhatsApp() {
-    const msg = buildWhatsAppOrderMessage({
-      restaurantName: restaurant.name,
+  async function onSendWhatsApp() {
+    const payload = {
       customerName: customerName.trim(),
       customerPhone: customerPhone.trim(),
       orderType,
       address: address.trim(),
       notes,
-      items: cart.items,
+      items: cart.items.map((i) => ({
+        _id: i._id,
+        name: i.name,
+        price: i.price,
+        qty: i.qty,
+      })),
       subtotal: cart.subtotal,
+    };
+
+    // 1) Save order to DB
+    const res = await fetch(`${API_BASE}/api/orders`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data?.message || "Failed to create order");
+      return;
+    }
+
+    // 2) Build WhatsApp message (include order id)
+    const msg =
+      buildWhatsAppOrderMessage({
+        restaurantName: restaurant.name,
+        customerName: payload.customerName,
+        customerPhone: payload.customerPhone,
+        orderType: payload.orderType,
+        address: payload.address,
+        notes: payload.notes,
+        items: cart.items,
+        subtotal: cart.subtotal,
+      }) + `\n\nOrder ID: ${data.order._id}`;
 
     const url = toWhatsAppUrl(restaurant.whatsappPhone, msg);
 
-    // Optional: clear cart after clicking send
+    // 3) Clear cart and open WhatsApp
     cart.clear();
-
     window.open(url, "_blank", "noreferrer");
   }
 
