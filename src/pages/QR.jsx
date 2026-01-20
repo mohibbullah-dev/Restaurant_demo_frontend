@@ -1,6 +1,7 @@
 import Section from "../components/Section";
 import { restaurant } from "../config/restaurant";
-import QRCode from "qrcode.react";
+// import QRCode from "qrcode.react";
+import { QRCodeSVG } from "qrcode.react";
 
 export default function QR() {
   const menuUrl = `${restaurant.publicSiteUrl}/menu`;
@@ -21,7 +22,7 @@ export default function QR() {
 
             <div className="mt-6 flex justify-center">
               <div className="p-4 rounded-2xl border">
-                <QRCode value={menuUrl} size={220} />
+                <QRCodeSVG value={menuUrl} size={220} />
               </div>
             </div>
 
@@ -38,7 +39,7 @@ export default function QR() {
 
             <div className="mt-6 flex justify-center">
               <div className="p-4 rounded-2xl border">
-                <QRCode value={reviewUrl} size={220} />
+                <QRCodeSVG value={reviewUrl} size={220} />
               </div>
             </div>
 
