@@ -11,6 +11,7 @@ import AdminMenu from "./pages/AdminMenu.jsx";
 import AdminSettings from "./pages/AdminSettings.jsx";
 // import AdminOrders from "./pages/AdminOrders.jsx";
 import AdminGuard from "./components/AdminGuard.jsx";
+import QR from "./pages/QR.jsx";
 
 export default function App() {
   return (
@@ -58,6 +59,7 @@ export default function App() {
           }
         />
       </Route>
+      <Route path="/qr" element={<QR />} />
     </Routes>
   );
 }
