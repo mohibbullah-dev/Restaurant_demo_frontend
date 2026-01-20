@@ -24,6 +24,9 @@ export default function Layout() {
           <Link to="/menu" className="text-sm text-gray-700 hover:text-black">
             Menu
           </Link>
+          <Link to="/qr" className="text-sm text-gray-700 hover:text-black">
+            QR
+          </Link>
 
           <div className="flex items-center gap-2">
             <CartButton />
