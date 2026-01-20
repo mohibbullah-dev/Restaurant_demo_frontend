@@ -192,18 +192,42 @@ export default function AdminOrders() {
   const [error, setError] = useState("");
   const [lastCount, setLastCount] = useState(0);
 
-  async function loadOrders() {
+  async function loadOrders(firstLoad = false) {
     setError("");
     const res = await fetch(`${API_BASE}/api/orders`, {
       headers: { ...authHeaders() },
     });
     const data = await res.json();
+
     if (!res.ok) {
       setError(data?.message || "Failed to load orders");
       setOrders([]);
       return;
     }
-    setOrders(data.orders || []);
+
+    const newOrders = data.orders || [];
+    setOrders(newOrders);
+
+    if (firstLoad) {
+      setLastCount(newOrders.length);
+      return;
+    }
+
+    // new order alert
+    if (newOrders.length > lastCount) {
+      // simple sound + title flash
+      try {
+        const audio = new Audio(
+          "https://actions.google.com/sounds/v1/alarms/beep_short.ogg",
+        );
+        audio.play();
+      } catch {}
+
+      document.title = "🛎 New Order!";
+      setTimeout(() => (document.title = "Admin — Orders"), 3000);
+    }
+
+    setLastCount(newOrders.length);
   }
 
   useEffect(() => {
