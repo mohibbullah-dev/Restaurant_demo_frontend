@@ -3,6 +3,7 @@ import { clearToken } from "../utils/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { API_BASE } from "../config/api";
 import { authHeaders } from "../utils/auth";
+import { notify } from "../utils/toast";
 
 export default function AdminDashboard() {
   const nav = useNavigate();
@@ -41,8 +42,8 @@ export default function AdminDashboard() {
                 headers: { ...authHeaders() },
               });
               const data = await res.json();
-              if (!res.ok) return alert(data?.message || "Reset failed");
-              alert("Demo reset done ✅");
+              if (!res.ok) return notify.error(data?.message || "Reset failed");
+              notify.success("Demo reset done ✅");
             }}
           >
             Reset Demo Data

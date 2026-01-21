@@ -3,6 +3,7 @@ import Section from "../components/Section";
 import { API_BASE } from "../config/api";
 import { authHeaders } from "../utils/auth";
 import { uploadMenuImage } from "../utils/uploadImage";
+import { notify } from "../utils/toast";
 
 const emptyForm = {
   name: "",
@@ -81,7 +82,7 @@ export default function AdminMenu() {
     });
 
     const data = await res.json();
-    if (!res.ok) return alert(data?.message || "Save failed");
+    if (!res.ok) return notify.error(data?.message || "Save failed");
 
     await load();
     reset();
@@ -95,7 +96,7 @@ export default function AdminMenu() {
       headers: { ...authHeaders() },
     });
     const data = await res.json();
-    if (!res.ok) return alert(data?.message || "Delete failed");
+    if (!res.ok) return notify.error(data?.message || "Delete failed");
 
     await load();
   }
@@ -203,7 +204,7 @@ export default function AdminMenu() {
                         imagePublicId: uploaded.publicId,
                       }));
                     } catch (err) {
-                      alert(err.message);
+                      notify.error(err.message);
                     } finally {
                       setUploading(false);
                       e.target.value = ""; // reset input

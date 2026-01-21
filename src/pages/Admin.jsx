@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { restaurantData } from "../data/restaurantData";
+import { notify } from "../utils/toast";
 
 export default function Admin() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -20,7 +21,7 @@ export default function Admin() {
           />
           <button
             onClick={() =>
-              pass === "1234" ? setLoggedIn(true) : alert("Wrong Pass")
+              pass === "1234" ? setLoggedIn(true) : notify.error("Wrong Pass")
             }
             className="w-full bg-gold text-black font-black py-4 rounded-xl uppercase tracking-widest"
           >
