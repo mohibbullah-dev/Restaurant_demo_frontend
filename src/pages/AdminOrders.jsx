@@ -177,6 +177,7 @@ import Section from "../components/Section";
 import { API_BASE } from "../config/api";
 import { authHeaders } from "../utils/auth";
 import { formatPriceEGP } from "../utils/menu";
+import { notify } from "../utils/toast";
 
 const statuses = [
   "New",
@@ -244,7 +245,7 @@ export default function AdminOrders() {
       body: JSON.stringify({ status }),
     });
     const data = await res.json();
-    if (!res.ok) return alert(data?.message || "Failed to update");
+    if (!res.ok) return notify.error(data?.message || "Failed to update");
 
     setOrders((prev) => prev.map((o) => (o._id === id ? data.order : o)));
   }
