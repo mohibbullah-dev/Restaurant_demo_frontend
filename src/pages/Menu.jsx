@@ -1,17 +1,15 @@
 import { useMemo, useState, useEffect } from "react";
 import Section from "../components/Section";
 import MenuItemCard from "../components/MenuItemCard";
-// import { menuItems } from "../data/menu";
 import { getCategories } from "../utils/menu";
 import { useCart } from "../context/CartContext";
-
 import { API_BASE } from "../config/api";
 
 export default function Menu() {
   const [category, setCategory] = useState("All");
   const [query, setQuery] = useState("");
-  const cart = useCart();
   const [menuItems, setMenuItems] = useState([]);
+  const cart = useCart();
 
   useEffect(() => {
     fetch(`${API_BASE}/api/menu`)
@@ -20,28 +18,37 @@ export default function Menu() {
       .catch(() => setMenuItems([]));
   }, []);
 
-  const categories = useMemo(() => getCategories(menuItems), []);
+  // ✅ must depend on menuItems
+  const categories = useMemo(() => getCategories(menuItems), [menuItems]);
 
+  // ✅ if current category disappears (after fetch), reset to All
+  useEffect(() => {
+    if (!categories.includes(category)) setCategory("All");
+  }, [categories, category]);
+
+  // ✅ must depend on menuItems too
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
 
     return menuItems.filter((item) => {
       const matchCategory = category === "All" || item.category === category;
+
+      const name = (item.name || "").toLowerCase();
+      const desc = (item.desc || "").toLowerCase();
+      const cat = (item.category || "").toLowerCase();
+
       const matchQuery =
-        !q ||
-        item.name.toLowerCase().includes(q) ||
-        item.desc.toLowerCase().includes(q) ||
-        item.category.toLowerCase().includes(q);
+        !q || name.includes(q) || desc.includes(q) || cat.includes(q);
 
       return matchCategory && matchQuery;
     });
-  }, [category, query]);
+  }, [menuItems, category, query]);
 
   return (
     <div className="pb-24 md:pb-0">
       <Section
         title="Menu"
-        subtitle="Search items, filter categories, and add to cart. (Cart comes next step.)"
+        subtitle="Search items, filter categories, and add to cart."
       >
         {/* Controls */}
         <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
