@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Section from "../components/Section";
 import { API_BASE } from "../config/api";
 import { setToken } from "../utils/auth";
+import { notify } from "../utils/toast";
 
 export default function AdminLogin() {
   const nav = useNavigate();
@@ -19,6 +20,7 @@ export default function AdminLogin() {
     });
     const data = await res.json();
     if (!res.ok) return setErr(data?.message || "Login failed");
+    notify.success("admin login success");
 
     setToken(data.token);
     nav("/admin");
