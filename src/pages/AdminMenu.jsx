@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Section from "../components/Section";
 import { API_BASE } from "../config/api";
 import { authHeaders } from "../utils/auth";
+import { uploadMenuImage } from "../utils/uploadImage";
 
 const emptyForm = {
   name: "",
@@ -19,6 +20,7 @@ export default function AdminMenu() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [q, setQ] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
@@ -165,18 +167,72 @@ export default function AdminMenu() {
                 }
               />
             </div>
-
             <div>
-              <label className="text-sm text-gray-600">
-                Image URL (optional)
-              </label>
-              <input
-                className="mt-1 w-full px-4 py-3 rounded-2xl border"
-                value={form.imageUrl}
-                onChange={(e) =>
-                  setForm((p) => ({ ...p, imageUrl: e.target.value }))
-                }
-              />
+              <label className="text-sm text-gray-600">Image</label>
+
+              <div className="mt-1 flex flex-col gap-2">
+                {/* Preview */}
+                <div className="h-24 rounded-2xl border bg-gray-50 overflow-hidden flex items-center justify-center text-sm text-gray-500">
+                  {form.imageUrl ? (
+                    <img
+                      src={form.imageUrl}
+                      alt="preview"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    "No image"
+                  )}
+                </div>
+
+                {/* Upload */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="block w-full text-sm"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+
+                    try {
+                      setUploading(true);
+                      const uploaded = await uploadMenuImage(file);
+
+                      setForm((p) => ({
+                        ...p,
+                        imageUrl: uploaded.imageUrl,
+                        imagePublicId: uploaded.publicId,
+                      }));
+                    } catch (err) {
+                      alert(err.message);
+                    } finally {
+                      setUploading(false);
+                      e.target.value = ""; // reset input
+                    }
+                  }}
+                  disabled={uploading}
+                />
+
+                {/* Optional: clear image */}
+                {form.imageUrl && (
+                  <button
+                    type="button"
+                    className="px-4 py-2 rounded-xl border"
+                    onClick={() =>
+                      setForm((p) => ({
+                        ...p,
+                        imageUrl: "",
+                        imagePublicId: "",
+                      }))
+                    }
+                  >
+                    Remove image from item
+                  </button>
+                )}
+
+                {uploading && (
+                  <p className="text-sm text-gray-600">Uploading...</p>
+                )}
+              </div>
             </div>
 
             <div className="md:col-span-2 flex flex-wrap gap-3 pt-2">
