@@ -6,6 +6,7 @@ import { restaurant } from "../config/restaurant";
 import { formatPriceEGP } from "../utils/menu";
 import { buildWhatsAppOrderMessage, toWhatsAppUrl } from "../utils/whatsapp";
 import { API_BASE } from "../config/api";
+import { notify } from "../utils/toast";
 
 export default function Checkout() {
   const cart = useCart();
@@ -17,21 +18,76 @@ export default function Checkout() {
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
 
+  // ✅ settings (fetched locally so we don't touch other files)
+  const [settings, setSettings] = useState({
+    isOpen: true,
+    notice: "",
+    deliveryFee: 0,
+    minimumOrder: 0,
+  });
+
   // If cart empty, push back to menu
   useEffect(() => {
     if (cart.items.length === 0) navigate("/menu");
   }, [cart.items.length, navigate]);
 
+  // Load settings
+  useEffect(() => {
+    fetch(`${API_BASE}/api/settings`)
+      .then((r) => r.json())
+      .then((d) => {
+        const s = d?.settings || {};
+        setSettings({
+          isOpen: s.isOpen ?? true,
+          notice: s.notice ?? "",
+          deliveryFee: Number(s.deliveryFee ?? 0),
+          minimumOrder: Number(s.minimumOrder ?? 0),
+        });
+      })
+      .catch(() => {
+        // keep defaults
+      });
+  }, []);
+
   const isDelivery = orderType === "Delivery";
+
+  const subtotal = Number(cart.subtotal || 0);
+  const deliveryFee = isDelivery ? Number(settings.deliveryFee || 0) : 0;
+  const minimumOrder = Number(settings.minimumOrder || 0);
+  const total = subtotal + deliveryFee;
+
+  const belowMinimum =
+    isDelivery && minimumOrder > 0 && subtotal < minimumOrder;
 
   const canSend = useMemo(() => {
     if (!customerName.trim()) return false;
     if (!customerPhone.trim()) return false;
     if (isDelivery && !address.trim()) return false;
+    if (belowMinimum) return false;
+    if (!settings.isOpen) return false;
     return cart.items.length > 0;
-  }, [customerName, customerPhone, isDelivery, address, cart.items.length]);
+  }, [
+    customerName,
+    customerPhone,
+    isDelivery,
+    address,
+    cart.items.length,
+    belowMinimum,
+    settings.isOpen,
+  ]);
 
   async function onSendWhatsApp() {
+    if (!settings.isOpen) {
+      notify.error("Restaurant is closed right now");
+      return;
+    }
+    if (belowMinimum) {
+      notify.error(
+        `Minimum order for delivery is ${formatPriceEGP(minimumOrder)}`,
+      );
+      return;
+    }
+
     const payload = {
       customerName: customerName.trim(),
       customerPhone: customerPhone.trim(),
@@ -44,7 +100,10 @@ export default function Checkout() {
         price: i.price,
         qty: i.qty,
       })),
-      subtotal: cart.subtotal,
+      subtotal,
+      // ✅ include these (good for DB + admin view later)
+      deliveryFee,
+      total,
     };
 
     // 1) Save order to DB
@@ -56,12 +115,12 @@ export default function Checkout() {
 
     const data = await res.json();
     if (!res.ok) {
-      alert(data?.message || "Failed to create order");
+      notify.error(data?.message || "Failed to create order");
       return;
     }
 
-    // 2) Build WhatsApp message (include order id)
-    const msg =
+    // 2) Build WhatsApp message (keep your existing util, append fee/total)
+    let msg =
       buildWhatsAppOrderMessage({
         restaurantName: restaurant.name,
         customerName: payload.customerName,
@@ -70,8 +129,15 @@ export default function Checkout() {
         address: payload.address,
         notes: payload.notes,
         items: cart.items,
-        subtotal: cart.subtotal,
-      }) + `\n\nOrder ID: ${data.order._id}`;
+        subtotal,
+      }) + `\n`;
+
+    if (isDelivery && deliveryFee > 0) {
+      msg += `\nDelivery Fee: ${formatPriceEGP(deliveryFee)}`;
+    }
+    msg += `\nTotal: ${formatPriceEGP(total)}`;
+
+    msg += `\n\nOrder ID: ${data.order._id}`;
 
     const url = toWhatsAppUrl(restaurant.whatsappPhone, msg);
 
@@ -86,6 +152,16 @@ export default function Checkout() {
         title="Checkout"
         subtitle="Confirm details and send the order on WhatsApp."
       >
+        {/* Closed warning */}
+        {!settings.isOpen && (
+          <div className="mb-4 rounded-2xl border bg-white p-4 text-sm">
+            <p className="font-semibold">We are currently closed.</p>
+            <p className="text-gray-600">
+              {settings.notice ? settings.notice : "Please check back soon."}
+            </p>
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-2 gap-6">
           {/* FORM */}
           <div className="rounded-3xl border bg-white p-6">
@@ -131,17 +207,27 @@ export default function Checkout() {
               </div>
 
               {isDelivery && (
-                <div>
-                  <label className="text-sm text-gray-600">
-                    Delivery address
-                  </label>
-                  <input
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Street, building, area..."
-                    className="mt-1 w-full px-4 py-3 rounded-2xl border outline-none focus:ring-2 focus:ring-black"
-                  />
-                </div>
+                <>
+                  <div>
+                    <label className="text-sm text-gray-600">
+                      Delivery address
+                    </label>
+                    <input
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      placeholder="Street, building, area..."
+                      className="mt-1 w-full px-4 py-3 rounded-2xl border outline-none focus:ring-2 focus:ring-black"
+                    />
+                  </div>
+
+                  {/* Minimum order message */}
+                  {belowMinimum && (
+                    <p className="text-sm text-red-600">
+                      Minimum order for delivery is{" "}
+                      {formatPriceEGP(minimumOrder)}.
+                    </p>
+                  )}
+                </>
               )}
 
               <div>
@@ -177,7 +263,7 @@ export default function Checkout() {
 
             {!canSend && (
               <p className="mt-3 text-sm text-gray-600">
-                Fill the required fields to send the order.
+                Fill required fields. Delivery orders must meet minimum order.
               </p>
             )}
           </div>
@@ -207,11 +293,29 @@ export default function Checkout() {
               ))}
             </div>
 
-            <div className="mt-6 border-t pt-4 flex items-center justify-between">
-              <span className="text-gray-600">Subtotal</span>
-              <span className="text-2xl font-bold">
-                {formatPriceEGP(cart.subtotal)}
-              </span>
+            <div className="mt-6 border-t pt-4 space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-600">Subtotal</span>
+                <span className="font-semibold">
+                  {formatPriceEGP(subtotal)}
+                </span>
+              </div>
+
+              {isDelivery && deliveryFee > 0 && (
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600">Delivery fee</span>
+                  <span className="font-semibold">
+                    {formatPriceEGP(deliveryFee)}
+                  </span>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between border-t pt-3">
+                <span className="text-gray-600 font-semibold">Total</span>
+                <span className="text-2xl font-bold">
+                  {formatPriceEGP(total)}
+                </span>
+              </div>
             </div>
 
             <p className="mt-3 text-sm text-gray-600">
