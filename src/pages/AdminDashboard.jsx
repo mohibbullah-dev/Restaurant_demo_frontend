@@ -1,6 +1,8 @@
 import Section from "../components/Section";
 import { clearToken } from "../utils/auth";
 import { useNavigate, Link } from "react-router-dom";
+import { API_BASE } from "../config/api";
+import { authHeaders } from "../utils/auth";
 
 export default function AdminDashboard() {
   const nav = useNavigate();
@@ -23,6 +25,28 @@ export default function AdminDashboard() {
               Settings
             </Link>
           </div>
+
+          <button
+            className="px-4 py-2 rounded-xl border"
+            onClick={async () => {
+              if (
+                !confirm(
+                  "Reset demo data? This deletes all orders and resets menu.",
+                )
+              )
+                return;
+
+              const res = await fetch(`${API_BASE}/api/admin/reset-demo`, {
+                method: "POST",
+                headers: { ...authHeaders() },
+              });
+              const data = await res.json();
+              if (!res.ok) return alert(data?.message || "Reset failed");
+              alert("Demo reset done ✅");
+            }}
+          >
+            Reset Demo Data
+          </button>
 
           <button
             className="px-4 py-2 rounded-xl border"
