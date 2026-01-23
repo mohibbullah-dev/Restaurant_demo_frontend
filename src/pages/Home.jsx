@@ -1,237 +1,237 @@
-import Section from "../components/Section";
-import { restaurant } from "../config/restaurant";
-import { useEffect, useState } from "react";
-import { API_BASE } from "../config/api";
-import MenuItemCard from "../components/MenuItemCard";
-import { useCart } from "../context/CartContext";
+// import Section from "../components/Section";
+// import { restaurant } from "../config/restaurant";
+// import { useEffect, useState } from "react";
+// import { API_BASE } from "../config/api";
+// import MenuItemCard from "../components/MenuItemCard";
+// import { useCart } from "../context/CartContext";
 
-const featured = [
-  {
-    name: "Classic Burger",
-    desc: "Juicy beef patty, cheese, house sauce.",
-    price: "120 EGP",
-  },
-  {
-    name: "Chicken Shawarma",
-    desc: "Tender chicken, garlic sauce, pickles.",
-    price: "95 EGP",
-  },
-  {
-    name: "Margherita Pizza",
-    desc: "Tomato, mozzarella, fresh basil.",
-    price: "150 EGP",
-  },
-  {
-    name: "Fresh Lemon Mint",
-    desc: "Cold, refreshing, made to order.",
-    price: "45 EGP",
-  },
-];
+// const featured = [
+//   {
+//     name: "Classic Burger",
+//     desc: "Juicy beef patty, cheese, house sauce.",
+//     price: "120 EGP",
+//   },
+//   {
+//     name: "Chicken Shawarma",
+//     desc: "Tender chicken, garlic sauce, pickles.",
+//     price: "95 EGP",
+//   },
+//   {
+//     name: "Margherita Pizza",
+//     desc: "Tomato, mozzarella, fresh basil.",
+//     price: "150 EGP",
+//   },
+//   {
+//     name: "Fresh Lemon Mint",
+//     desc: "Cold, refreshing, made to order.",
+//     price: "45 EGP",
+//   },
+// ];
 
-export default function Home() {
-  const [featured, setFeatured] = useState([]);
-  const cart = useCart();
+// export default function Home() {
+//   const [featured, setFeatured] = useState([]);
+//   const cart = useCart();
 
-  useEffect(() => {
-    fetch(`${API_BASE}/api/menu?featured=true`)
-      .then((r) => r.json())
-      .then((d) => setFeatured(d.items || []))
-      .catch(() => setFeatured([]));
-  }, []);
+//   useEffect(() => {
+//     fetch(`${API_BASE}/api/menu?featured=true`)
+//       .then((r) => r.json())
+//       .then((d) => setFeatured(d.items || []))
+//       .catch(() => setFeatured([]));
+//   }, []);
 
-  return (
-    <div className="pb-24 md:pb-0">
-      {/* HERO */}
-      <div className="bg-gradient-to-b from-gray-50 to-white border-b">
-        <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <p className="text-sm text-gray-600">
-                Open today • Fast pickup • WhatsApp ordering
-              </p>
+//   return (
+//     <div className="pb-24 md:pb-0">
+//       {/* HERO */}
+//       <div className="bg-gradient-to-b from-gray-50 to-white border-b">
+//         <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
+//           <div className="grid md:grid-cols-2 gap-8 items-center">
+//             <div>
+//               <p className="text-sm text-gray-600">
+//                 Open today • Fast pickup • WhatsApp ordering
+//               </p>
 
-              <h1 className="mt-3 text-4xl md:text-6xl font-bold leading-tight">
-                {restaurant.tagline}
-              </h1>
+//               <h1 className="mt-3 text-4xl md:text-6xl font-bold leading-tight">
+//                 {restaurant.tagline}
+//               </h1>
 
-              <p className="mt-4 text-gray-600 max-w-xl">
-                A clean restaurant website + digital menu + WhatsApp ordering
-                that brings customers from Google Maps into real orders.
-              </p>
+//               <p className="mt-4 text-gray-600 max-w-xl">
+//                 A clean restaurant website + digital menu + WhatsApp ordering
+//                 that brings customers from Google Maps into real orders.
+//               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href="#menu"
-                  className="px-5 py-3 rounded-2xl bg-black text-white font-medium"
-                >
-                  View Menu
-                </a>
-                <a
-                  href={`https://wa.me/${restaurant.whatsappPhone}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-5 py-3 rounded-2xl border font-medium"
-                >
-                  Order on WhatsApp
-                </a>
-              </div>
+//               <div className="mt-6 flex flex-wrap gap-3">
+//                 <a
+//                   href="#menu"
+//                   className="px-5 py-3 rounded-2xl bg-black text-white font-medium"
+//                 >
+//                   View Menu
+//                 </a>
+//                 <a
+//                   href={`https://wa.me/${restaurant.whatsappPhone}`}
+//                   target="_blank"
+//                   rel="noreferrer"
+//                   className="px-5 py-3 rounded-2xl border font-medium"
+//                 >
+//                   Order on WhatsApp
+//                 </a>
+//               </div>
 
-              <div className="mt-6 flex flex-wrap gap-2 text-sm text-gray-600">
-                <span className="px-3 py-1 rounded-full border">
-                  No apps needed
-                </span>
-                <span className="px-3 py-1 rounded-full border">
-                  Mobile-first
-                </span>
-                <span className="px-3 py-1 rounded-full border">
-                  Easy admin
-                </span>
-              </div>
-            </div>
+//               <div className="mt-6 flex flex-wrap gap-2 text-sm text-gray-600">
+//                 <span className="px-3 py-1 rounded-full border">
+//                   No apps needed
+//                 </span>
+//                 <span className="px-3 py-1 rounded-full border">
+//                   Mobile-first
+//                 </span>
+//                 <span className="px-3 py-1 rounded-full border">
+//                   Easy admin
+//                 </span>
+//               </div>
+//             </div>
 
-            {/* Fake image block (replace later with real photos) */}
-            <div className="rounded-3xl border bg-white p-6">
-              <div className="rounded-2xl bg-gray-100 h-64 md:h-80 flex items-center justify-center text-gray-500">
-                Food Photo / Slider
-              </div>
-              <div className="mt-4 grid grid-cols-3 gap-3">
-                <div className="h-20 rounded-xl bg-gray-100" />
-                <div className="h-20 rounded-xl bg-gray-100" />
-                <div className="h-20 rounded-xl bg-gray-100" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+//             {/* Fake image block (replace later with real photos) */}
+//             <div className="rounded-3xl border bg-white p-6">
+//               <div className="rounded-2xl bg-gray-100 h-64 md:h-80 flex items-center justify-center text-gray-500">
+//                 Food Photo / Slider
+//               </div>
+//               <div className="mt-4 grid grid-cols-3 gap-3">
+//                 <div className="h-20 rounded-xl bg-gray-100" />
+//                 <div className="h-20 rounded-xl bg-gray-100" />
+//                 <div className="h-20 rounded-xl bg-gray-100" />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
 
-      {/* FEATURED */}
-      <Section
-        id="menu"
-        title="Featured dishes"
-        subtitle="A quick section to hook customers before they scroll the full menu."
-      >
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {featured.map((item) => (
-            <MenuItemCard
-              key={item._id}
-              item={item}
-              onAdd={(it) => {
-                cart.add(it);
-                cart.open();
-              }}
-            />
-          ))}
+//       {/* FEATURED */}
+//       <Section
+//         id="menu"
+//         title="Featured dishes"
+//         subtitle="A quick section to hook customers before they scroll the full menu."
+//       >
+//         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+//           {featured.map((item) => (
+//             <MenuItemCard
+//               key={item._id}
+//               item={item}
+//               onAdd={(it) => {
+//                 cart.add(it);
+//                 cart.open();
+//               }}
+//             />
+//           ))}
 
-          {featured.length === 0 && (
-            <div className="text-gray-600">
-              No featured items yet. Mark items as featured in Admin → Menu.
-            </div>
-          )}
-        </div>
-      </Section>
+//           {featured.length === 0 && (
+//             <div className="text-gray-600">
+//               No featured items yet. Mark items as featured in Admin → Menu.
+//             </div>
+//           )}
+//         </div>
+//       </Section>
 
-      {/* INFO STRIP */}
-      <div className="border-y bg-white">
-        <div className="max-w-6xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-4">
-          <div className="rounded-2xl border p-4">
-            <p className="text-sm text-gray-600">Phone</p>
-            <a className="font-semibold" href={`tel:${restaurant.phone}`}>
-              {restaurant.phone}
-            </a>
-          </div>
-          <div className="rounded-2xl border p-4">
-            <p className="text-sm text-gray-600">Address</p>
-            <p className="font-semibold">{restaurant.addressLine}</p>
-          </div>
-          <div className="rounded-2xl border p-4">
-            <p className="text-sm text-gray-600">Order</p>
-            <a
-              className="font-semibold"
-              href={`https://wa.me/${restaurant.whatsappPhone}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              WhatsApp ordering
-            </a>
-          </div>
-        </div>
-      </div>
+//       {/* INFO STRIP */}
+//       <div className="border-y bg-white">
+//         <div className="max-w-6xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-4">
+//           <div className="rounded-2xl border p-4">
+//             <p className="text-sm text-gray-600">Phone</p>
+//             <a className="font-semibold" href={`tel:${restaurant.phone}`}>
+//               {restaurant.phone}
+//             </a>
+//           </div>
+//           <div className="rounded-2xl border p-4">
+//             <p className="text-sm text-gray-600">Address</p>
+//             <p className="font-semibold">{restaurant.addressLine}</p>
+//           </div>
+//           <div className="rounded-2xl border p-4">
+//             <p className="text-sm text-gray-600">Order</p>
+//             <a
+//               className="font-semibold"
+//               href={`https://wa.me/${restaurant.whatsappPhone}`}
+//               target="_blank"
+//               rel="noreferrer"
+//             >
+//               WhatsApp ordering
+//             </a>
+//           </div>
+//         </div>
+//       </div>
 
-      {/* HOURS + MAP */}
-      <Section
-        title="Hours & Location"
-        subtitle="Make it easy for customers to visit or call."
-      >
-        <div className="grid lg:grid-cols-2 gap-6">
-          <div className="rounded-3xl border p-6 bg-white">
-            <h3 className="text-xl font-bold">Opening hours</h3>
-            <div className="mt-4 space-y-2">
-              {restaurant.hours.map((h) => (
-                <div
-                  key={h.day}
-                  className="flex items-center justify-between text-sm"
-                >
-                  <span className="text-gray-600">{h.day}</span>
-                  <span className="font-medium">{h.time}</span>
-                </div>
-              ))}
-            </div>
+//       {/* HOURS + MAP */}
+//       <Section
+//         title="Hours & Location"
+//         subtitle="Make it easy for customers to visit or call."
+//       >
+//         <div className="grid lg:grid-cols-2 gap-6">
+//           <div className="rounded-3xl border p-6 bg-white">
+//             <h3 className="text-xl font-bold">Opening hours</h3>
+//             <div className="mt-4 space-y-2">
+//               {restaurant.hours.map((h) => (
+//                 <div
+//                   key={h.day}
+//                   className="flex items-center justify-between text-sm"
+//                 >
+//                   <span className="text-gray-600">{h.day}</span>
+//                   <span className="font-medium">{h.time}</span>
+//                 </div>
+//               ))}
+//             </div>
 
-            <div className="mt-6 flex gap-3">
-              <a
-                href={`tel:${restaurant.phone}`}
-                className="flex-1 text-center py-3 rounded-2xl border font-medium"
-              >
-                Call
-              </a>
-              <a
-                href={`https://wa.me/${restaurant.whatsappPhone}`}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 text-center py-3 rounded-2xl bg-black text-white font-medium"
-              >
-                WhatsApp
-              </a>
-            </div>
-          </div>
+//             <div className="mt-6 flex gap-3">
+//               <a
+//                 href={`tel:${restaurant.phone}`}
+//                 className="flex-1 text-center py-3 rounded-2xl border font-medium"
+//               >
+//                 Call
+//               </a>
+//               <a
+//                 href={`https://wa.me/${restaurant.whatsappPhone}`}
+//                 target="_blank"
+//                 rel="noreferrer"
+//                 className="flex-1 text-center py-3 rounded-2xl bg-black text-white font-medium"
+//               >
+//                 WhatsApp
+//               </a>
+//             </div>
+//           </div>
 
-          <div className="rounded-3xl border overflow-hidden bg-white">
-            <iframe
-              title="map"
-              src={restaurant.mapEmbedUrl}
-              className="w-full h-80 lg:h-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </div>
-      </Section>
+//           <div className="rounded-3xl border overflow-hidden bg-white">
+//             <iframe
+//               title="map"
+//               src={restaurant.mapEmbedUrl}
+//               className="w-full h-80 lg:h-full"
+//               loading="lazy"
+//               referrerPolicy="no-referrer-when-downgrade"
+//             />
+//           </div>
+//         </div>
+//       </Section>
 
-      {/* FINAL CTA */}
-      <Section
-        title="Order in 1 minute"
-        subtitle="Customers don’t want to download apps. WhatsApp ordering converts fast."
-      >
-        <div className="rounded-3xl border p-8 bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div>
-            <h3 className="text-2xl font-bold">Ready to place an order?</h3>
-            <p className="mt-2 text-gray-600">
-              Send your order on WhatsApp and we’ll confirm instantly.
-            </p>
-          </div>
-          <a
-            href={`https://wa.me/${restaurant.whatsappPhone}`}
-            target="_blank"
-            rel="noreferrer"
-            className="px-6 py-3 rounded-2xl bg-black text-white font-medium"
-          >
-            Order on WhatsApp
-          </a>
-        </div>
-      </Section>
-    </div>
-  );
-}
+//       {/* FINAL CTA */}
+//       <Section
+//         title="Order in 1 minute"
+//         subtitle="Customers don’t want to download apps. WhatsApp ordering converts fast."
+//       >
+//         <div className="rounded-3xl border p-8 bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+//           <div>
+//             <h3 className="text-2xl font-bold">Ready to place an order?</h3>
+//             <p className="mt-2 text-gray-600">
+//               Send your order on WhatsApp and we’ll confirm instantly.
+//             </p>
+//           </div>
+//           <a
+//             href={`https://wa.me/${restaurant.whatsappPhone}`}
+//             target="_blank"
+//             rel="noreferrer"
+//             className="px-6 py-3 rounded-2xl bg-black text-white font-medium"
+//           >
+//             Order on WhatsApp
+//           </a>
+//         </div>
+//       </Section>
+//     </div>
+//   );
+// }
 
 // import Section from "../components/Section";
 // import { restaurant } from "../config/restaurant";
@@ -662,3 +662,245 @@ export default function Home() {
 //     </div>
 //   );
 // }
+
+import Section from "../components/Section";
+import { restaurant } from "../config/restaurant";
+import { useEffect, useState } from "react";
+import { API_BASE } from "../config/api";
+import MenuItemCard from "../components/MenuItemCard";
+import { useCart } from "../context/CartContext";
+
+const SLIDES = [
+  {
+    title: "Fresh ingredients.",
+    highlight: "Masterful taste.",
+    image:
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop",
+  },
+  {
+    title: "Artisanal quality.",
+    highlight: "Elite service.",
+    image:
+      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
+  },
+  {
+    title: "Curated menu.",
+    highlight: "Digital ease.",
+    image:
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop",
+  },
+];
+
+export default function Home() {
+  const [featured, setFeatured] = useState([]);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const cart = useCart();
+
+  // Auto-slide logic
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/menu?featured=true`)
+      .then((r) => r.json())
+      .then((d) => setFeatured(d.items || []))
+      .catch(() => setFeatured([]));
+  }, []);
+
+  return (
+    <div className="bg-obsidian selection:bg-champagne selection:text-obsidian">
+      {/* 1. CINEMATIC HERO SLIDER */}
+      <div className="relative h-[90vh] md:h-screen w-full flex items-center overflow-hidden">
+        {/* Background Images with Fade Transition */}
+        {SLIDES.map((slide, idx) => (
+          <div
+            key={idx}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out z-0 ${idx === activeSlide ? "opacity-40" : "opacity-0"}`}
+          >
+            <img
+              src={slide.image}
+              alt="Atmosphere"
+              className={`w-full h-full object-cover transition-transform duration-[5000ms] ${idx === activeSlide ? "scale-110" : "scale-100"}`}
+            />
+          </div>
+        ))}
+
+        {/* Professional Overlay Gradients */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent"></div>
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+          <div className="max-w-4xl space-y-10">
+            {/* Live Status Badge */}
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass border-white/10 backdrop-blur-md animate-fade-in">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></span>
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-champagne/90">
+                Service Experience Live
+              </p>
+            </div>
+
+            {/* Dynamic Typography */}
+            <div className="space-y-4 min-h-[220px] md:min-h-[300px]">
+              <h1 className="text-6xl md:text-[9rem] font-display font-bold leading-[0.85] tracking-tight text-mist transition-all duration-700">
+                {SLIDES[activeSlide].title}
+                <br />
+                <span className="gold-gradient-text italic font-serif">
+                  {SLIDES[activeSlide].highlight}
+                </span>
+              </h1>
+              <p className="text-lg md:text-xl text-smoke/90 font-light max-w-xl leading-relaxed animate-fade-in">
+                Explore a new era of digital gastronomy. Curated collections
+                delivered with precision via our WhatsApp concierge.
+              </p>
+            </div>
+
+            {/* CTA Suite */}
+            <div className="flex flex-wrap items-center gap-6 pt-6">
+              <a
+                href="#menu"
+                className="group relative px-12 py-5 overflow-hidden rounded-2xl bg-champagne text-obsidian font-black uppercase text-[10px] tracking-[0.3em] transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-champagne/10"
+              >
+                <span className="relative z-10">Explore Menu</span>
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              </a>
+
+              <a
+                href={`https://wa.me/${restaurant.whatsappPhone}`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-12 py-5 rounded-2xl glass border-white/10 text-mist font-black uppercase text-[10px] tracking-[0.3em] hover:bg-white/5 transition-all flex items-center gap-3"
+              >
+                WhatsApp Order
+              </a>
+            </div>
+
+            {/* Progress Indicators */}
+            <div className="flex gap-3 pt-12">
+              {SLIDES.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveSlide(i)}
+                  className={`h-1 transition-all duration-500 rounded-full ${i === activeSlide ? "w-12 bg-champagne" : "w-4 bg-white/20"}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. THE FEATURED COLLECTION */}
+      <Section
+        id="menu"
+        title={
+          <span className="gold-gradient-text italic font-serif">
+            Chef's Signature
+          </span>
+        }
+        subtitle="A definitive selection of our most celebrated seasonal masterpieces."
+      >
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {featured.map((item) => (
+            <MenuItemCard
+              key={item._id}
+              item={item}
+              onAdd={(it) => {
+                cart.add(it);
+                cart.open();
+              }}
+            />
+          ))}
+          {featured.length === 0 && (
+            <div className="col-span-full py-20 text-center glass rounded-[3rem] border-dashed border-white/5">
+              <p className="text-smoke italic font-light tracking-widest opacity-40">
+                Awaiting the chef's arrival...
+              </p>
+            </div>
+          )}
+        </div>
+      </Section>
+
+      {/* 3. EXPERIENCE ARCHITECTURE */}
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-10 mb-24">
+        <div className="lg:col-span-5 glass-gold rounded-[3rem] p-12 border-white/10 flex flex-col justify-between group">
+          <div className="space-y-4">
+            <p className="text-champagne text-[10px] font-black uppercase tracking-[0.4em]">
+              Our Atelier
+            </p>
+            <h3 className="text-4xl font-bold tracking-tight italic font-serif text-mist">
+              Physical Experience
+            </h3>
+            <p className="text-smoke text-sm leading-relaxed max-w-xs font-light">
+              {restaurant.addressLine}
+            </p>
+          </div>
+          <div className="pt-10">
+            <a
+              href={`tel:${restaurant.phone}`}
+              className="inline-flex items-center gap-4 text-xs font-black uppercase tracking-widest text-mist group-hover:text-champagne transition-all"
+            >
+              <span className="w-8 h-px bg-white/20"></span>
+              Call Concierge
+            </a>
+          </div>
+        </div>
+
+        <div className="lg:col-span-7 glass rounded-[3rem] p-12 border-white/5 flex flex-col justify-between">
+          <div className="space-y-8">
+            <p className="text-smoke text-[10px] font-black uppercase tracking-[0.4em]">
+              Service Times
+            </p>
+            <div className="grid sm:grid-cols-2 gap-x-12 gap-y-4">
+              {restaurant.hours.map((h) => (
+                <div
+                  key={h.day}
+                  className="flex justify-between text-[11px] uppercase tracking-[0.2em] text-smoke border-b border-white/5 pb-2"
+                >
+                  <span className="font-bold">{h.day}</span>
+                  <span className="text-mist">{h.time}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. MAP INTEGRATION */}
+      <div className="max-w-7xl mx-auto px-6 mb-24">
+        <div className="h-[500px] rounded-[4rem] overflow-hidden glass p-3 border-white/5 shadow-3xl">
+          <div className="w-full h-full rounded-[3.5rem] overflow-hidden grayscale invert brightness-75 contrast-125 opacity-40 transition-opacity hover:opacity-100 duration-1000">
+            <iframe
+              title="map"
+              src={restaurant.mapEmbedUrl}
+              className="w-full h-full border-0"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 5. FINAL STATEMENT */}
+      <div className="max-w-5xl mx-auto px-6 pb-24 text-center">
+        <div className="relative glass p-20 rounded-[4rem] border-white/5 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-champagne to-transparent opacity-30"></div>
+          <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 italic font-serif text-mist">
+            Taste the Distinction.
+          </h2>
+          <p className="text-smoke mb-12 max-w-md mx-auto italic font-light leading-relaxed">
+            Join our elite circle of guests and experience the height of digital
+            convenience.
+          </p>
+          <a
+            href={`https://wa.me/${restaurant.whatsappPhone}`}
+            className="inline-block px-16 py-6 rounded-full bg-mist text-obsidian font-black uppercase text-[10px] tracking-[0.4em] hover:bg-champagne transition-all shadow-3xl"
+          >
+            Open WhatsApp Concierge
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
