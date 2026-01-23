@@ -894,6 +894,8 @@ export default function AdminMenu() {
       if (!res.ok) throw new Error(data?.message || "Save failed");
 
       notify.success(isEdit ? "Item refined" : "Added to collection");
+
+      // Refresh the list and reset the form to clear all fields
       await load();
       reset();
     } catch (err) {
@@ -977,9 +979,15 @@ export default function AdminMenu() {
                     const file = e.target.files?.[0];
                     if (!file) return;
                     setUploading(true);
-                    const uploaded = await uploadMenuImage(file);
-                    setForm((p) => ({ ...p, imageUrl: uploaded.imageUrl }));
-                    setUploading(false);
+                    try {
+                      const uploaded = await uploadMenuImage(file);
+                      setForm((p) => ({ ...p, imageUrl: uploaded.imageUrl }));
+                    } catch (err) {
+                      notify.error("Upload failed");
+                    } finally {
+                      setUploading(false);
+                      e.target.value = ""; // Clear the file input DOM value
+                    }
                   }}
                 />
               </div>
