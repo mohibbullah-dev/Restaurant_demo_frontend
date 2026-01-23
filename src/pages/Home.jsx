@@ -674,14 +674,20 @@ const SLIDES = [
   {
     image:
       "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
-    title: "Culinary Excellence",
-    tag: "Experience the Art of Taste",
+    title: "Culinary Mastery.",
+    highlight: "Delivered.",
   },
   {
     image:
       "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop",
-    title: "Freshly Curated",
-    tag: "From Farm to Table",
+    title: "Fresh Selection.",
+    highlight: "Daily.",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop",
+    title: "Premium Taste.",
+    highlight: "Elite Service.",
   },
 ];
 
@@ -690,6 +696,7 @@ export default function Home() {
   const [current, setCurrent] = useState(0);
   const cart = useCart();
 
+  // Auto-play slider logic
   useEffect(() => {
     const timer = setInterval(
       () => setCurrent((s) => (s + 1) % SLIDES.length),
@@ -706,74 +713,97 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-white text-slate-900 font-sans antialiased">
-      {/* --- HERO SLIDER: CLEAN & MASSIVE --- */}
-      <div className="relative h-screen w-full bg-slate-100 overflow-hidden">
+    <div className="bg-obsidian text-mist min-h-screen">
+      {/* --- ELITE HERO SLIDER (THE FIRST IMPRESSION) --- */}
+      <div className="relative h-[85vh] md:h-screen w-full overflow-hidden">
+        {/* Images Layer */}
         {SLIDES.map((slide, i) => (
           <div
             key={i}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === current ? "opacity-100" : "opacity-0"}`}
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out z-0 ${i === current ? "opacity-50 scale-105" : "opacity-0 scale-100"}`}
           >
             <img
               src={slide.image}
               className="w-full h-full object-cover"
-              alt="Hero"
+              alt="Ambience"
             />
-            <div className="absolute inset-0 bg-black/30 shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]"></div>
           </div>
         ))}
 
-        {/* Hero Content Overlay */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
-          <p className="text-xs font-bold uppercase tracking-[0.5em] mb-4 animate-fade-in">
-            {SLIDES[current].tag}
-          </p>
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tight mb-8">
-            {SLIDES[current].title}
-          </h1>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="#menu"
-              className="bg-white text-black px-10 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-slate-200 transition-colors"
-            >
-              Discover Menu
-            </a>
-            <a
-              href={`https://wa.me/${restaurant.whatsappPhone}`}
-              className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all"
-            >
-              Order Online
-            </a>
-          </div>
-        </div>
+        {/* Master Overlays for Professional Look */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-obsidian via-obsidian/60 to-transparent"></div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3">
-          {SLIDES.map((_, i) => (
-            <div
-              key={i}
-              className={`h-1 rounded-full transition-all duration-500 ${i === current ? "w-12 bg-white" : "w-4 bg-white/40"}`}
-            />
-          ))}
+        {/* Content Container */}
+        <div className="max-w-7xl mx-auto px-6 h-full flex items-center relative z-20">
+          <div className="max-w-4xl space-y-8">
+            {/* Status Indicator */}
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass border-white/5 animate-fade-in">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-champagne">
+                Direct WhatsApp Ordering Active
+              </p>
+            </div>
+
+            {/* Typography Stack */}
+            <div className="space-y-4">
+              <h1 className="text-6xl md:text-[8rem] font-display font-bold leading-[0.85] tracking-tighter">
+                {SLIDES[current].title}
+                <br />
+                <span className="gold-gradient-text italic">
+                  {SLIDES[current].highlight}
+                </span>
+              </h1>
+              <p className="text-lg md:text-xl text-smoke max-w-xl font-light leading-relaxed">
+                Elevating the digital dining journey. Experience seamless
+                ordering through our curated menu and direct concierge service.
+              </p>
+            </div>
+
+            {/* Action Group */}
+            <div className="flex flex-wrap gap-4 pt-6">
+              <a
+                href="#menu"
+                className="px-10 py-5 rounded-2xl bg-gradient-to-r from-champagne to-bronze text-obsidian font-black uppercase text-[10px] tracking-widest shadow-lg shadow-champagne/10 hover:scale-[1.02] transition-all"
+              >
+                Explore Collection
+              </a>
+              <a
+                href={`https://wa.me/${restaurant.whatsappPhone}`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-10 py-5 rounded-2xl glass border-white/10 text-mist font-black uppercase text-[10px] tracking-widest hover:bg-white/5 transition-all"
+              >
+                WhatsApp Concierge
+              </a>
+            </div>
+
+            {/* Progress Dots */}
+            <div className="flex gap-2 pt-12">
+              {SLIDES.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`h-1 transition-all duration-500 rounded-full ${i === current ? "w-12 bg-champagne" : "w-4 bg-white/20"}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* --- CLEAN GRID SECTION --- */}
-      <div className="max-w-7xl mx-auto px-6 py-24" id="menu">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
-          <div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-              Today's Selection
-            </h2>
-            <div className="h-1 w-20 bg-black mt-4"></div>
-          </div>
-          <p className="text-slate-500 mt-4 md:mt-0 max-w-sm font-medium">
-            Hand-picked dishes from our chef, prepared fresh upon your WhatsApp
-            request.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      {/* --- FEATURED COLLECTION (INTEGRATED) --- */}
+      <Section
+        id="menu"
+        title={
+          <span className="gold-gradient-text italic">Featured Selection</span>
+        }
+        subtitle="A preview of our master chef's seasonal highlights."
+      >
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {featured.map((item) => (
             <MenuItemCard
               key={item._id}
@@ -784,79 +814,110 @@ export default function Home() {
               }}
             />
           ))}
+          {featured.length === 0 && (
+            <div className="col-span-full py-20 text-center glass rounded-4xl border-dashed border-white/5">
+              <p className="text-smoke italic opacity-60">
+                Refreshing the collection...
+              </p>
+            </div>
+          )}
+        </div>
+      </Section>
+
+      {/* --- INFO ARCHITECTURE (MATCHING SITE STYLE) --- */}
+      <div className="py-20 border-y border-white/5 bg-obsidian/40 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+          {[
+            {
+              label: "Direct Line",
+              val: restaurant.phone,
+              link: `tel:${restaurant.phone}`,
+            },
+            { label: "Our Atelier", val: restaurant.addressLine, link: null },
+            {
+              label: "Digital Order",
+              val: "WhatsApp Priority",
+              link: `https://wa.me/${restaurant.whatsappPhone}`,
+            },
+          ].map((info, i) => (
+            <div
+              key={i}
+              className="space-y-2 border-l border-white/5 pl-6 hover:border-champagne/50 transition-colors"
+            >
+              <p className="text-[10px] uppercase tracking-[0.3em] text-champagne font-bold">
+                {info.label}
+              </p>
+              {info.link ? (
+                <a
+                  href={info.link}
+                  className="text-mist font-medium hover:text-champagne transition-colors"
+                >
+                  {info.val}
+                </a>
+              ) : (
+                <p className="text-mist font-medium">{info.val}</p>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* --- PROFESSIONAL INFO BAR --- */}
-      <div className="bg-slate-50 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-          <div className="space-y-2">
-            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-              Location
-            </h4>
-            <p className="font-bold">{restaurant.addressLine}</p>
+      {/* --- HOURS & MAP (CLEAN & PROFESSIONAL) --- */}
+      <Section
+        title={<span className="gold-gradient-text">Hours & Location</span>}
+        subtitle="Join us at our physical location for the full experience."
+      >
+        <div className="grid lg:grid-cols-2 gap-8">
+          <div className="glass-gold rounded-[2.5rem] p-10 border-white/5 space-y-10">
+            <h3 className="text-2xl font-bold text-mist tracking-tight italic">
+              Service Times
+            </h3>
+            <div className="space-y-4">
+              {restaurant.hours.map((h) => (
+                <div
+                  key={h.day}
+                  className="flex items-center justify-between group text-sm"
+                >
+                  <span className="text-smoke uppercase tracking-widest">
+                    {h.day}
+                  </span>
+                  <div className="h-px flex-1 mx-6 bg-white/5"></div>
+                  <span className="font-bold text-mist">{h.time}</span>
+                </div>
+              ))}
+            </div>
+            <a
+              href={`https://wa.me/${restaurant.whatsappPhone}`}
+              className="block w-full text-center py-5 rounded-2xl bg-champagne text-obsidian font-black uppercase text-[10px] tracking-widest shadow-xl shadow-champagne/10"
+            >
+              Contact via WhatsApp
+            </a>
           </div>
-          <div className="space-y-2">
-            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-              Reservations
-            </h4>
-            <p className="font-bold">{restaurant.phone}</p>
-          </div>
-          <div className="space-y-2">
-            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-              Daily Service
-            </h4>
-            <p className="font-bold">12:00 PM — 11:00 PM</p>
-          </div>
-        </div>
-      </div>
 
-      {/* --- CONTACT & MAP SECTION --- */}
-      <div className="max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center">
-        <div className="space-y-8">
-          <h3 className="text-4xl font-bold tracking-tight">
-            Visit Our Kitchen.
-          </h3>
-          <p className="text-lg text-slate-600 leading-relaxed">
-            Located in the heart of the city, we provide a clean, modern
-            atmosphere perfect for quick bites or long evenings.
-          </p>
-          <div className="grid grid-cols-2 gap-4">
-            {restaurant.hours.slice(0, 4).map((h) => (
-              <div
-                key={h.day}
-                className="border-l-2 border-slate-200 pl-4 py-1"
-              >
-                <span className="block text-[10px] uppercase font-bold text-slate-400">
-                  {h.day}
-                </span>
-                <span className="font-medium text-sm">{h.time}</span>
-              </div>
-            ))}
+          <div className="rounded-[2.5rem] glass border border-white/5 overflow-hidden min-h-[400px] relative">
+            <iframe
+              title="map"
+              src={restaurant.mapEmbedUrl}
+              className="absolute inset-0 w-full h-full grayscale invert opacity-30 brightness-75 contrast-125 transition-opacity hover:opacity-100 duration-1000"
+              loading="lazy"
+            />
           </div>
         </div>
-        <div className="h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-slate-100">
-          <iframe
-            title="map"
-            src={restaurant.mapEmbedUrl}
-            className="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-700"
-            loading="lazy"
-          />
-        </div>
-      </div>
+      </Section>
 
-      {/* --- MINIMAL FOOTER CTA --- */}
-      <div className="bg-slate-900 py-20 text-center text-white">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl md:text-5xl font-bold mb-8 italic">
-            Skip the wait.
+      {/* --- FINAL STATEMENT --- */}
+      <div className="max-w-5xl mx-auto px-6 pb-24">
+        <div className="glass-gold p-16 rounded-[4rem] border-white/5 text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-champagne/5 blur-[100px] rounded-full"></div>
+          <h2 className="text-5xl font-display font-bold gold-gradient-text italic mb-6">
+            Ready to begin?
           </h2>
-          <p className="text-slate-400 mb-10 text-lg">
-            Order directly via WhatsApp for the fastest service.
+          <p className="text-smoke mb-10 max-w-sm mx-auto font-light leading-relaxed">
+            Skip the downloads. Order via WhatsApp in under 60 seconds.
           </p>
           <a
             href={`https://wa.me/${restaurant.whatsappPhone}`}
-            className="inline-block bg-emerald-500 hover:bg-emerald-600 text-white px-16 py-5 rounded-full font-bold uppercase text-xs tracking-[0.2em] transition-all"
+            className="inline-block px-12 py-5 rounded-full bg-mist text-obsidian font-black uppercase text-[10px] tracking-[0.4em] hover:bg-champagne transition-all"
           >
             Start WhatsApp Order
           </a>
