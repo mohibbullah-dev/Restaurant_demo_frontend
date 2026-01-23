@@ -1,4 +1,4 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
 
 @theme {
   --color-obsidian: #0b0c10;
@@ -10,4 +10,64 @@
   --color-smoke: #a1a1aa;
 
   --font-display: "Playfair Display", serif;
+} */
+@import "tailwindcss";
+
+@theme {
+  /* Your Requested Palette */
+  --color-obsidian: #0b0c10;
+  --color-velvet: #1f2833;
+  --color-champagne: #c5a059;
+  --color-bronze: #8d6e42;
+  --color-barolo: #4a0404;
+  --color-mist: #e6e6e6;
+  --color-smoke: #a1a1aa;
+
+  --font-display: "Playfair Display", serif;
+
+  /* 2026 Radius Scale */
+  --radius-xs: 0.5rem;
+  --radius-md: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 3rem;
+}
+
+@layer base {
+  body {
+    @apply bg-obsidian text-mist antialiased;
+    /* Subtle luxury radial glow */
+    background-image:
+      radial-gradient(
+        circle at 0% 0%,
+        rgba(197, 160, 89, 0.03) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 100% 100%,
+        rgba(197, 160, 89, 0.03) 0%,
+        transparent 40%
+      );
+    min-height: 100vh;
+  }
+}
+
+/* 2026 Glassmorphism Utilities */
+@utility glass {
+  background: rgba(31, 40, 51, 0.4);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(230, 230, 230, 0.1);
+}
+
+@utility glass-gold {
+  background: rgba(31, 40, 51, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  box-shadow: 0 0 30px rgba(197, 160, 89, 0.05);
+}
+
+@utility gold-gradient-text {
+  background: linear-gradient(to right, #c5a059, #8d6e42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
