@@ -8,7 +8,7 @@ export function SettingsProvider({ children }) {
   const [settings, setSettings] = useState({
     isOpen: true,
     notice: "",
-    orderMode: "Direct",
+    orderMode: "WhatsApp",
   });
 
   async function refresh() {

@@ -214,14 +214,12 @@
 //     </div>
 //   );
 // }
-
 import Section from "../components/Section";
 import { useSettings } from "../context/SettingsContext";
 
 export default function AdminSettings() {
   const { settings, updateSettings } = useSettings();
 
-  // Safety check: if context isn't ready, show a loading state
   if (!settings)
     return (
       <div className="p-20 text-center animate-pulse text-champagne">
@@ -248,64 +246,67 @@ export default function AdminSettings() {
         }
         subtitle="Configure the environment and operational status."
       >
-        <div className="max-w-3xl mx-auto">
-          {/* Operational Status */}
-          <ControlPanel title="Operations">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div>
-                <p className="text-mist font-bold text-lg">Restaurant Status</p>
-                <p className="text-xs text-smoke italic mt-1">
-                  {settings.isOpen
-                    ? "Allowing new orders to be placed"
-                    : "Orders are currently disabled"}
-                </p>
+        <div className="max-w-2xl mx-auto">
+          {/* Status Control */}
+          <ControlPanel title="Operational Status">
+            <div className="space-y-8">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-mist font-bold text-lg">
+                    Restaurant Status
+                  </p>
+                  <p className="text-xs text-smoke italic mt-1">
+                    {settings.isOpen
+                      ? "Currently accepting WhatsApp orders"
+                      : "Ordering is temporarily disabled"}
+                  </p>
+                </div>
+
+                {/* iOS Style Toggle Switch */}
+                <button
+                  onClick={() => updateSettings({ isOpen: !settings.isOpen })}
+                  className={`relative w-16 h-8 rounded-full transition-all duration-300 ${
+                    settings.isOpen ? "bg-emerald-500" : "bg-barolo"
+                  }`}
+                >
+                  <div
+                    className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform duration-300 shadow-md ${
+                      settings.isOpen ? "translate-x-8" : "translate-x-0"
+                    }`}
+                  />
+                </button>
               </div>
-              <button
-                // Fixed: Added safety check to ensure updateSettings is a function
-                onClick={() =>
-                  typeof updateSettings === "function" &&
-                  updateSettings({ isOpen: !settings.isOpen })
-                }
-                className={`px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all shadow-xl ${
-                  settings.isOpen
-                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20"
-                    : "bg-barolo/20 text-red-500 border border-barolo/40 hover:bg-barolo/30"
-                }`}
-              >
-                {settings.isOpen ? "● Open for Business" : "○ Currently Closed"}
-              </button>
+
+              {/* Closure Reason Input - Only shows when CLOSED */}
+              {!settings.isOpen && (
+                <div className="pt-6 border-t border-white/5 animate-in fade-in slide-in-from-top-4">
+                  <label className="text-[10px] uppercase tracking-widest text-champagne font-black mb-3 block opacity-60">
+                    Reason for Closure
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.notice || ""}
+                    onChange={(e) => updateSettings({ notice: e.target.value })}
+                    placeholder="e.g., Closed for maintenance / Private event"
+                    className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-mist placeholder:text-smoke/30 outline-none focus:border-champagne/40 transition-all"
+                  />
+                  <p className="text-[9px] text-smoke italic mt-3">
+                    * This message will appear on the homepage for customers.
+                  </p>
+                </div>
+              )}
             </div>
           </ControlPanel>
 
-          {/* Ordering Mode */}
-          <ControlPanel title="Service Mode">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div>
-                <p className="text-mist font-bold text-lg">Dine-In Orders</p>
-                <p className="text-xs text-smoke italic mt-1">
-                  Control how customers interact with the menu
-                </p>
-              </div>
-              <div className="flex gap-2 bg-black/40 p-1.5 rounded-2xl border border-white/5 w-full md:w-auto">
-                {["Direct", "WhatsApp"].map((mode) => (
-                  <button
-                    key={mode}
-                    onClick={() =>
-                      typeof updateSettings === "function" &&
-                      updateSettings({ orderMode: mode })
-                    }
-                    className={`flex-1 md:flex-none px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                      settings.orderMode === mode
-                        ? "bg-champagne text-obsidian shadow-lg"
-                        : "text-smoke hover:text-mist hover:bg-white/5"
-                    }`}
-                  >
-                    {mode}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </ControlPanel>
+          {/* Quick Help */}
+          <div className="mt-12 p-8 rounded-[2rem] border border-white/5 bg-white/[0.02] text-center">
+            <p className="text-xs text-smoke font-light leading-relaxed">
+              Service mode is locked to{" "}
+              <strong className="text-champagne">WhatsApp Concierge</strong>.
+              <br /> All orders will be directed to your registered business
+              number.
+            </p>
+          </div>
         </div>
       </Section>
     </div>
