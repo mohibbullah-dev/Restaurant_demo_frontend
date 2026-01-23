@@ -110,15 +110,13 @@ export default function Menu() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const cart = useCart();
-
-  // Ref for the category bar to handle smooth scrolling
   const sectionRefs = useRef({});
 
   useEffect(() => {
     fetch(`${API_BASE}/api/menu`)
       .then((r) => r.json())
       .then((data) => {
-        // We group items by their category field
+        // Grouping items by category for professional organization
         const grouped = data.items.reduce((acc, item) => {
           const cat = item.category || "General";
           if (!acc[cat]) acc[cat] = [];
@@ -126,7 +124,6 @@ export default function Menu() {
           return acc;
         }, {});
 
-        // Convert object to array for easier mapping
         const categoryArray = Object.keys(grouped).map((name) => ({
           name,
           items: grouped[name],
@@ -148,54 +145,58 @@ export default function Menu() {
   if (loading)
     return (
       <div className="min-h-screen bg-obsidian flex items-center justify-center">
-        <div className="w-12 h-12 border-2 border-champagne/20 border-t-champagne rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-2 border-champagne/10 border-t-champagne rounded-full animate-spin"></div>
       </div>
     );
 
   return (
-    <div className="bg-obsidian min-h-screen pb-20">
-      {/* 1. MINIMAL MENU HEADER */}
-      <div className="pt-32 pb-12 px-6 text-center">
-        <p className="text-champagne text-[10px] font-black uppercase tracking-[0.5em] mb-4">
-          The Collection
-        </p>
+    <div className="pb-24">
+      {/* --- PAGE HEADER --- */}
+      <div className="pt-32 pb-16 px-6 text-center">
+        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/5 bg-white/5 mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse"></span>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-champagne/80">
+            Curated Menu
+          </p>
+        </div>
         <h1 className="text-5xl md:text-7xl font-display font-bold gold-gradient-text tracking-tighter italic">
-          Digital Atelier
+          The Collection
         </h1>
       </div>
 
-      {/* 2. STICKY CATEGORY NAV (Professional & Functional) */}
-      <div className="sticky top-0 z-30 bg-obsidian/80 backdrop-blur-xl border-y border-white/5 py-4 overflow-x-auto no-scrollbar">
-        <div className="max-w-7xl mx-auto px-6 flex justify-center gap-8 whitespace-nowrap">
+      {/* --- STICKY CATEGORY NAV --- */}
+      <div className="sticky top-[72px] z-30 bg-obsidian/60 backdrop-blur-xl border-y border-white/5 py-4 overflow-x-auto no-scrollbar">
+        <div className="max-w-7xl mx-auto px-6 flex justify-center gap-10 whitespace-nowrap">
           {categories.map((cat) => (
             <button
               key={cat.name}
               onClick={() => scrollToCategory(cat.name)}
-              className="text-[10px] font-black uppercase tracking-widest text-smoke hover:text-champagne transition-colors"
+              className="text-[10px] font-black uppercase tracking-[0.3em] text-smoke hover:text-champagne transition-all relative group"
             >
               {cat.name}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-champagne transition-all group-hover:w-full"></span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* 3. GROUPED SECTIONS */}
-      <div className="max-w-7xl mx-auto px-6 space-y-24 pt-16">
+      {/* --- MENU SECTIONS --- */}
+      <div className="max-w-7xl mx-auto px-6 space-y-32 pt-20">
         {categories.map((cat) => (
           <div
             key={cat.name}
             ref={(el) => (sectionRefs.current[cat.name] = el)}
-            className="scroll-mt-24" // Prevents the sticky nav from covering the title
+            className="scroll-mt-32"
           >
-            {/* Category Title Architecture */}
-            <div className="flex items-center gap-6 mb-12">
-              <h2 className="text-3xl font-display font-bold text-mist tracking-tight whitespace-nowrap uppercase">
+            {/* Minimalist Category Header */}
+            <div className="flex items-center gap-8 mb-12">
+              <h2 className="text-2xl font-display font-bold text-mist tracking-widest uppercase italic">
                 {cat.name}
               </h2>
-              <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent"></div>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
             </div>
 
-            {/* Grid for this specific category */}
+            {/* Optimized Grid for MenuItemCards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {cat.items.map((item) => (
                 <MenuItemCard
@@ -212,11 +213,11 @@ export default function Menu() {
         ))}
       </div>
 
-      {/* 4. NO ITEMS FALLBACK */}
+      {/* --- EMPTY STATE --- */}
       {categories.length === 0 && (
-        <div className="py-40 text-center">
-          <p className="text-smoke/40 font-serif italic text-xl">
-            The menu is being curated. Please check back shortly.
+        <div className="py-40 text-center opacity-40">
+          <p className="font-serif italic text-xl tracking-widest text-smoke">
+            The kitchen is preparing new selections...
           </p>
         </div>
       )}
