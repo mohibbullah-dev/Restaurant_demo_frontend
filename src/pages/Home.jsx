@@ -670,38 +670,22 @@ import { API_BASE } from "../config/api";
 import MenuItemCard from "../components/MenuItemCard";
 import { useCart } from "../context/CartContext";
 
-const SLIDES = [
-  {
-    title: "Fresh ingredients.",
-    highlight: "Masterful taste.",
-    image:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    title: "Artisanal quality.",
-    highlight: "Elite service.",
-    image:
-      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    title: "Curated menu.",
-    highlight: "Digital ease.",
-    image:
-      "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop",
-  },
+const HERO_IMAGES = [
+  "https://images.unsplash.com/photo-1550966841-3ee3ad059041?q=80&w=2070&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
 ];
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [index, setIndex] = useState(0);
   const cart = useCart();
 
-  // Auto-slide logic
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % SLIDES.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    const interval = setInterval(
+      () => setIndex((i) => (i + 1) % HERO_IMAGES.length),
+      6000,
+    );
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -712,97 +696,77 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-obsidian selection:bg-champagne selection:text-obsidian">
-      {/* 1. CINEMATIC HERO SLIDER */}
-      <div className="relative h-[90vh] md:h-screen w-full flex items-center overflow-hidden">
-        {/* Background Images with Fade Transition */}
-        {SLIDES.map((slide, idx) => (
-          <div
-            key={idx}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out z-0 ${idx === activeSlide ? "opacity-40" : "opacity-0"}`}
-          >
+    <div className="bg-obsidian min-h-screen text-mist selection:bg-champagne/30">
+      {/* --- MINIMALIST HERO SECTOR --- */}
+      <div className="relative h-screen w-full flex flex-col justify-center overflow-hidden border-b border-white/5">
+        {/* Background Layer: Subtle & Deep */}
+        <div className="absolute inset-0 z-0">
+          {HERO_IMAGES.map((img, i) => (
             <img
-              src={slide.image}
+              key={i}
+              src={img}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${i === index ? "opacity-30 scale-105" : "opacity-0 scale-100"}`}
               alt="Atmosphere"
-              className={`w-full h-full object-cover transition-transform duration-[5000ms] ${idx === activeSlide ? "scale-110" : "scale-100"}`}
             />
-          </div>
-        ))}
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-b from-obsidian via-transparent to-obsidian"></div>
+        </div>
 
-        {/* Professional Overlay Gradients */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent"></div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-          <div className="max-w-4xl space-y-10">
-            {/* Live Status Badge */}
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass border-white/10 backdrop-blur-md animate-fade-in">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></span>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-champagne/90">
-                Service Experience Live
+        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+          <div className="flex flex-col items-start space-y-12">
+            {/* Ultra-Clean Badge */}
+            <div className="flex items-center gap-6 animate-fade-in">
+              <span className="h-[1px] w-12 bg-champagne/40"></span>
+              <p className="text-[10px] uppercase tracking-[0.6em] text-champagne font-bold">
+                The Master Collection 2026
               </p>
             </div>
 
-            {/* Dynamic Typography */}
-            <div className="space-y-4 min-h-[220px] md:min-h-[300px]">
-              <h1 className="text-6xl md:text-[9rem] font-display font-bold leading-[0.85] tracking-tight text-mist transition-all duration-700">
-                {SLIDES[activeSlide].title}
-                <br />
-                <span className="gold-gradient-text italic font-serif">
-                  {SLIDES[activeSlide].highlight}
-                </span>
-              </h1>
-              <p className="text-lg md:text-xl text-smoke/90 font-light max-w-xl leading-relaxed animate-fade-in">
-                Explore a new era of digital gastronomy. Curated collections
-                delivered with precision via our WhatsApp concierge.
-              </p>
-            </div>
+            {/* Massive Editorial Headline */}
+            <h1 className="text-[clamp(3rem,10vw,8rem)] font-display font-medium leading-[0.9] tracking-tighter">
+              Exceptional <br />
+              <span className="italic font-serif opacity-80">Gastronomy.</span>
+            </h1>
 
-            {/* CTA Suite */}
-            <div className="flex flex-wrap items-center gap-6 pt-6">
+            {/* Clean Action Bar */}
+            <div className="flex flex-col md:flex-row gap-8 items-start md:items-center pt-8">
               <a
                 href="#menu"
-                className="group relative px-12 py-5 overflow-hidden rounded-2xl bg-champagne text-obsidian font-black uppercase text-[10px] tracking-[0.3em] transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-champagne/10"
+                className="group relative flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.4em] text-mist"
               >
-                <span className="relative z-10">Explore Menu</span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                <span className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-champagne group-hover:text-obsidian transition-all duration-500">
+                  ↓
+                </span>
+                Explore Menu
               </a>
 
               <a
                 href={`https://wa.me/${restaurant.whatsappPhone}`}
                 target="_blank"
                 rel="noreferrer"
-                className="px-12 py-5 rounded-2xl glass border-white/10 text-mist font-black uppercase text-[10px] tracking-[0.3em] hover:bg-white/5 transition-all flex items-center gap-3"
+                className="px-12 py-5 bg-white text-obsidian rounded-full text-[10px] font-black uppercase tracking-[0.3em] hover:bg-champagne transition-colors shadow-2xl"
               >
-                WhatsApp Order
+                Direct Concierge
               </a>
-            </div>
-
-            {/* Progress Indicators */}
-            <div className="flex gap-3 pt-12">
-              {SLIDES.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveSlide(i)}
-                  className={`h-1 transition-all duration-500 rounded-full ${i === activeSlide ? "w-12 bg-champagne" : "w-4 bg-white/20"}`}
-                />
-              ))}
             </div>
           </div>
         </div>
+
+        {/* Vertical Decorative Text (Editorial Style) */}
+        <div className="absolute right-12 bottom-12 hidden lg:block rotate-90 origin-right translate-y-[-50%]">
+          <p className="text-[10px] uppercase tracking-[1em] text-white/10 whitespace-nowrap">
+            Quality • Atmosphere • Taste
+          </p>
+        </div>
       </div>
 
-      {/* 2. THE FEATURED COLLECTION */}
+      {/* --- FEATURED SECTION: CLEAN GRID --- */}
       <Section
         id="menu"
-        title={
-          <span className="gold-gradient-text italic font-serif">
-            Chef's Signature
-          </span>
-        }
-        subtitle="A definitive selection of our most celebrated seasonal masterpieces."
+        title={<span className="font-serif italic font-light">Featured</span>}
+        subtitle="Selected highlights from our current seasonal offering."
       >
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
           {featured.map((item) => (
             <MenuItemCard
               key={item._id}
@@ -814,64 +778,59 @@ export default function Home() {
             />
           ))}
           {featured.length === 0 && (
-            <div className="col-span-full py-20 text-center glass rounded-[3rem] border-dashed border-white/5">
-              <p className="text-smoke italic font-light tracking-widest opacity-40">
-                Awaiting the chef's arrival...
+            <div className="col-span-full border border-white/5 py-32 rounded-[4rem] text-center">
+              <p className="text-smoke/30 font-serif italic text-xl tracking-widest">
+                Preparing the palette...
               </p>
             </div>
           )}
         </div>
       </Section>
 
-      {/* 3. EXPERIENCE ARCHITECTURE */}
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-10 mb-24">
-        <div className="lg:col-span-5 glass-gold rounded-[3rem] p-12 border-white/10 flex flex-col justify-between group">
-          <div className="space-y-4">
-            <p className="text-champagne text-[10px] font-black uppercase tracking-[0.4em]">
-              Our Atelier
-            </p>
-            <h3 className="text-4xl font-bold tracking-tight italic font-serif text-mist">
-              Physical Experience
-            </h3>
-            <p className="text-smoke text-sm leading-relaxed max-w-xs font-light">
-              {restaurant.addressLine}
-            </p>
-          </div>
-          <div className="pt-10">
-            <a
-              href={`tel:${restaurant.phone}`}
-              className="inline-flex items-center gap-4 text-xs font-black uppercase tracking-widest text-mist group-hover:text-champagne transition-all"
-            >
-              <span className="w-8 h-px bg-white/20"></span>
-              Call Concierge
-            </a>
-          </div>
-        </div>
+      {/* --- INFO ARCHITECTURE: THE "ATELIER" --- */}
+      <div className="py-32 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-12 gap-20">
+          <div className="lg:col-span-4 space-y-16">
+            <div className="space-y-4">
+              <h3 className="text-[10px] uppercase tracking-[0.5em] text-champagne font-bold">
+                Contact
+              </h3>
+              <a
+                href={`tel:${restaurant.phone}`}
+                className="text-3xl font-light hover:text-champagne transition-colors"
+              >
+                {restaurant.phone}
+              </a>
+            </div>
 
-        <div className="lg:col-span-7 glass rounded-[3rem] p-12 border-white/5 flex flex-col justify-between">
-          <div className="space-y-8">
-            <p className="text-smoke text-[10px] font-black uppercase tracking-[0.4em]">
-              Service Times
-            </p>
-            <div className="grid sm:grid-cols-2 gap-x-12 gap-y-4">
-              {restaurant.hours.map((h) => (
-                <div
-                  key={h.day}
-                  className="flex justify-between text-[11px] uppercase tracking-[0.2em] text-smoke border-b border-white/5 pb-2"
-                >
-                  <span className="font-bold">{h.day}</span>
-                  <span className="text-mist">{h.time}</span>
-                </div>
-              ))}
+            <div className="space-y-4">
+              <h3 className="text-[10px] uppercase tracking-[0.5em] text-champagne font-bold">
+                Location
+              </h3>
+              <p className="text-xl font-light leading-relaxed text-smoke">
+                {restaurant.addressLine}
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <h3 className="text-[10px] uppercase tracking-[0.5em] text-champagne font-bold">
+                Hours
+              </h3>
+              <div className="space-y-3">
+                {restaurant.hours.map((h) => (
+                  <div
+                    key={h.day}
+                    className="flex justify-between text-xs tracking-widest text-smoke border-b border-white/5 pb-2"
+                  >
+                    <span className="uppercase opacity-50">{h.day}</span>
+                    <span>{h.time}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* 4. MAP INTEGRATION */}
-      <div className="max-w-7xl mx-auto px-6 mb-24">
-        <div className="h-[500px] rounded-[4rem] overflow-hidden glass p-3 border-white/5 shadow-3xl">
-          <div className="w-full h-full rounded-[3.5rem] overflow-hidden grayscale invert brightness-75 contrast-125 opacity-40 transition-opacity hover:opacity-100 duration-1000">
+          <div className="lg:col-span-8 h-[600px] grayscale invert brightness-[0.4] contrast-150 rounded-[4rem] overflow-hidden opacity-50 hover:opacity-100 transition-opacity duration-1000">
             <iframe
               title="map"
               src={restaurant.mapEmbedUrl}
@@ -882,22 +841,21 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 5. FINAL STATEMENT */}
-      <div className="max-w-5xl mx-auto px-6 pb-24 text-center">
-        <div className="relative glass p-20 rounded-[4rem] border-white/5 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-champagne to-transparent opacity-30"></div>
-          <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 italic font-serif text-mist">
-            Taste the Distinction.
+      {/* --- FOOTER CTA: MINIMALIST --- */}
+      <div className="py-40 text-center">
+        <div className="max-w-4xl mx-auto px-8 space-y-12">
+          <h2 className="text-5xl md:text-8xl font-display tracking-tighter">
+            Ready to{" "}
+            <span className="italic font-serif opacity-50">Begin?</span>
           </h2>
-          <p className="text-smoke mb-12 max-w-md mx-auto italic font-light leading-relaxed">
-            Join our elite circle of guests and experience the height of digital
-            convenience.
+          <p className="text-smoke text-lg font-light tracking-widest uppercase opacity-40">
+            Orders processed via WhatsApp Concierge
           </p>
           <a
             href={`https://wa.me/${restaurant.whatsappPhone}`}
-            className="inline-block px-16 py-6 rounded-full bg-mist text-obsidian font-black uppercase text-[10px] tracking-[0.4em] hover:bg-champagne transition-all shadow-3xl"
+            className="inline-block border border-white/10 px-20 py-8 rounded-full text-[10px] font-black uppercase tracking-[0.5em] hover:bg-white hover:text-obsidian transition-all duration-500"
           >
-            Open WhatsApp Concierge
+            Start Order Request
           </a>
         </div>
       </div>
