@@ -1,68 +1,68 @@
-import Section from "../components/Section";
-import { clearToken } from "../utils/auth";
-import { useNavigate, Link } from "react-router-dom";
-import { API_BASE } from "../config/api";
-import { authHeaders } from "../utils/auth";
-import { notify } from "../utils/toast";
+// import Section from "../components/Section";
+// import { clearToken } from "../utils/auth";
+// import { useNavigate, Link } from "react-router-dom";
+// import { API_BASE } from "../config/api";
+// import { authHeaders } from "../utils/auth";
+// import { notify } from "../utils/toast";
 
-export default function AdminDashboard() {
-  const nav = useNavigate();
+// export default function AdminDashboard() {
+//   const nav = useNavigate();
 
-  return (
-    <div className="pb-24 md:pb-0">
-      <Section
-        title="Admin"
-        subtitle="Manage menu, orders, and restaurant status."
-      >
-        <div className="rounded-3xl border bg-white p-6 space-y-4">
-          <div className="flex flex-wrap gap-2">
-            <Link className="px-4 py-2 rounded-xl border" to="/admin/menu">
-              Menu Management
-            </Link>
-            <Link className="px-4 py-2 rounded-xl border" to="/admin/orders">
-              Orders
-            </Link>
-            <Link className="px-4 py-2 rounded-xl border" to="/admin/settings">
-              Settings
-            </Link>
-          </div>
+//   return (
+//     <div className="pb-24 md:pb-0">
+//       <Section
+//         title="Admin"
+//         subtitle="Manage menu, orders, and restaurant status."
+//       >
+//         <div className="rounded-3xl border bg-white p-6 space-y-4">
+//           <div className="flex flex-wrap gap-2">
+//             <Link className="px-4 py-2 rounded-xl border" to="/admin/menu">
+//               Menu Management
+//             </Link>
+//             <Link className="px-4 py-2 rounded-xl border" to="/admin/orders">
+//               Orders
+//             </Link>
+//             <Link className="px-4 py-2 rounded-xl border" to="/admin/settings">
+//               Settings
+//             </Link>
+//           </div>
 
-          <button
-            className="px-4 py-2 rounded-xl border"
-            onClick={async () => {
-              if (
-                !confirm(
-                  "Reset demo data? This deletes all orders and resets menu.",
-                )
-              )
-                return;
+//           <button
+//             className="px-4 py-2 rounded-xl border"
+//             onClick={async () => {
+//               if (
+//                 !confirm(
+//                   "Reset demo data? This deletes all orders and resets menu.",
+//                 )
+//               )
+//                 return;
 
-              const res = await fetch(`${API_BASE}/api/admin/reset-demo`, {
-                method: "POST",
-                headers: { ...authHeaders() },
-              });
-              const data = await res.json();
-              if (!res.ok) return notify.error(data?.message || "Reset failed");
-              notify.success("Demo reset done ✅");
-            }}
-          >
-            Reset Demo Data
-          </button>
+//               const res = await fetch(`${API_BASE}/api/admin/reset-demo`, {
+//                 method: "POST",
+//                 headers: { ...authHeaders() },
+//               });
+//               const data = await res.json();
+//               if (!res.ok) return notify.error(data?.message || "Reset failed");
+//               notify.success("Demo reset done ✅");
+//             }}
+//           >
+//             Reset Demo Data
+//           </button>
 
-          <button
-            className="px-4 py-2 rounded-xl border"
-            onClick={() => {
-              clearToken();
-              nav("/admin/login");
-            }}
-          >
-            Logout
-          </button>
-        </div>
-      </Section>
-    </div>
-  );
-}
+//           <button
+//             className="px-4 py-2 rounded-xl border"
+//             onClick={() => {
+//               clearToken();
+//               nav("/admin/login");
+//             }}
+//           >
+//             Logout
+//           </button>
+//         </div>
+//       </Section>
+//     </div>
+//   );
+// }
 
 // import Section from "../components/Section";
 // import { clearToken } from "../utils/auth";
@@ -150,3 +150,135 @@ export default function AdminDashboard() {
 //     </div>
 //   );
 // }
+
+import Section from "../components/Section";
+import { clearToken } from "../utils/auth";
+import { useNavigate, Link } from "react-router-dom";
+import { API_BASE } from "../config/api";
+import { authHeaders } from "../utils/auth";
+import { notify } from "../utils/toast";
+import {
+  LayoutDashboard,
+  UtensilsCrossed,
+  ClipboardList,
+  Settings,
+  RefreshCcw,
+  LogOut,
+  AlertTriangle,
+} from "lucide-react";
+
+export default function AdminDashboard() {
+  const nav = useNavigate();
+
+  return (
+    <div className="pb-24 md:pb-12 animate-in fade-in duration-700">
+      <Section
+        title="Command Center"
+        subtitle="Manage your digital presence and shop operations."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* STATS/MANAGEMENT BENTO CARD */}
+          <div className="md:col-span-2 glass-panel rounded-[2.5rem] p-8 space-y-8">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl font-display italic text-champagne">
+                Quick Access
+              </h3>
+              <LayoutDashboard className="text-white/20" size={24} />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Link
+                className="glass-interactive p-6 rounded-3xl flex flex-col items-center gap-3 group text-center"
+                to="/admin/menu"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-champagne/10 flex items-center justify-center group-hover:bg-champagne group-hover:text-obsidian transition-all">
+                  <UtensilsCrossed size={20} />
+                </div>
+                <span className="text-sm font-medium">Menu</span>
+              </Link>
+
+              <Link
+                className="glass-interactive p-6 rounded-3xl flex flex-col items-center gap-3 group text-center"
+                to="/admin/orders"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:shadow-glow-blue transition-all">
+                  <ClipboardList size={20} />
+                </div>
+                <span className="text-sm font-medium">Orders</span>
+              </Link>
+
+              <Link
+                className="glass-interactive p-6 rounded-3xl flex flex-col items-center gap-3 group text-center"
+                to="/admin/settings"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-white/20 transition-all">
+                  <Settings size={20} />
+                </div>
+                <span className="text-sm font-medium">Settings</span>
+              </Link>
+            </div>
+
+            {/* ACTION BUTTONS */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <button
+                className="flex-1 px-6 py-4 rounded-2xl glass-interactive text-sm font-medium flex items-center justify-center gap-2 text-smoke hover:text-white"
+                onClick={async () => {
+                  if (
+                    !confirm(
+                      "Reset demo data? This deletes all orders and resets menu.",
+                    )
+                  )
+                    return;
+                  const res = await fetch(`${API_BASE}/api/admin/reset-demo`, {
+                    method: "POST",
+                    headers: { ...authHeaders() },
+                  });
+                  const data = await res.json();
+                  if (!res.ok)
+                    return notify.error(data?.message || "Reset failed");
+                  notify.success("Demo reset done ✅");
+                }}
+              >
+                <RefreshCcw size={16} /> Reset Demo
+              </button>
+
+              <button
+                className="px-6 py-4 rounded-2xl glass-interactive text-sm font-medium flex items-center justify-center gap-2 text-barolo hover:bg-barolo/20 hover:text-white"
+                onClick={() => {
+                  clearToken();
+                  nav("/admin/login");
+                }}
+              >
+                <LogOut size={16} /> Logout
+              </button>
+            </div>
+          </div>
+
+          {/* EMERGENCY STATUS MODULE - THE "SURVIVAL" FEATURE */}
+          <div className="glass-panel rounded-[2.5rem] p-8 border-barolo/30 animate-pulse-red flex flex-col items-center justify-center text-center space-y-6">
+            <div className="w-16 h-16 rounded-full bg-barolo/20 border border-barolo/50 flex items-center justify-center text-barolo shadow-glow-red">
+              <AlertTriangle size={32} />
+            </div>
+            <div>
+              <h4 className="text-xs uppercase tracking-widest text-barolo font-black mb-1">
+                Business Status
+              </h4>
+              <p className="text-2xl font-display italic text-mist">
+                Currently Closed
+              </p>
+            </div>
+            <button
+              className="w-full py-4 rounded-2xl bg-barolo text-white font-bold text-sm hover:brightness-125 transition-all"
+              onClick={() => nav("/admin/settings")}
+            >
+              Update Availability
+            </button>
+            <p className="text-[10px] text-smoke leading-relaxed">
+              Updating your status will instantly notify users on the frontend.
+            </p>
+          </div>
+        </div>
+      </Section>
+    </div>
+  );
+}
