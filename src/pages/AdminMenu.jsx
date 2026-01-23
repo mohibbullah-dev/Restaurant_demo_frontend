@@ -825,7 +825,9 @@ export default function AdminMenu() {
   const [editingId, setEditingId] = useState(null);
   const [q, setQ] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(""); // For instant local preview
 
+  // Auto-detect existing categories
   const existingCategories = useMemo(() => {
     const cats = items.map((i) => i.category).filter(Boolean);
     return [...new Set(cats)];
@@ -842,9 +844,13 @@ export default function AdminMenu() {
   }, [items, q]);
 
   async function load() {
-    const res = await fetch(`${API_BASE}/api/menu`);
-    const data = await res.json();
-    setItems(data.items || []);
+    try {
+      const res = await fetch(`${API_BASE}/api/menu`);
+      const data = await res.json();
+      setItems(data.items || data || []); // Handle different API response shapes
+    } catch (err) {
+      console.error("Failed to load menu:", err);
+    }
   }
 
   useEffect(() => {
@@ -853,6 +859,7 @@ export default function AdminMenu() {
 
   function startEdit(item) {
     setEditingId(item._id);
+    setPreviewUrl(item.imageUrl);
     setForm({
       name: item.name || "",
       desc: item.desc || "",
@@ -869,12 +876,18 @@ export default function AdminMenu() {
   function reset() {
     setEditingId(null);
     setForm(emptyForm);
+    setPreviewUrl("");
   }
 
   async function save() {
     if (!form.name || !form.category || !form.price) {
       return notify.error("Name, Category, and Price are required");
     }
+
+    // Ensure we aren't saving while an image is still uploading to Cloudinary
+    if (uploading)
+      return notify.error("Please wait for image upload to finish");
+
     const payload = { ...form, price: Number(form.price) };
     const isEdit = !!editingId;
     const url = isEdit
@@ -887,31 +900,36 @@ export default function AdminMenu() {
         headers: { "Content-Type": "application/json", ...authHeaders() },
         body: JSON.stringify(payload),
       });
+
       const data = await res.json();
       if (!res.ok) throw new Error(data?.message || "Save failed");
-      notify.success(isEdit ? "Item refined" : "Added to collection");
-      await load();
-      reset();
+
+      notify.success(isEdit ? "Item updated" : "Item created");
+      await load(); // This brings the list back
+      reset(); // This clears the form
     } catch (err) {
       notify.error(err.message);
     }
   }
 
   async function del(id) {
-    if (!confirm("Remove this item?")) return;
-    const res = await fetch(`${API_BASE}/api/menu/${id}`, {
-      method: "DELETE",
-      headers: { ...authHeaders() },
-    });
-    if (res.ok) {
-      notify.success("Item removed");
-      await load();
+    if (!confirm("Delete this item?")) return;
+    try {
+      const res = await fetch(`${API_BASE}/api/menu/${id}`, {
+        method: "DELETE",
+        headers: { ...authHeaders() },
+      });
+      if (res.ok) {
+        notify.success("Removed from menu");
+        await load();
+      }
+    } catch (err) {
+      notify.error("Delete failed");
     }
   }
 
-  // Common styles for the input to ensure visibility
   const inputClass =
-    "w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-mist placeholder:text-smoke/20 outline-none focus:border-champagne/40 transition-all";
+    "w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-mist placeholder:text-white/10 outline-none focus:border-champagne/40 focus:bg-white/10 transition-all";
 
   return (
     <div className="pb-24 bg-obsidian min-h-screen text-mist">
@@ -919,41 +937,30 @@ export default function AdminMenu() {
         title={
           <span className="gold-gradient-text italic">Atelier Control</span>
         }
-        subtitle="Manage the visual and culinary identity of your menu."
       >
+        {/* --- FORM SECTION --- */}
         <div className="glass-gold rounded-[2.5rem] border-white/5 p-10 mb-16 relative overflow-hidden">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-10">
-            <div>
-              <h3 className="text-3xl font-bold tracking-tighter">
-                {editingId ? "Edit Selection" : "New Creation"}
-              </h3>
-            </div>
-            {editingId && (
-              <button
-                onClick={reset}
-                className="px-6 py-2 rounded-full border border-white/10 text-[10px] uppercase tracking-widest hover:bg-white/5"
-              >
-                Cancel Edit
-              </button>
-            )}
-          </div>
+          <h3 className="text-3xl font-bold tracking-tighter mb-10">
+            {editingId ? "Edit Selection" : "New Creation"}
+          </h3>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-12">
+            {/* Image Upload with Instant Preview */}
             <div className="lg:col-span-1">
               <label className="text-[10px] uppercase tracking-[0.3em] text-champagne font-black mb-4 block">
                 Presentation
               </label>
-              <div className="aspect-square rounded-[2rem] border-2 border-dashed border-white/10 bg-black/40 flex flex-col items-center justify-center relative overflow-hidden group">
-                {form.imageUrl ? (
+              <div className="aspect-[4/5] rounded-[2rem] border-2 border-dashed border-white/10 bg-black/20 flex flex-col items-center justify-center relative overflow-hidden group">
+                {previewUrl ? (
                   <img
-                    src={form.imageUrl}
+                    src={previewUrl}
                     className="w-full h-full object-cover"
-                    alt="Preview"
+                    alt="Local preview"
                   />
                 ) : (
-                  <div className="text-center p-6 opacity-40">
-                    <span className="text-3xl block mb-2">📸</span>
-                    <p className="text-[10px] uppercase tracking-widest">
+                  <div className="text-center opacity-30">
+                    <span className="text-4xl block mb-2">📸</span>
+                    <p className="text-[10px] uppercase tracking-widest font-bold">
                       Upload Image
                     </p>
                   </div>
@@ -964,19 +971,34 @@ export default function AdminMenu() {
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (!file) return;
+
+                    // 1. Show Local Preview Immediately
+                    setPreviewUrl(URL.createObjectURL(file));
+
+                    // 2. Upload to Cloudinary in background
                     setUploading(true);
-                    const uploaded = await uploadMenuImage(file);
-                    setForm((p) => ({ ...p, imageUrl: uploaded.imageUrl }));
-                    setUploading(false);
-                    e.target.value = "";
+                    try {
+                      const uploaded = await uploadMenuImage(file);
+                      setForm((p) => ({ ...p, imageUrl: uploaded.imageUrl }));
+                    } catch (err) {
+                      notify.error("Image upload failed");
+                    } finally {
+                      setUploading(false);
+                    }
                   }}
                 />
               </div>
+              {uploading && (
+                <p className="text-center text-[10px] text-champagne animate-pulse mt-4 font-bold tracking-widest">
+                  SYNCING TO CLOUD...
+                </p>
+              )}
             </div>
 
+            {/* Inputs */}
             <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2">
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2 font-bold">
                   Item Name
                 </label>
                 <input
@@ -989,12 +1011,12 @@ export default function AdminMenu() {
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2">
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2 font-bold">
                   Category
                 </label>
                 <input
-                  list="category-list"
+                  list="cats"
                   className={inputClass}
                   value={form.category}
                   onChange={(e) =>
@@ -1002,19 +1024,19 @@ export default function AdminMenu() {
                   }
                   placeholder="e.g. Mains"
                 />
-                <datalist id="category-list">
+                <datalist id="cats">
                   {existingCategories.map((c) => (
                     <option key={c} value={c} />
                   ))}
                 </datalist>
               </div>
 
-              <div className="md:col-span-2 space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2">
+              <div className="md:col-span-2 space-y-2">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2 font-bold">
                   Description
                 </label>
                 <textarea
-                  className={`${inputClass} h-24 resize-none`}
+                  className={`${inputClass} h-32 resize-none`}
                   value={form.desc}
                   onChange={(e) =>
                     setForm((p) => ({ ...p, desc: e.target.value }))
@@ -1022,8 +1044,8 @@ export default function AdminMenu() {
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2">
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2 font-bold">
                   Price (EGP)
                 </label>
                 <input
@@ -1036,7 +1058,7 @@ export default function AdminMenu() {
                 />
               </div>
 
-              <div className="flex items-center gap-6 pt-6">
+              <div className="flex items-center gap-6 pt-8">
                 {[
                   { k: "available", l: "Stock" },
                   { k: "isVeg", l: "Veg" },
@@ -1044,7 +1066,7 @@ export default function AdminMenu() {
                 ].map((opt) => (
                   <label
                     key={opt.k}
-                    className="flex items-center gap-2 cursor-pointer"
+                    className="flex items-center gap-3 cursor-pointer group"
                   >
                     <input
                       type="checkbox"
@@ -1052,9 +1074,9 @@ export default function AdminMenu() {
                       onChange={(e) =>
                         setForm((p) => ({ ...p, [opt.k]: e.target.checked }))
                       }
-                      className="accent-champagne"
+                      className="w-5 h-5 rounded accent-champagne border-white/20 bg-white/5"
                     />
-                    <span className="text-[10px] uppercase tracking-widest font-bold">
+                    <span className="text-[10px] uppercase tracking-widest font-bold group-hover:text-champagne transition-colors">
                       {opt.l}
                     </span>
                   </label>
@@ -1064,15 +1086,80 @@ export default function AdminMenu() {
               <button
                 onClick={save}
                 disabled={uploading}
-                className="md:col-span-2 py-5 rounded-2xl bg-champagne text-obsidian font-black uppercase text-[10px] tracking-[0.3em] hover:brightness-110 mt-4 shadow-xl shadow-champagne/10"
+                className="md:col-span-2 py-6 rounded-2xl bg-champagne text-obsidian font-black uppercase text-[11px] tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-champagne/20 mt-4 disabled:opacity-50"
               >
-                {editingId ? "Update Collection" : "Commit to Menu"}
+                {uploading
+                  ? "Uploading Image..."
+                  : editingId
+                    ? "Update Selection"
+                    : "Commit to Menu"}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Inventory List Code remains same as before... */}
+        {/* --- LIST SECTION --- */}
+        <div className="space-y-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-white/5 pb-8">
+            <h4 className="text-2xl font-bold tracking-tighter">
+              Live Inventory
+            </h4>
+            <input
+              className="bg-white/5 border border-white/10 px-6 py-3 rounded-full text-xs outline-none focus:border-champagne/40 w-full md:w-80"
+              placeholder="Filter items..."
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            />
+          </div>
+
+          <div className="grid gap-4">
+            {filtered.length > 0 ? (
+              filtered.map((item) => (
+                <div
+                  key={item._id}
+                  className="glass p-5 rounded-[2rem] border-white/5 flex items-center justify-between group hover:border-champagne/30 transition-all"
+                >
+                  <div className="flex items-center gap-6">
+                    <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white/5 border border-white/10">
+                      <img
+                        src={item.imageUrl}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <p className="text-[9px] uppercase tracking-widest text-champagne font-black mb-1">
+                        {item.category}
+                      </p>
+                      <h5 className="text-xl font-bold">{item.name}</h5>
+                      <p className="text-sm text-smoke opacity-60 italic">
+                        {item.price} EGP
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => startEdit(item)}
+                      className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-[10px] uppercase font-bold tracking-widest transition-all"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => del(item._id)}
+                      className="px-6 py-3 rounded-xl bg-red-500/5 hover:bg-red-500/20 text-red-400 text-[10px] uppercase font-bold tracking-widest transition-all"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-20 opacity-20 italic">
+                No items found in the collection.
+              </div>
+            )}
+          </div>
+        </div>
       </Section>
     </div>
   );
