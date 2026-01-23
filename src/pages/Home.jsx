@@ -670,22 +670,32 @@ import { API_BASE } from "../config/api";
 import MenuItemCard from "../components/MenuItemCard";
 import { useCart } from "../context/CartContext";
 
-const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1550966841-3ee3ad059041?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
+const SLIDES = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
+    title: "Culinary Excellence",
+    tag: "Experience the Art of Taste",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop",
+    title: "Freshly Curated",
+    tag: "From Farm to Table",
+  },
 ];
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
-  const [index, setIndex] = useState(0);
+  const [current, setCurrent] = useState(0);
   const cart = useCart();
 
   useEffect(() => {
-    const interval = setInterval(
-      () => setIndex((i) => (i + 1) % HERO_IMAGES.length),
-      6000,
+    const timer = setInterval(
+      () => setCurrent((s) => (s + 1) % SLIDES.length),
+      5000,
     );
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -696,77 +706,74 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-obsidian min-h-screen text-mist selection:bg-champagne/30">
-      {/* --- MINIMALIST HERO SECTOR --- */}
-      <div className="relative h-screen w-full flex flex-col justify-center overflow-hidden border-b border-white/5">
-        {/* Background Layer: Subtle & Deep */}
-        <div className="absolute inset-0 z-0">
-          {HERO_IMAGES.map((img, i) => (
+    <div className="bg-white text-slate-900 font-sans antialiased">
+      {/* --- HERO SLIDER: CLEAN & MASSIVE --- */}
+      <div className="relative h-screen w-full bg-slate-100 overflow-hidden">
+        {SLIDES.map((slide, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === current ? "opacity-100" : "opacity-0"}`}
+          >
             <img
-              key={i}
-              src={img}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${i === index ? "opacity-30 scale-105" : "opacity-0 scale-100"}`}
-              alt="Atmosphere"
+              src={slide.image}
+              className="w-full h-full object-cover"
+              alt="Hero"
             />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-b from-obsidian via-transparent to-obsidian"></div>
-        </div>
+            <div className="absolute inset-0 bg-black/30 shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]"></div>
+          </div>
+        ))}
 
-        <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
-          <div className="flex flex-col items-start space-y-12">
-            {/* Ultra-Clean Badge */}
-            <div className="flex items-center gap-6 animate-fade-in">
-              <span className="h-[1px] w-12 bg-champagne/40"></span>
-              <p className="text-[10px] uppercase tracking-[0.6em] text-champagne font-bold">
-                The Master Collection 2026
-              </p>
-            </div>
-
-            {/* Massive Editorial Headline */}
-            <h1 className="text-[clamp(3rem,10vw,8rem)] font-display font-medium leading-[0.9] tracking-tighter">
-              Exceptional <br />
-              <span className="italic font-serif opacity-80">Gastronomy.</span>
-            </h1>
-
-            {/* Clean Action Bar */}
-            <div className="flex flex-col md:flex-row gap-8 items-start md:items-center pt-8">
-              <a
-                href="#menu"
-                className="group relative flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.4em] text-mist"
-              >
-                <span className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-champagne group-hover:text-obsidian transition-all duration-500">
-                  ↓
-                </span>
-                Explore Menu
-              </a>
-
-              <a
-                href={`https://wa.me/${restaurant.whatsappPhone}`}
-                target="_blank"
-                rel="noreferrer"
-                className="px-12 py-5 bg-white text-obsidian rounded-full text-[10px] font-black uppercase tracking-[0.3em] hover:bg-champagne transition-colors shadow-2xl"
-              >
-                Direct Concierge
-              </a>
-            </div>
+        {/* Hero Content Overlay */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+          <p className="text-xs font-bold uppercase tracking-[0.5em] mb-4 animate-fade-in">
+            {SLIDES[current].tag}
+          </p>
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tight mb-8">
+            {SLIDES[current].title}
+          </h1>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a
+              href="#menu"
+              className="bg-white text-black px-10 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-slate-200 transition-colors"
+            >
+              Discover Menu
+            </a>
+            <a
+              href={`https://wa.me/${restaurant.whatsappPhone}`}
+              className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+            >
+              Order Online
+            </a>
           </div>
         </div>
 
-        {/* Vertical Decorative Text (Editorial Style) */}
-        <div className="absolute right-12 bottom-12 hidden lg:block rotate-90 origin-right translate-y-[-50%]">
-          <p className="text-[10px] uppercase tracking-[1em] text-white/10 whitespace-nowrap">
-            Quality • Atmosphere • Taste
-          </p>
+        {/* Slide Indicators */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3">
+          {SLIDES.map((_, i) => (
+            <div
+              key={i}
+              className={`h-1 rounded-full transition-all duration-500 ${i === current ? "w-12 bg-white" : "w-4 bg-white/40"}`}
+            />
+          ))}
         </div>
       </div>
 
-      {/* --- FEATURED SECTION: CLEAN GRID --- */}
-      <Section
-        id="menu"
-        title={<span className="font-serif italic font-light">Featured</span>}
-        subtitle="Selected highlights from our current seasonal offering."
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+      {/* --- CLEAN GRID SECTION --- */}
+      <div className="max-w-7xl mx-auto px-6 py-24" id="menu">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+          <div>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+              Today's Selection
+            </h2>
+            <div className="h-1 w-20 bg-black mt-4"></div>
+          </div>
+          <p className="text-slate-500 mt-4 md:mt-0 max-w-sm font-medium">
+            Hand-picked dishes from our chef, prepared fresh upon your WhatsApp
+            request.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {featured.map((item) => (
             <MenuItemCard
               key={item._id}
@@ -777,85 +784,81 @@ export default function Home() {
               }}
             />
           ))}
-          {featured.length === 0 && (
-            <div className="col-span-full border border-white/5 py-32 rounded-[4rem] text-center">
-              <p className="text-smoke/30 font-serif italic text-xl tracking-widest">
-                Preparing the palette...
-              </p>
-            </div>
-          )}
         </div>
-      </Section>
+      </div>
 
-      {/* --- INFO ARCHITECTURE: THE "ATELIER" --- */}
-      <div className="py-32 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-12 gap-20">
-          <div className="lg:col-span-4 space-y-16">
-            <div className="space-y-4">
-              <h3 className="text-[10px] uppercase tracking-[0.5em] text-champagne font-bold">
-                Contact
-              </h3>
-              <a
-                href={`tel:${restaurant.phone}`}
-                className="text-3xl font-light hover:text-champagne transition-colors"
-              >
-                {restaurant.phone}
-              </a>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-[10px] uppercase tracking-[0.5em] text-champagne font-bold">
-                Location
-              </h3>
-              <p className="text-xl font-light leading-relaxed text-smoke">
-                {restaurant.addressLine}
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              <h3 className="text-[10px] uppercase tracking-[0.5em] text-champagne font-bold">
-                Hours
-              </h3>
-              <div className="space-y-3">
-                {restaurant.hours.map((h) => (
-                  <div
-                    key={h.day}
-                    className="flex justify-between text-xs tracking-widest text-smoke border-b border-white/5 pb-2"
-                  >
-                    <span className="uppercase opacity-50">{h.day}</span>
-                    <span>{h.time}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* --- PROFESSIONAL INFO BAR --- */}
+      <div className="bg-slate-50 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+          <div className="space-y-2">
+            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+              Location
+            </h4>
+            <p className="font-bold">{restaurant.addressLine}</p>
           </div>
-
-          <div className="lg:col-span-8 h-[600px] grayscale invert brightness-[0.4] contrast-150 rounded-[4rem] overflow-hidden opacity-50 hover:opacity-100 transition-opacity duration-1000">
-            <iframe
-              title="map"
-              src={restaurant.mapEmbedUrl}
-              className="w-full h-full border-0"
-              loading="lazy"
-            />
+          <div className="space-y-2">
+            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+              Reservations
+            </h4>
+            <p className="font-bold">{restaurant.phone}</p>
+          </div>
+          <div className="space-y-2">
+            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+              Daily Service
+            </h4>
+            <p className="font-bold">12:00 PM — 11:00 PM</p>
           </div>
         </div>
       </div>
 
-      {/* --- FOOTER CTA: MINIMALIST --- */}
-      <div className="py-40 text-center">
-        <div className="max-w-4xl mx-auto px-8 space-y-12">
-          <h2 className="text-5xl md:text-8xl font-display tracking-tighter">
-            Ready to{" "}
-            <span className="italic font-serif opacity-50">Begin?</span>
+      {/* --- CONTACT & MAP SECTION --- */}
+      <div className="max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center">
+        <div className="space-y-8">
+          <h3 className="text-4xl font-bold tracking-tight">
+            Visit Our Kitchen.
+          </h3>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            Located in the heart of the city, we provide a clean, modern
+            atmosphere perfect for quick bites or long evenings.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            {restaurant.hours.slice(0, 4).map((h) => (
+              <div
+                key={h.day}
+                className="border-l-2 border-slate-200 pl-4 py-1"
+              >
+                <span className="block text-[10px] uppercase font-bold text-slate-400">
+                  {h.day}
+                </span>
+                <span className="font-medium text-sm">{h.time}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-slate-100">
+          <iframe
+            title="map"
+            src={restaurant.mapEmbedUrl}
+            className="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-700"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      {/* --- MINIMAL FOOTER CTA --- */}
+      <div className="bg-slate-900 py-20 text-center text-white">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl md:text-5xl font-bold mb-8 italic">
+            Skip the wait.
           </h2>
-          <p className="text-smoke text-lg font-light tracking-widest uppercase opacity-40">
-            Orders processed via WhatsApp Concierge
+          <p className="text-slate-400 mb-10 text-lg">
+            Order directly via WhatsApp for the fastest service.
           </p>
           <a
             href={`https://wa.me/${restaurant.whatsappPhone}`}
-            className="inline-block border border-white/10 px-20 py-8 rounded-full text-[10px] font-black uppercase tracking-[0.5em] hover:bg-white hover:text-obsidian transition-all duration-500"
+            className="inline-block bg-emerald-500 hover:bg-emerald-600 text-white px-16 py-5 rounded-full font-bold uppercase text-xs tracking-[0.2em] transition-all"
           >
-            Start Order Request
+            Start WhatsApp Order
           </a>
         </div>
       </div>
