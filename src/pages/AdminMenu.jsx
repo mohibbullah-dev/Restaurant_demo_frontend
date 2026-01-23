@@ -930,8 +930,9 @@ export default function AdminMenu() {
     }
   }
 
+  // Replace your old inputClass with this:
   const inputClass =
-    "w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-mist placeholder:text-white/10 outline-none focus:border-champagne/40 focus:bg-white/10 transition-all cursor-pointer";
+    "w-full bg-[#1a1c23] border border-white/10 rounded-2xl px-5 py-4 text-mist placeholder:text-white/20 outline-none focus:border-champagne/40 transition-all cursor-text";
 
   return (
     <div className="pb-24 bg-obsidian min-h-screen text-mist">
