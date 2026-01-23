@@ -662,6 +662,7 @@
 //     </div>
 //   );
 // }
+
 import Section from "../components/Section";
 import { restaurant } from "../config/restaurant";
 import { useEffect, useState } from "react";
