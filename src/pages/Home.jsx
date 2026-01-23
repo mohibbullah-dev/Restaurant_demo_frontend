@@ -662,13 +662,13 @@
 //     </div>
 //   );
 // }
-
 import Section from "../components/Section";
 import { restaurant } from "../config/restaurant";
 import { useEffect, useState } from "react";
 import { API_BASE } from "../config/api";
 import MenuItemCard from "../components/MenuItemCard";
 import { useCart } from "../context/CartContext";
+import { useSettings } from "../context/SettingsContext"; // Added this
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -680,6 +680,7 @@ export default function Home() {
   const [featured, setFeatured] = useState([]);
   const [current, setCurrent] = useState(0);
   const cart = useCart();
+  const { settings } = useSettings(); // Pulling the live status
 
   useEffect(() => {
     const timer = setInterval(
@@ -700,6 +701,18 @@ export default function Home() {
     <div className="bg-obsidian min-h-screen text-mist">
       {/* --- PROFESSIONAL SPLIT HERO --- */}
       <div className="relative min-h-[90vh] flex flex-col justify-center">
+        {/* HIGHLIGHTED ALERT: Only shows when restaurant is closed */}
+        {!settings?.isOpen && (
+          <div className="absolute top-24 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-xl">
+            <div className="glass-gold border border-barolo/30 p-4 rounded-2xl flex items-center justify-center gap-4 animate-pulse shadow-2xl shadow-barolo/10">
+              <span className="flex h-2 w-2 rounded-full bg-red-500"></span>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-red-400">
+                Notice: We are currently closed for orders
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-16 items-center pt-20">
           {/* Left: Content (Clean & Sharp) */}
           <div className="space-y-10 z-10">
@@ -748,7 +761,6 @@ export default function Home() {
                   alt="Food Presentation"
                 />
               ))}
-              {/* Subtle glass overlay for the slider dots */}
               <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 glass px-4 py-2 rounded-full border-white/10">
                 {SLIDES.map((_, i) => (
                   <button
@@ -760,7 +772,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Floating Detail Card (Optional Professional Touch) */}
             <div className="absolute -bottom-6 -left-6 glass p-6 rounded-3xl border border-white/10 hidden md:block shadow-3xl">
               <p className="text-champagne font-black text-xl">Chef's Choice</p>
               <p className="text-[9px] uppercase tracking-widest text-smoke">
