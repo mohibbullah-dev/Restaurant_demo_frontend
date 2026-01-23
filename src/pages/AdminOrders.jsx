@@ -172,6 +172,179 @@
 //   );
 // }
 
+// import { useEffect, useState } from "react";
+// import Section from "../components/Section";
+// import { API_BASE } from "../config/api";
+// import { authHeaders } from "../utils/auth";
+// import { formatPriceEGP } from "../utils/menu";
+// import { notify } from "../utils/toast";
+
+// const statuses = [
+//   "New",
+//   "Confirmed",
+//   "Preparing",
+//   "Ready",
+//   "Completed",
+//   "Canceled",
+// ];
+
+// export default function AdminOrders() {
+//   const [orders, setOrders] = useState([]);
+//   const [error, setError] = useState("");
+//   const [lastCount, setLastCount] = useState(0);
+
+//   async function loadOrders(firstLoad = false) {
+//     setError("");
+//     const res = await fetch(`${API_BASE}/api/orders`, {
+//       headers: { ...authHeaders() },
+//     });
+//     const data = await res.json();
+
+//     if (!res.ok) {
+//       setError(data?.message || "Failed to load orders");
+//       setOrders([]);
+//       return;
+//     }
+
+//     const newOrders = data.orders || [];
+//     setOrders(newOrders);
+
+//     if (firstLoad) {
+//       setLastCount(newOrders.length);
+//       return;
+//     }
+
+//     // new order alert
+//     if (newOrders.length > lastCount) {
+//       // simple sound + title flash
+//       try {
+//         const audio = new Audio(
+//           "https://actions.google.com/sounds/v1/alarms/beep_short.ogg",
+//         );
+//         audio.play();
+//       } catch {}
+
+//       document.title = "🛎 New Order!";
+//       setTimeout(() => (document.title = "Admin — Orders"), 3000);
+//     }
+
+//     setLastCount(newOrders.length);
+//   }
+
+//   useEffect(() => {
+//     loadOrders();
+//   }, []);
+
+//   async function updateStatus(id, status) {
+//     const res = await fetch(`${API_BASE}/api/orders/${id}/status`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//         ...authHeaders(),
+//       },
+//       body: JSON.stringify({ status }),
+//     });
+//     const data = await res.json();
+//     if (!res.ok) return notify.error(data?.message || "Failed to update");
+
+//     setOrders((prev) => prev.map((o) => (o._id === id ? data.order : o)));
+//   }
+
+//   useEffect(() => {
+//     let timer;
+
+//     async function init() {
+//       await loadOrders(true);
+//       timer = setInterval(() => loadOrders(false), 10000);
+//     }
+
+//     init();
+//     return () => clearInterval(timer);
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, []);
+
+//   return (
+//     <div className="pb-24 md:pb-0">
+//       <Section title="Admin — Orders" subtitle="View and update order status.">
+//         <div className="rounded-3xl border bg-white p-6">
+//           <div className="flex justify-end">
+//             <button
+//               className="px-4 py-2 rounded-xl border"
+//               onClick={loadOrders}
+//             >
+//               Refresh
+//             </button>
+//           </div>
+
+//           {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+
+//           <div className="mt-6 space-y-4">
+//             {orders.length === 0 && !error && (
+//               <p className="text-gray-600">No orders yet.</p>
+//             )}
+
+//             {orders.map((o) => (
+//               <div key={o._id} className="rounded-2xl border p-4">
+//                 <div className="flex flex-col md:flex-row md:justify-between gap-3">
+//                   <div>
+//                     <p className="font-bold">
+//                       {o.customerName} — {o.orderType}
+//                     </p>
+//                     <p className="text-sm text-gray-600">
+//                       {o.customerPhone} •{" "}
+//                       {new Date(o.createdAt).toLocaleString()}
+//                     </p>
+//                     {o.orderType === "Delivery" && o.address && (
+//                       <p className="text-sm text-gray-700 mt-1">
+//                         📍 {o.address}
+//                       </p>
+//                     )}
+//                     {o.notes && (
+//                       <p className="text-sm text-gray-700 mt-1">📝 {o.notes}</p>
+//                     )}
+//                   </div>
+
+//                   <div className="flex items-center gap-2">
+//                     <select
+//                       value={o.status}
+//                       onChange={(e) => updateStatus(o._id, e.target.value)}
+//                       className="px-3 py-2 rounded-xl border"
+//                     >
+//                       {statuses.map((s) => (
+//                         <option key={s} value={s}>
+//                           {s}
+//                         </option>
+//                       ))}
+//                     </select>
+//                     <span className="font-bold">
+//                       {formatPriceEGP(o.subtotal)}
+//                     </span>
+//                   </div>
+//                 </div>
+
+//                 <div className="mt-3 border-t pt-3 space-y-1">
+//                   {o.items.map((it) => (
+//                     <div key={it._id} className="flex justify-between text-sm">
+//                       <span>
+//                         {it.qty} × {it.name}
+//                       </span>
+//                       <span className="font-medium">
+//                         {formatPriceEGP(it.qty * it.price)}
+//                       </span>
+//                     </div>
+//                   ))}
+//                 </div>
+
+//                 <p className="mt-2 text-xs text-gray-500">Order ID: {o._id}</p>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </Section>
+//     </div>
+//   );
+// }
+
 import { useEffect, useState } from "react";
 import Section from "../components/Section";
 import { API_BASE } from "../config/api";
@@ -192,153 +365,214 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState("");
   const [lastCount, setLastCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   async function loadOrders(firstLoad = false) {
-    setError("");
-    const res = await fetch(`${API_BASE}/api/orders`, {
-      headers: { ...authHeaders() },
-    });
-    const data = await res.json();
+    try {
+      const res = await fetch(`${API_BASE}/api/orders`, {
+        headers: { ...authHeaders() },
+      });
+      const data = await res.json();
 
-    if (!res.ok) {
-      setError(data?.message || "Failed to load orders");
-      setOrders([]);
-      return;
-    }
+      if (!res.ok) {
+        setError(data?.message || "Failed to load orders");
+        setOrders([]);
+        return;
+      }
 
-    const newOrders = data.orders || [];
-    setOrders(newOrders);
+      const newOrders = data.orders || [];
+      setOrders(newOrders);
 
-    if (firstLoad) {
+      if (firstLoad) {
+        setLastCount(newOrders.length);
+        setLoading(false);
+        return;
+      }
+
+      // New order alert logic (kept from your original)
+      if (newOrders.length > lastCount) {
+        try {
+          const audio = new Audio(
+            "https://actions.google.com/sounds/v1/alarms/beep_short.ogg",
+          );
+          audio.play();
+        } catch {}
+        document.title = "🛎 New Order!";
+        setTimeout(() => (document.title = "Admin — Orders"), 3000);
+      }
       setLastCount(newOrders.length);
-      return;
+    } catch (err) {
+      setError("Sync failed");
     }
-
-    // new order alert
-    if (newOrders.length > lastCount) {
-      // simple sound + title flash
-      try {
-        const audio = new Audio(
-          "https://actions.google.com/sounds/v1/alarms/beep_short.ogg",
-        );
-        audio.play();
-      } catch {}
-
-      document.title = "🛎 New Order!";
-      setTimeout(() => (document.title = "Admin — Orders"), 3000);
-    }
-
-    setLastCount(newOrders.length);
   }
-
-  useEffect(() => {
-    loadOrders();
-  }, []);
 
   async function updateStatus(id, status) {
     const res = await fetch(`${API_BASE}/api/orders/${id}/status`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        ...authHeaders(),
-      },
+      headers: { "Content-Type": "application/json", ...authHeaders() },
       body: JSON.stringify({ status }),
     });
     const data = await res.json();
-    if (!res.ok) return notify.error(data?.message || "Failed to update");
+    if (!res.ok) return notify.error(data?.message || "Update failed");
 
     setOrders((prev) => prev.map((o) => (o._id === id ? data.order : o)));
+    notify.success(`Status: ${status}`);
   }
 
   useEffect(() => {
     let timer;
-
     async function init() {
       await loadOrders(true);
       timer = setInterval(() => loadOrders(false), 10000);
     }
-
     init();
     return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Helper for status colors
+  const getStatusStyle = (s) => {
+    if (s === "New")
+      return "bg-champagne/20 text-champagne border-champagne/30 animate-pulse";
+    if (s === "Completed")
+      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+    if (s === "Canceled") return "bg-barolo/10 text-barolo border-barolo/20";
+    return "bg-white/5 text-mist border-white/10";
+  };
+
   return (
-    <div className="pb-24 md:pb-0">
-      <Section title="Admin — Orders" subtitle="View and update order status.">
-        <div className="rounded-3xl border bg-white p-6">
-          <div className="flex justify-end">
-            <button
-              className="px-4 py-2 rounded-xl border"
-              onClick={loadOrders}
-            >
-              Refresh
-            </button>
+    <div className="pb-24 md:pb-10 min-h-screen">
+      <Section
+        title={<span className="gold-gradient-text">Live Orders</span>}
+        subtitle="Precision management for your 2026 guest list."
+      >
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-smoke font-bold">
+              Live Sync Active
+            </span>
           </div>
+          <button
+            className="px-6 py-2 rounded-xl glass border-white/10 text-mist text-xs font-bold hover:bg-white/5 transition-all"
+            onClick={() => loadOrders(false)}
+          >
+            Refresh Grid
+          </button>
+        </div>
 
-          {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+        {error && (
+          <div className="glass-gold border-barolo/50 p-4 rounded-2xl mb-6 text-center">
+            <p className="text-sm text-barolo">{error}</p>
+          </div>
+        )}
 
-          <div className="mt-6 space-y-4">
-            {orders.length === 0 && !error && (
-              <p className="text-gray-600">No orders yet.</p>
-            )}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {orders.length === 0 && !loading && (
+            <div className="lg:col-span-2 py-20 text-center glass rounded-4xl border-dashed border-white/10">
+              <p className="text-smoke italic opacity-60">
+                The kitchen is clear. No active orders.
+              </p>
+            </div>
+          )}
 
-            {orders.map((o) => (
-              <div key={o._id} className="rounded-2xl border p-4">
-                <div className="flex flex-col md:flex-row md:justify-between gap-3">
-                  <div>
-                    <p className="font-bold">
-                      {o.customerName} — {o.orderType}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      {o.customerPhone} •{" "}
-                      {new Date(o.createdAt).toLocaleString()}
-                    </p>
-                    {o.orderType === "Delivery" && o.address && (
-                      <p className="text-sm text-gray-700 mt-1">
-                        📍 {o.address}
+          {orders.map((o) => (
+            <div
+              key={o._id}
+              className="group relative glass rounded-4xl p-6 border-white/5 hover:border-champagne/30 transition-all duration-500 shadow-2xl"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3">
+                    <h3 className="text-lg font-bold text-mist tracking-tight group-hover:text-champagne transition-colors">
+                      {o.customerName}
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-smoke uppercase tracking-widest font-bold">
+                      {o.orderType}
+                    </span>
+                  </div>
+                  <p className="text-xs text-smoke opacity-70 italic">
+                    {o.customerPhone} •{" "}
+                    {new Date(o.createdAt).toLocaleTimeString()}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3 bg-obsidian/40 p-2 rounded-2xl border border-white/5">
+                  <select
+                    value={o.status}
+                    onChange={(e) => updateStatus(o._id, e.target.value)}
+                    className={`bg-transparent text-[11px] font-black uppercase tracking-widest outline-none px-3 py-1 rounded-lg cursor-pointer ${getStatusStyle(o.status)}`}
+                  >
+                    {statuses.map((s) => (
+                      <option
+                        key={s}
+                        value={s}
+                        className="bg-obsidian text-mist"
+                      >
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="text-lg font-bold gold-gradient-text px-2">
+                    {formatPriceEGP(o.subtotal)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Order Specifics */}
+              <div className="mt-6 space-y-3">
+                {(o.address || o.notes) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs bg-white/5 p-3 rounded-2xl border border-white/5">
+                    {o.address && (
+                      <p className="text-smoke">
+                        📍 <span className="text-mist">{o.address}</span>
                       </p>
                     )}
                     {o.notes && (
-                      <p className="text-sm text-gray-700 mt-1">📝 {o.notes}</p>
+                      <p className="text-smoke">
+                        📝 <span className="text-mist italic">{o.notes}</span>
+                      </p>
                     )}
                   </div>
+                )}
 
-                  <div className="flex items-center gap-2">
-                    <select
-                      value={o.status}
-                      onChange={(e) => updateStatus(o._id, e.target.value)}
-                      className="px-3 py-2 rounded-xl border"
-                    >
-                      {statuses.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="font-bold">
-                      {formatPriceEGP(o.subtotal)}
-                    </span>
+                <div className="bg-obsidian/60 rounded-2xl border border-white/5 overflow-hidden">
+                  <div className="px-4 py-2 bg-white/5 text-[10px] uppercase tracking-widest text-smoke font-bold border-b border-white/5">
+                    Order Items
+                  </div>
+                  <div className="p-4 space-y-2">
+                    {o.items.map((it) => (
+                      <div
+                        key={it._id}
+                        className="flex justify-between items-center text-sm"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-champagne font-bold w-6">
+                            {it.qty}×
+                          </span>
+                          <span className="text-mist">{it.name}</span>
+                        </div>
+                        <span className="text-smoke opacity-60 text-xs">
+                          {formatPriceEGP(it.qty * it.price)}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-
-                <div className="mt-3 border-t pt-3 space-y-1">
-                  {o.items.map((it) => (
-                    <div key={it._id} className="flex justify-between text-sm">
-                      <span>
-                        {it.qty} × {it.name}
-                      </span>
-                      <span className="font-medium">
-                        {formatPriceEGP(it.qty * it.price)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <p className="mt-2 text-xs text-gray-500">Order ID: {o._id}</p>
               </div>
-            ))}
-          </div>
+
+              <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center">
+                <p className="text-[9px] text-smoke/30 uppercase tracking-[0.2em]">
+                  Hash: {o._id}
+                </p>
+                <div className="flex gap-2">
+                  {/* Visual indicator of urgency */}
+                  {o.status === "New" && (
+                    <span className="flex h-2 w-2 rounded-full bg-champagne"></span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </Section>
     </div>
