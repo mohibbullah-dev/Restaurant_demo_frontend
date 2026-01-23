@@ -801,6 +801,7 @@
 //     </div>
 //   );
 // }
+
 import { useEffect, useMemo, useState } from "react";
 import Section from "../components/Section";
 import { API_BASE } from "../config/api";
@@ -827,7 +828,9 @@ export default function AdminMenu() {
   const [uploading, setUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(""); // For instant local preview
 
-  // Auto-detect existing categories
+  // Define your 5 categories here
+  const categories = ["Appetizers", "Mains", "Desserts", "Drinks", "Specials"];
+
   const existingCategories = useMemo(() => {
     const cats = items.map((i) => i.category).filter(Boolean);
     return [...new Set(cats)];
@@ -884,7 +887,6 @@ export default function AdminMenu() {
       return notify.error("Name, Category, and Price are required");
     }
 
-    // Ensure we aren't saving while an image is still uploading to Cloudinary
     if (uploading)
       return notify.error("Please wait for image upload to finish");
 
@@ -905,8 +907,8 @@ export default function AdminMenu() {
       if (!res.ok) throw new Error(data?.message || "Save failed");
 
       notify.success(isEdit ? "Item updated" : "Item created");
-      await load(); // This brings the list back
-      reset(); // This clears the form
+      await load();
+      reset();
     } catch (err) {
       notify.error(err.message);
     }
@@ -929,7 +931,7 @@ export default function AdminMenu() {
   }
 
   const inputClass =
-    "w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-mist placeholder:text-white/10 outline-none focus:border-champagne/40 focus:bg-white/10 transition-all";
+    "w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-mist placeholder:text-white/10 outline-none focus:border-champagne/40 focus:bg-white/10 transition-all cursor-pointer";
 
   return (
     <div className="pb-24 bg-obsidian min-h-screen text-mist">
@@ -938,14 +940,12 @@ export default function AdminMenu() {
           <span className="gold-gradient-text italic">Atelier Control</span>
         }
       >
-        {/* --- FORM SECTION --- */}
         <div className="glass-gold rounded-[2.5rem] border-white/5 p-10 mb-16 relative overflow-hidden">
           <h3 className="text-3xl font-bold tracking-tighter mb-10">
             {editingId ? "Edit Selection" : "New Creation"}
           </h3>
 
           <div className="grid lg:grid-cols-3 gap-12">
-            {/* Image Upload with Instant Preview */}
             <div className="lg:col-span-1">
               <label className="text-[10px] uppercase tracking-[0.3em] text-champagne font-black mb-4 block">
                 Presentation
@@ -971,11 +971,7 @@ export default function AdminMenu() {
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (!file) return;
-
-                    // 1. Show Local Preview Immediately
                     setPreviewUrl(URL.createObjectURL(file));
-
-                    // 2. Upload to Cloudinary in background
                     setUploading(true);
                     try {
                       const uploaded = await uploadMenuImage(file);
@@ -995,7 +991,6 @@ export default function AdminMenu() {
               )}
             </div>
 
-            {/* Inputs */}
             <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2 font-bold">
@@ -1011,24 +1006,27 @@ export default function AdminMenu() {
                 />
               </div>
 
+              {/* Category Select Tag */}
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-[0.2em] text-smoke ml-2 font-bold">
                   Category
                 </label>
-                <input
-                  list="cats"
+                <select
                   className={inputClass}
                   value={form.category}
                   onChange={(e) =>
                     setForm((p) => ({ ...p, category: e.target.value }))
                   }
-                  placeholder="e.g. Mains"
-                />
-                <datalist id="cats">
-                  {existingCategories.map((c) => (
-                    <option key={c} value={c} />
+                >
+                  <option value="" disabled className="bg-obsidian">
+                    Select a category
+                  </option>
+                  {categories.map((c) => (
+                    <option key={c} value={c} className="bg-obsidian text-mist">
+                      {c}
+                    </option>
                   ))}
-                </datalist>
+                </select>
               </div>
 
               <div className="md:col-span-2 space-y-2">
@@ -1098,7 +1096,6 @@ export default function AdminMenu() {
           </div>
         </div>
 
-        {/* --- LIST SECTION --- */}
         <div className="space-y-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-white/5 pb-8">
             <h4 className="text-2xl font-bold tracking-tighter">
