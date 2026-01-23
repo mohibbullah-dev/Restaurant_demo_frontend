@@ -14,7 +14,6 @@
 @import "tailwindcss";
 
 @theme {
-  /* Your Requested Palette */
   --color-obsidian: #0b0c10;
   --color-velvet: #1f2833;
   --color-champagne: #c5a059;
@@ -25,7 +24,6 @@
 
   --font-display: "Playfair Display", serif;
 
-  /* 2026 Radius Scale */
   --radius-xs: 0.5rem;
   --radius-md: 1rem;
   --radius-xl: 1.5rem;
@@ -36,7 +34,6 @@
 @layer base {
   body {
     @apply bg-obsidian text-mist antialiased;
-    /* Subtle luxury radial glow */
     background-image:
       radial-gradient(
         circle at 0% 0%,
@@ -50,9 +47,15 @@
       );
     min-height: 100vh;
   }
+
+  /* Fix for invisible inputs shown in your screenshots */
+  input,
+  textarea,
+  select {
+    @apply bg-velvet/50 text-mist border-white/10 outline-none focus:border-champagne/50 transition-all;
+  }
 }
 
-/* 2026 Glassmorphism Utilities */
 @utility glass {
   background: rgba(31, 40, 51, 0.4);
   backdrop-filter: blur(16px);
@@ -72,11 +75,6 @@
   -webkit-text-fill-color: transparent;
 }
 
-@keyframes shine {
-  100% {
-    left: 125%;
-  }
-}
-.animate-shine {
-  animation: shine 0.8s;
+@utility btn-gold {
+  @apply bg-champagne text-obsidian font-bold py-3 px-6 rounded-xl hover:bg-bronze transition-colors uppercase tracking-widest text-xs;
 }
