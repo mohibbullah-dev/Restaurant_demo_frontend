@@ -470,6 +470,199 @@
 //   );
 // }
 
+// import Section from "../components/Section";
+// import { restaurant } from "../config/restaurant";
+// import { useEffect, useState } from "react";
+// import { API_BASE } from "../config/api";
+// import MenuItemCard from "../components/MenuItemCard";
+// import { useCart } from "../context/CartContext";
+
+// export default function Home() {
+//   const [featured, setFeatured] = useState([]);
+//   const cart = useCart();
+
+//   useEffect(() => {
+//     fetch(`${API_BASE}/api/menu?featured=true`)
+//       .then((r) => r.json())
+//       .then((d) => setFeatured(d.items || []))
+//       .catch(() => setFeatured([]));
+//   }, []);
+
+//   return (
+//     <div className="pb-24 bg-obsidian text-mist">
+//       {/* PROFESSIONAL CINEMATIC HERO */}
+//       <div className="relative min-h-[90vh] flex items-center overflow-hidden">
+//         {/* The Background Image - Use a high-quality dark restaurant/food photo */}
+//         <div className="absolute inset-0 z-0">
+//           <img
+//             src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop"
+//             alt="Luxury Dining"
+//             className="w-full h-full object-cover opacity-50 scale-105"
+//           />
+//           {/* Gradients to blend the image into the site colors */}
+//           <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent"></div>
+//           <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+//         </div>
+
+//         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+//           <div className="max-w-3xl space-y-10">
+//             {/* Status Badge */}
+//             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/10 animate-fade-in">
+//               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] animate-pulse"></span>
+//               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-champagne">
+//                 Service Experience Live
+//               </p>
+//             </div>
+
+//             {/* Typography */}
+//             <div className="space-y-4">
+//               <h1 className="text-6xl md:text-[7rem] font-display font-bold leading-[0.85] tracking-tighter italic">
+//                 Fresh food,
+//                 <br />
+//                 <span className="gold-gradient-text">great taste.</span>
+//               </h1>
+//               <p className="text-lg md:text-xl text-smoke/80 font-light max-w-xl leading-relaxed">
+//                 Experience a new era of digital gastronomy. Explore our curated
+//                 collection and order directly via our WhatsApp concierge.
+//               </p>
+//             </div>
+
+//             {/* Primary Action Suite */}
+//             <div className="flex flex-wrap gap-5 pt-4">
+//               <a
+//                 href="#menu"
+//                 className="group relative px-10 py-5 overflow-hidden rounded-2xl bg-champagne text-obsidian font-black uppercase text-xs tracking-widest transition-all hover:scale-105 active:scale-95"
+//               >
+//                 <span className="relative z-10">Explore Menu</span>
+//                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+//               </a>
+
+//               <a
+//                 href={`https://wa.me/${restaurant.whatsappPhone}`}
+//                 target="_blank"
+//                 rel="noreferrer"
+//                 className="px-10 py-5 rounded-2xl glass border-white/10 text-mist font-black uppercase text-xs tracking-widest hover:bg-white/5 transition-all flex items-center gap-3"
+//               >
+//                 WhatsApp Order
+//               </a>
+//             </div>
+
+//             {/* Quick Metrics */}
+//             <div className="flex gap-10 pt-10 border-t border-white/5 max-w-sm">
+//               <div>
+//                 <p className="text-xl font-bold text-mist">100%</p>
+//                 <p className="text-[9px] uppercase tracking-widest text-smoke font-bold">
+//                   Premium Quality
+//                 </p>
+//               </div>
+//               <div>
+//                 <p className="text-xl font-bold text-mist">15m</p>
+//                 <p className="text-[9px] uppercase tracking-widest text-smoke font-bold">
+//                   Average Prep
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Floating Abstract Element */}
+//         <div className="absolute right-0 bottom-0 top-0 w-1/3 hidden lg:block">
+//           <div className="h-full w-full glass border-l border-white/5 backdrop-blur-3xl flex items-center justify-center">
+//             <div className="rotate-90 origin-center text-[10rem] font-black opacity-[0.02] pointer-events-none select-none">
+//               GASTRONOMY
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* FEATURED COLLECTION */}
+//       <Section
+//         id="menu"
+//         title={
+//           <span className="gold-gradient-text italic">Chef's Signature</span>
+//         }
+//         subtitle="The definitive selection of our finest seasonal items."
+//       >
+//         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+//           {featured.map((item) => (
+//             <MenuItemCard
+//               key={item._id}
+//               item={item}
+//               onAdd={(it) => {
+//                 cart.add(it);
+//                 cart.open();
+//               }}
+//             />
+//           ))}
+//           {featured.length === 0 && (
+//             <div className="col-span-full py-20 text-center glass rounded-[3rem] border-dashed border-white/5">
+//               <p className="text-smoke italic opacity-40">
+//                 Syncing the kitchen collection...
+//               </p>
+//             </div>
+//           )}
+//         </div>
+//       </Section>
+
+//       {/* INFO ARCHITECTURE */}
+//       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 mb-20">
+//         <div className="glass-gold rounded-[3rem] p-12 border-white/10 flex flex-col justify-between aspect-video">
+//           <h3 className="text-3xl font-bold tracking-tight italic">
+//             Our Atelier
+//           </h3>
+//           <p className="text-smoke text-sm mb-8 leading-relaxed">
+//             {restaurant.addressLine}
+//           </p>
+//           <div className="flex gap-4">
+//             <a
+//               href={`tel:${restaurant.phone}`}
+//               className="text-xs font-black uppercase tracking-widest text-champagne border-b border-champagne pb-1"
+//             >
+//               Call Concierge
+//             </a>
+//           </div>
+//         </div>
+
+//         <div className="glass rounded-[3rem] p-12 border-white/5 aspect-video overflow-hidden">
+//           <h3 className="text-3xl font-bold tracking-tight italic mb-8">
+//             Hours
+//           </h3>
+//           <div className="space-y-3">
+//             {restaurant.hours.slice(0, 3).map((h) => (
+//               <div
+//                 key={h.day}
+//                 className="flex justify-between text-xs uppercase tracking-[0.2em] text-smoke border-b border-white/5 pb-2"
+//               >
+//                 <span>{h.day}</span>
+//                 <span className="text-mist font-bold">{h.time}</span>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* FOOTER CALL TO ACTION */}
+//       <div className="max-w-5xl mx-auto px-6 mb-20">
+//         <div className="relative glass p-16 rounded-[4rem] border-white/5 text-center overflow-hidden">
+//           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-champagne to-transparent opacity-50"></div>
+//           <h2 className="text-4xl md:text-5xl font-bold mb-6 italic">
+//             Ready to Begin?
+//           </h2>
+//           <p className="text-smoke mb-10 max-w-md mx-auto italic font-light">
+//             Join the elite circle of diners who value precision and taste.
+//           </p>
+//           <a
+//             href={`https://wa.me/${restaurant.whatsappPhone}`}
+//             className="inline-block px-12 py-5 rounded-full bg-mist text-obsidian font-black uppercase text-[10px] tracking-[0.3em] hover:bg-champagne transition-all"
+//           >
+//             Start WhatsApp Order
+//           </a>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
 import Section from "../components/Section";
 import { restaurant } from "../config/restaurant";
 import { useEffect, useState } from "react";
@@ -489,101 +682,107 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="pb-24 bg-obsidian text-mist">
-      {/* PROFESSIONAL CINEMATIC HERO */}
-      <div className="relative min-h-[90vh] flex items-center overflow-hidden">
-        {/* The Background Image - Use a high-quality dark restaurant/food photo */}
-        <div className="absolute inset-0 z-0">
+    <div className="bg-obsidian selection:bg-champagne selection:text-obsidian">
+      {/* 1. CINEMATIC LANDING (The First Impression) */}
+      <div className="relative h-screen w-full flex items-center overflow-hidden">
+        {/* Background Visual Layer */}
+        <div className="absolute inset-0 z-0 scale-105 animate-slow-zoom">
           <img
-            src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop"
-            alt="Luxury Dining"
-            className="w-full h-full object-cover opacity-50 scale-105"
+            src="https://images.unsplash.com/photo-1550966841-3ee3ad059041?q=80&w=2070&auto=format&fit=crop"
+            alt="Atmosphere"
+            className="w-full h-full object-cover opacity-40 contrast-125 brightness-75 grayscale-[20%]"
           />
-          {/* Gradients to blend the image into the site colors */}
-          <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/70 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/40"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-          <div className="max-w-3xl space-y-10">
-            {/* Status Badge */}
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/10 animate-fade-in">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] animate-pulse"></span>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-champagne">
-                Service Experience Live
+        <div className="max-w-7xl mx-auto px-6 relative z-20 w-full grid lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-8 space-y-12">
+            {/* Elite Badge */}
+            <div className="inline-flex items-center gap-4 px-5 py-2 rounded-full glass border-white/5 backdrop-blur-xl translate-y-8 animate-fade-in-up">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981]"></span>
+              <p className="text-[10px] font-black uppercase tracking-[0.5em] text-mist/60">
+                Serving Excellence{" "}
+                <span className="text-champagne mx-2">•</span> Est. 2026
               </p>
             </div>
 
-            {/* Typography */}
-            <div className="space-y-4">
-              <h1 className="text-6xl md:text-[7rem] font-display font-bold leading-[0.85] tracking-tighter italic">
-                Fresh food,
-                <br />
-                <span className="gold-gradient-text">great taste.</span>
+            {/* Headline Architecture */}
+            <div className="space-y-6 translate-y-8 animate-fade-in-up delay-200">
+              <h1 className="text-7xl md:text-[9rem] font-display font-bold leading-[0.8] tracking-tight">
+                Crafting <br />
+                <span className="gold-gradient-text italic font-serif">
+                  Moments.
+                </span>
               </h1>
-              <p className="text-lg md:text-xl text-smoke/80 font-light max-w-xl leading-relaxed">
-                Experience a new era of digital gastronomy. Explore our curated
-                collection and order directly via our WhatsApp concierge.
+              <p className="text-xl md:text-2xl text-mist/50 font-light max-w-xl leading-relaxed">
+                Beyond dining. A sensory journey curated for the discerning
+                palate. Experience gastronomy without boundaries.
               </p>
             </div>
 
-            {/* Primary Action Suite */}
-            <div className="flex flex-wrap gap-5 pt-4">
+            {/* Action Group */}
+            <div className="flex flex-wrap items-center gap-8 pt-6 translate-y-8 animate-fade-in-up delay-400">
               <a
                 href="#menu"
-                className="group relative px-10 py-5 overflow-hidden rounded-2xl bg-champagne text-obsidian font-black uppercase text-xs tracking-widest transition-all hover:scale-105 active:scale-95"
+                className="group relative px-12 py-6 overflow-hidden rounded-full bg-mist text-obsidian font-black uppercase text-[10px] tracking-[0.3em] transition-all hover:pr-16"
               >
-                <span className="relative z-10">Explore Menu</span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                <span className="relative z-10">Explore Collection</span>
+                <span className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all">
+                  →
+                </span>
               </a>
 
               <a
                 href={`https://wa.me/${restaurant.whatsappPhone}`}
                 target="_blank"
                 rel="noreferrer"
-                className="px-10 py-5 rounded-2xl glass border-white/10 text-mist font-black uppercase text-xs tracking-widest hover:bg-white/5 transition-all flex items-center gap-3"
+                className="group flex items-center gap-4 text-mist font-black uppercase text-[10px] tracking-[0.3em] hover:text-champagne transition-all"
               >
-                WhatsApp Order
+                <span className="w-12 h-px bg-white/20 group-hover:w-16 transition-all"></span>
+                WhatsApp Concierge
               </a>
             </div>
-
-            {/* Quick Metrics */}
-            <div className="flex gap-10 pt-10 border-t border-white/5 max-w-sm">
-              <div>
-                <p className="text-xl font-bold text-mist">100%</p>
-                <p className="text-[9px] uppercase tracking-widest text-smoke font-bold">
-                  Premium Quality
-                </p>
-              </div>
-              <div>
-                <p className="text-xl font-bold text-mist">15m</p>
-                <p className="text-[9px] uppercase tracking-widest text-smoke font-bold">
-                  Average Prep
-                </p>
-              </div>
-            </div>
           </div>
-        </div>
 
-        {/* Floating Abstract Element */}
-        <div className="absolute right-0 bottom-0 top-0 w-1/3 hidden lg:block">
-          <div className="h-full w-full glass border-l border-white/5 backdrop-blur-3xl flex items-center justify-center">
-            <div className="rotate-90 origin-center text-[10rem] font-black opacity-[0.02] pointer-events-none select-none">
-              GASTRONOMY
+          {/* Side Info (The "Architectural" feel) */}
+          <div className="lg:col-span-4 hidden lg:flex flex-col justify-end items-end space-y-10 text-right pb-10 border-r border-white/5 pr-10">
+            <div className="space-y-2 opacity-40 hover:opacity-100 transition-opacity">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-champagne">
+                Location
+              </p>
+              <p className="text-sm font-light leading-relaxed">
+                {restaurant.addressLine}
+              </p>
+            </div>
+            <div className="space-y-2 opacity-40 hover:opacity-100 transition-opacity">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-champagne">
+                Contact
+              </p>
+              <p className="text-sm font-light">{restaurant.phone}</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* FEATURED COLLECTION */}
-      <Section
-        id="menu"
-        title={
-          <span className="gold-gradient-text italic">Chef's Signature</span>
-        }
-        subtitle="The definitive selection of our finest seasonal items."
-      >
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* 2. THE CURATED COLLECTION (Section Title) */}
+      <div id="menu" className="pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-white/5 pb-10">
+          <div>
+            <p className="text-champagne text-[10px] font-black uppercase tracking-[0.4em] mb-4">
+              The Selection
+            </p>
+            <h2 className="text-5xl md:text-7xl font-display font-bold tracking-tighter">
+              Chef's <span className="text-mist/20">Signature</span>
+            </h2>
+          </div>
+          <p className="max-w-xs text-sm text-smoke italic font-light leading-relaxed">
+            Every dish is a testament to our commitment to artisanal quality and
+            seasonal freshness.
+          </p>
+        </div>
+
+        <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {featured.map((item) => (
             <MenuItemCard
               key={item._id}
@@ -594,69 +793,79 @@ export default function Home() {
               }}
             />
           ))}
-          {featured.length === 0 && (
-            <div className="col-span-full py-20 text-center glass rounded-[3rem] border-dashed border-white/5">
-              <p className="text-smoke italic opacity-40">
-                Syncing the kitchen collection...
-              </p>
+        </div>
+      </div>
+
+      {/* 3. EXPERIENCE ARCHITECTURE (Hours & Map) */}
+      <div className="py-32 bg-white/[0.02] border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-20">
+          <div className="lg:col-span-5 space-y-12">
+            <h3 className="text-5xl font-display font-bold gold-gradient-text tracking-tighter italic">
+              Operational Hours
+            </h3>
+            <div className="space-y-6">
+              {restaurant.hours.map((h) => (
+                <div key={h.day} className="flex items-center group">
+                  <span className="text-xs uppercase tracking-[0.2em] text-smoke group-hover:text-champagne transition-colors">
+                    {h.day}
+                  </span>
+                  <div className="flex-1 border-b border-white/5 mx-6 h-px"></div>
+                  <span className="text-xs font-black text-mist tracking-widest">
+                    {h.time}
+                  </span>
+                </div>
+              ))}
             </div>
-          )}
-        </div>
-      </Section>
-
-      {/* INFO ARCHITECTURE */}
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 mb-20">
-        <div className="glass-gold rounded-[3rem] p-12 border-white/10 flex flex-col justify-between aspect-video">
-          <h3 className="text-3xl font-bold tracking-tight italic">
-            Our Atelier
-          </h3>
-          <p className="text-smoke text-sm mb-8 leading-relaxed">
-            {restaurant.addressLine}
-          </p>
-          <div className="flex gap-4">
-            <a
-              href={`tel:${restaurant.phone}`}
-              className="text-xs font-black uppercase tracking-widest text-champagne border-b border-champagne pb-1"
-            >
-              Call Concierge
-            </a>
-          </div>
-        </div>
-
-        <div className="glass rounded-[3rem] p-12 border-white/5 aspect-video overflow-hidden">
-          <h3 className="text-3xl font-bold tracking-tight italic mb-8">
-            Hours
-          </h3>
-          <div className="space-y-3">
-            {restaurant.hours.slice(0, 3).map((h) => (
-              <div
-                key={h.day}
-                className="flex justify-between text-xs uppercase tracking-[0.2em] text-smoke border-b border-white/5 pb-2"
-              >
-                <span>{h.day}</span>
-                <span className="text-mist font-bold">{h.time}</span>
+            <div className="pt-10 flex gap-4">
+              <div className="h-16 w-16 glass rounded-2xl flex items-center justify-center border-white/10 group hover:border-champagne/30 transition-all">
+                <span className="text-xl group-hover:scale-110 transition-transform">
+                  📍
+                </span>
               </div>
-            ))}
+              <div className="flex-1 glass rounded-2xl p-4 flex flex-col justify-center border-white/5">
+                <p className="text-[10px] font-black uppercase tracking-widest text-smoke mb-1">
+                  Direct Directions
+                </p>
+                <p className="text-[11px] text-mist font-medium truncate">
+                  {restaurant.addressLine}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 h-[600px] rounded-[4rem] glass p-3 border-white/5 shadow-3xl">
+            <div className="w-full h-full rounded-[3.5rem] overflow-hidden grayscale invert brightness-75 contrast-125 opacity-40">
+              <iframe
+                title="map"
+                src={restaurant.mapEmbedUrl}
+                className="w-full h-full border-0"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* FOOTER CALL TO ACTION */}
-      <div className="max-w-5xl mx-auto px-6 mb-20">
-        <div className="relative glass p-16 rounded-[4rem] border-white/5 text-center overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-champagne to-transparent opacity-50"></div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 italic">
-            Ready to Begin?
-          </h2>
-          <p className="text-smoke mb-10 max-w-md mx-auto italic font-light">
-            Join the elite circle of diners who value precision and taste.
+      {/* 4. FINAL STATEMENT */}
+      <div className="py-40 px-6 text-center relative overflow-hidden">
+        {/* Abstract Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-champagne/5 blur-[120px] pointer-events-none"></div>
+
+        <div className="max-w-3xl mx-auto relative z-10 space-y-10">
+          <p className="text-champagne text-[10px] font-black uppercase tracking-[0.5em]">
+            Join the Collection
           </p>
-          <a
-            href={`https://wa.me/${restaurant.whatsappPhone}`}
-            className="inline-block px-12 py-5 rounded-full bg-mist text-obsidian font-black uppercase text-[10px] tracking-[0.3em] hover:bg-champagne transition-all"
-          >
-            Start WhatsApp Order
-          </a>
+          <h2 className="text-6xl md:text-8xl font-display font-bold tracking-tight gold-gradient-text">
+            Reserved for you.
+          </h2>
+          <div className="pt-8 flex justify-center gap-6">
+            <a
+              href={`https://wa.me/${restaurant.whatsappPhone}`}
+              className="px-16 py-6 rounded-full glass border-white/10 text-mist font-black uppercase text-[10px] tracking-[0.4em] hover:bg-mist hover:text-obsidian transition-all duration-500"
+            >
+              Order Now via WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>
