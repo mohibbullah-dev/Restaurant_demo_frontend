@@ -8,7 +8,7 @@ export const restaurantData = {
     wine: "#4A0404",
     mist: "#E6E6E6",
   },
-  whatsapp: "201515247233", // Replace with your number
+  whatsapp: "8801838153606", // Replace with your number
   menu: [
     {
       id: 1,
