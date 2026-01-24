@@ -6,7 +6,8 @@ export default function CartButton() {
   return (
     <button
       onClick={cart.toggle}
-      className="relative px-3 py-2 rounded-lg  text-sm border border-white/5 text-smoke hover:text-mist transition-colors"
+      className="relative px-3 py-2 rounded-lg border border-champagne/30 text-smoke hover:text-mist transition-colors text-sm "
+      // border border-champagne/30 text-smoke hover:text-mist transition-colors"
     >
       Cart
       {cart.count > 0 && (
