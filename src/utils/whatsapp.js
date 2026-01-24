@@ -9,11 +9,10 @@ export function buildWhatsAppOrderMessage({
   notes,
   items,
   subtotal,
-  deliveryFee, // Added this
-  total, // Added this
+  deliveryFee,
+  total,
 }) {
   const lines = [];
-
   lines.push(`*🍽️ NEW ORDER — ${restaurantName.toUpperCase()}*`);
   lines.push(``);
   lines.push(`*Customer:* ${customerName}`);
@@ -49,12 +48,9 @@ export function buildWhatsAppOrderMessage({
 }
 
 export function toWhatsAppUrl(phone, message) {
-  // 1. Force the phone to be ONLY digits (removes any accidentally added '+' or spaces)
-  const cleanPhone = phone.replace(/\D/g, "");
-
-  // 2. Encode message
+  // Cleans the number: removes +, spaces, and dashes
+  const cleanPhone = phone.toString().replace(/\D/g, "");
   const encoded = encodeURIComponent(message);
-
-  // 3. 'api.whatsapp.com' is more reliable than 'wa.me' for deep-linking from async JS
+  // Using api.whatsapp.com is more reliable for mobile redirects
   return `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encoded}`;
 }

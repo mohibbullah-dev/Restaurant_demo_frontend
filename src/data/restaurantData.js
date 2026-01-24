@@ -1,8 +1,7 @@
 export const restaurant = {
   name: "AURELIA",
   city: "Birmingham",
-  // Your WhatsApp number must be in international format without '+' or '00'
-  whatsappPhone: "8801838153606",
+  whatsappPhone: "8801838153606", // Bangladesh format: CountryCode + Number
   colors: {
     obsidian: "#0B0C10",
     charcoal: "#1F2833",
@@ -10,8 +9,6 @@ export const restaurant = {
     wine: "#4A0404",
     mist: "#E6E6E6",
   },
-
-  whatsapp: "8801838153606", // Replace with your number
   menu: [
     {
       id: 1,

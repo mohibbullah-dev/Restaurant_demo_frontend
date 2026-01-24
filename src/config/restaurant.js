@@ -1,8 +1,8 @@
 export const restaurant = {
   name: "Demo Restaurant",
   tagline: "Fresh food, fast service, great taste.",
-  phone: "+201000000000",
-  whatsappPhone: "201000000000", // digits only
+  phone: "8801838153606",
+  whatsappPhone: "8801838153606", // digits only
   addressLine: "12 Example Street, Cairo, Egypt",
   hours: [
     { day: "Mon", time: "12:00 PM – 11:00 PM" },

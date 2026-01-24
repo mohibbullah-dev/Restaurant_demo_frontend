@@ -424,48 +424,42 @@ export default function Checkout() {
     };
 
     try {
-      // 1. Save to Database
       const res = await fetch(`${API_BASE}/api/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json(); // Read body ONCE here
-
+      const data = await res.json();
       if (!res.ok) throw new Error(data?.message || "Order failed");
 
-      // 2. Build the WhatsApp Message using the ID from the Database
-      let msg = buildWhatsAppOrderMessage({
-        restaurantName: restaurant.name,
-        customerName: payload.customerName,
-        customerPhone: payload.customerPhone,
-        orderType: payload.orderType,
-        address: payload.address,
-        notes: payload.notes,
-        items: cart.items,
-        subtotal,
-      });
+      const msg =
+        buildWhatsAppOrderMessage({
+          restaurantName: restaurant.name,
+          customerName: payload.customerName,
+          customerPhone: payload.customerPhone,
+          orderType: payload.orderType,
+          address: payload.address,
+          notes: payload.notes,
+          items: cart.items,
+          subtotal,
+          deliveryFee,
+          total,
+        }) +
+        `\n\n🆔 Track Order: ${window.location.origin}/status/${data.order._id}`;
 
-      // Append extras to message
-      if (isDelivery && deliveryFee > 0) {
-        msg += `\nDelivery Fee: ${formatPriceEGP(deliveryFee)}`;
-      }
-      msg += `\nTotal: ${formatPriceEGP(total)}`;
-      msg += `\n\n🆔 Track Order: ${window.location.origin}/status/${data.order._id}`;
-
-      // 3. Clear Cart
       cart.clear();
 
-      // 4. Action: Open WhatsApp AND Redirect to Status Page
+      // THE FIX: Redirect the current window instead of opening a new tab
+      // This bypasses the browser's "popup blocker" which triggers after 'await'
       const whatsappUrl = toWhatsAppUrl(restaurant.whatsappPhone, msg);
 
-      // Open WhatsApp in new tab
-      window.open(whatsappUrl, "_blank", "noreferrer");
+      notify.success("Order Registered! Opening WhatsApp...");
 
-      // Notify and Redirect the current page to the Live Status
-      notify.success("Order Registered Successfully");
-      navigate(`/status/${data.order._id}`);
+      // Small delay ensures the user sees the success toast before leaving
+      setTimeout(() => {
+        window.location.assign(whatsappUrl);
+      }, 1000);
     } catch (err) {
       notify.error(err.message);
     }
