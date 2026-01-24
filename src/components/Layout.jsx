@@ -167,6 +167,7 @@ import { restaurant } from "../config/restaurant";
 import CartButton from "./CartButton";
 import CartDrawer from "./CartDrawer";
 import { getToken } from "../utils/auth";
+import { Phone } from "lucide-react";
 
 export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -242,7 +243,6 @@ export default function Layout() {
                   className="relative px-3 py-2 rounded-lg border border-champagne/30 text-smoke hover:text-mist transition-colors text-sm text-xs"
                 >
                   <Phone />
-                  Call
                 </a>
 
                 <a
