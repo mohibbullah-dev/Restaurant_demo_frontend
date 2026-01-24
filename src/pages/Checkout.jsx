@@ -399,7 +399,6 @@ export default function Checkout() {
     belowMinimum,
     settings.isOpen,
   ]);
-
   async function onSendWhatsApp() {
     if (!settings.isOpen) return notify.error("Restaurant is closed");
     if (belowMinimum)
@@ -425,39 +424,52 @@ export default function Checkout() {
     };
 
     try {
+      // 1. Save to Database
       const res = await fetch(`${API_BASE}/api/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
+      const data = await res.json(); // Read body ONCE here
+
       if (!res.ok) throw new Error(data?.message || "Order failed");
 
-      let msg =
-        buildWhatsAppOrderMessage({
-          restaurantName: restaurant.name,
-          customerName: payload.customerName,
-          customerPhone: payload.customerPhone,
-          orderType: payload.orderType,
-          address: payload.address,
-          notes: payload.notes,
-          items: cart.items,
-          subtotal,
-        }) + `\n`;
+      // 2. Build the WhatsApp Message using the ID from the Database
+      let msg = buildWhatsAppOrderMessage({
+        restaurantName: restaurant.name,
+        customerName: payload.customerName,
+        customerPhone: payload.customerPhone,
+        orderType: payload.orderType,
+        address: payload.address,
+        notes: payload.notes,
+        items: cart.items,
+        subtotal,
+      });
 
-      if (isDelivery && deliveryFee > 0)
+      // Append extras to message
+      if (isDelivery && deliveryFee > 0) {
         msg += `\nDelivery Fee: ${formatPriceEGP(deliveryFee)}`;
-      msg += `\nTotal: ${formatPriceEGP(total)}\n\nOrder ID: ${data.order._id}`;
+      }
+      msg += `\nTotal: ${formatPriceEGP(total)}`;
+      msg += `\n\n🆔 Track Order: ${window.location.origin}/status/${data.order._id}`;
 
-      const url = toWhatsAppUrl(restaurant.whatsappPhone, msg);
+      // 3. Clear Cart
       cart.clear();
-      window.open(url, "_blank", "noreferrer");
+
+      // 4. Action: Open WhatsApp AND Redirect to Status Page
+      const whatsappUrl = toWhatsAppUrl(restaurant.whatsappPhone, msg);
+
+      // Open WhatsApp in new tab
+      window.open(whatsappUrl, "_blank", "noreferrer");
+
+      // Notify and Redirect the current page to the Live Status
+      notify.success("Order Registered Successfully");
+      navigate(`/status/${data.order._id}`);
     } catch (err) {
       notify.error(err.message);
     }
   }
-
   const inputClass =
     "w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-mist placeholder:text-white/10 outline-none focus:border-champagne/40 focus:bg-white/10 transition-all";
 
