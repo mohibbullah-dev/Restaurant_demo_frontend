@@ -139,6 +139,15 @@ export default function App() {
           }
         />
 
+        <Route
+          path="/admin/reservations"
+          element={
+            <AdminGuard>
+              <AdminReservations />
+            </AdminGuard>
+          }
+        />
+
         {/* Full-screen pages (No Header/Footer) */}
         <Route path="/qr" element={<QR />} />
 
