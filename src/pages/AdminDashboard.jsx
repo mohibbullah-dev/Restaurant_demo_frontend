@@ -151,6 +151,122 @@
 //   );
 // }
 
+// import Section from "../components/Section";
+// import { clearToken } from "../utils/auth";
+// import { useNavigate, Link } from "react-router-dom";
+// import { API_BASE } from "../config/api";
+// import { authHeaders } from "../utils/auth";
+// import { notify } from "../utils/toast";
+
+// export default function AdminDashboard() {
+//   const nav = useNavigate();
+
+//   const menuCards = [
+//     {
+//       title: "Menu Management",
+//       path: "/admin/menu",
+//       desc: "Curate your collection",
+//       icon: "🍴",
+//     },
+//     {
+//       title: "Live Orders",
+//       path: "/admin/orders",
+//       desc: "Monitor guest requests",
+//       icon: "🔔",
+//     },
+//     {
+//       title: "System Settings",
+//       path: "/admin/settings",
+//       desc: "Adjust restaurant flow",
+//       icon: "⚙️",
+//     },
+//   ];
+
+//   return (
+//     <div className="pb-24 md:pb-10 min-h-screen">
+//       <Section
+//         title={<span className="gold-gradient-text">Command Center</span>}
+//         subtitle="Precision control over your luxury establishment."
+//       >
+//         {/* Main Grid Navigation */}
+//         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+//           {menuCards.map((card) => (
+//             <Link
+//               key={card.path}
+//               to={card.path}
+//               className="group relative glass-gold p-8 rounded-4xl border-white/5 hover:border-champagne/40 transition-all duration-500 overflow-hidden"
+//             >
+//               {/* Decorative background glow on hover */}
+//               <div className="absolute -inset-px bg-gradient-to-br from-champagne/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+//               <div className="relative z-10">
+//                 <div className="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300 inline-block">
+//                   {card.icon}
+//                 </div>
+//                 <h3 className="text-xl font-bold text-mist mb-2 group-hover:text-champagne transition-colors">
+//                   {card.title}
+//                 </h3>
+//                 <p className="text-sm text-smoke opacity-70 italic">
+//                   {card.desc}
+//                 </p>
+//               </div>
+//             </Link>
+//           ))}
+//         </div>
+
+//         {/* Action Bar: Secondary Controls */}
+//         <div className="glass rounded-4xl p-8 border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+//           <div className="flex items-center gap-4">
+//             <div className="w-12 h-12 rounded-2xl bg-velvet border border-white/10 flex items-center justify-center text-champagne font-bold">
+//               HQ
+//             </div>
+//             <div>
+//               <h4 className="font-bold text-mist">System Maintenance</h4>
+//               <p className="text-xs text-smoke opacity-60">
+//                 Update data & sessions
+//               </p>
+//             </div>
+//           </div>
+
+//           <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
+//             <button
+//               className="flex-1 md:flex-none px-8 py-3 rounded-2xl border border-barolo/30 text-barolo hover:bg-barolo/10 text-xs font-bold uppercase tracking-widest transition-all"
+//               onClick={async () => {
+//                 if (
+//                   !confirm(
+//                     "Reset demo data? This deletes all orders and resets menu.",
+//                   )
+//                 )
+//                   return;
+//                 const res = await fetch(`${API_BASE}/api/admin/reset-demo`, {
+//                   method: "POST",
+//                   headers: { ...authHeaders() },
+//                 });
+//                 const data = await res.json();
+//                 if (!res.ok)
+//                   return notify.error(data?.message || "Reset failed");
+//                 notify.success("Environment Restored ✅");
+//               }}
+//             >
+//               Reset Data
+//             </button>
+
+//             <button
+//               className="flex-1 md:flex-none px-8 py-3 rounded-2xl bg-white/5 text-mist hover:bg-white/10 text-xs font-bold uppercase tracking-widest transition-all border border-white/5"
+//               onClick={() => {
+//                 clearToken();
+//                 nav("/admin/login");
+//               }}
+//             >
+//               Sign Out
+//             </button>
+//           </div>
+//         </div>
+//       </Section>
+//     </div>
+//   );
+// }
+
 import Section from "../components/Section";
 import { clearToken } from "../utils/auth";
 import { useNavigate, Link } from "react-router-dom";
@@ -175,6 +291,12 @@ export default function AdminDashboard() {
       icon: "🔔",
     },
     {
+      title: "Guest Feedback",
+      path: "/admin/reviews",
+      desc: "Moderate public reviews",
+      icon: "💬",
+    },
+    {
       title: "System Settings",
       path: "/admin/settings",
       desc: "Adjust restaurant flow",
@@ -189,12 +311,12 @@ export default function AdminDashboard() {
         subtitle="Precision control over your luxury establishment."
       >
         {/* Main Grid Navigation */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {menuCards.map((card) => (
             <Link
               key={card.path}
               to={card.path}
-              className="group relative glass-gold p-8 rounded-4xl border-white/5 hover:border-champagne/40 transition-all duration-500 overflow-hidden"
+              className="group relative glass-gold p-8 rounded-4xl border-white/5 hover:border-champagne/40 transition-all duration-500 overflow-hidden flex flex-col h-full"
             >
               {/* Decorative background glow on hover */}
               <div className="absolute -inset-px bg-gradient-to-br from-champagne/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -217,7 +339,7 @@ export default function AdminDashboard() {
         {/* Action Bar: Secondary Controls */}
         <div className="glass rounded-4xl p-8 border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-velvet border border-white/10 flex items-center justify-center text-champagne font-bold">
+            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-champagne font-bold">
               HQ
             </div>
             <div>
@@ -230,7 +352,7 @@ export default function AdminDashboard() {
 
           <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
             <button
-              className="flex-1 md:flex-none px-8 py-3 rounded-2xl border border-barolo/30 text-barolo hover:bg-barolo/10 text-xs font-bold uppercase tracking-widest transition-all"
+              className="flex-1 md:flex-none px-8 py-3 rounded-2xl border border-red-500/30 text-red-500/70 hover:bg-red-500/10 text-xs font-bold uppercase tracking-widest transition-all"
               onClick={async () => {
                 if (
                   !confirm(

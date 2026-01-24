@@ -669,6 +669,7 @@ import { API_BASE } from "../config/api";
 import MenuItemCard from "../components/MenuItemCard";
 import { useCart } from "../context/CartContext";
 import { useSettings } from "../context/SettingsContext"; // Added this
+import ReviewsDisplay from "../components/ReviewsDisplay";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -851,6 +852,10 @@ export default function Home() {
           />
         </div>
       </div>
+
+      {/* review section  */}
+
+      <ReviewsDisplay />
     </div>
   );
 }
