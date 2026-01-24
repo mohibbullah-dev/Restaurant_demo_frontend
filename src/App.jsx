@@ -80,6 +80,7 @@ import QR from "./pages/QR.jsx";
 import OrderStatus from "./pages/OrderStatus";
 import AdminReviews from "./pages/AdminReviews.jsx";
 import AllReviews from "./pages/AllReviews";
+import AdminReservations from "./pages/AdminReservations.jsx";
 
 export default function App() {
   return (
