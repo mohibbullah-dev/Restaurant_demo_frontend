@@ -48,23 +48,28 @@ export default function OrderStatus() {
       </div>
     );
 
-  if (!order)
+  // Replace your "if (!order)" block with this:
+  if (!order) {
     return (
       <div className="min-h-screen bg-obsidian flex flex-col items-center justify-center p-6 text-center">
-        <h2 className="text-2xl font-display gold-gradient-text mb-4">
+        {/* 1. We show the error message */}
+        <h2 className="text-2xl gold-gradient-text mb-4 italic">
           Registry Entry Not Found
         </h2>
-        <p className="text-smoke/50 text-sm mb-8">
-          This reference number does not exist in our current records.
-        </p>
-        <Link
-          to="/"
-          className="px-8 py-3 rounded-full bg-white/5 border border-white/10 text-champagne text-[10px] font-black uppercase tracking-widest"
-        >
-          Return to Atelier
-        </Link>
+
+        {/* 2. BUT we still show the form so you can TEST the feature! */}
+        <div className="w-full max-w-md mt-10 border-t border-white/5 pt-10">
+          <p className="text-[10px] text-champagne uppercase tracking-widest mb-6">
+            Submit a Test Review Below
+          </p>
+          <ReviewForm
+            orderId="65b123456789012345678901"
+            customerName="Test Guest"
+          />
+        </div>
       </div>
     );
+  }
 
   const currentStepIdx = statusSteps.findIndex((s) => s.id === order.status);
 
