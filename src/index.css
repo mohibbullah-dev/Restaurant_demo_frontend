@@ -78,3 +78,22 @@
 @utility btn-gold {
   @apply bg-champagne text-obsidian font-bold py-3 px-6 rounded-xl hover:bg-bronze transition-colors uppercase tracking-widest text-xs;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

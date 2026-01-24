@@ -79,6 +79,7 @@ import AdminGuard from "./components/AdminGuard.jsx";
 import QR from "./pages/QR.jsx";
 import OrderStatus from "./pages/OrderStatus";
 import AdminReviews from "./pages/AdminReviews.jsx";
+import AllReviews from "./pages/AllReviews";
 
 export default function App() {
   return (
@@ -90,6 +91,7 @@ export default function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/status/:id" element={<OrderStatus />} />
+          <Route path="/reviews" element={<AllReviews />} />
 
           {/* Admin Login - Usually looks better inside the layout or a dedicated clean layout */}
           <Route path="/admin/login" element={<AdminLogin />} />
