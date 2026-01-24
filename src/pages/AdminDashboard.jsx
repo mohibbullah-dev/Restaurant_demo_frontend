@@ -291,6 +291,12 @@ export default function AdminDashboard() {
       icon: "🔔",
     },
     {
+      title: "Table Registry",
+      path: "/admin/reservations",
+      desc: "Manage VIP bookings",
+      icon: "📅",
+    },
+    {
       title: "Guest Feedback",
       path: "/admin/reviews",
       desc: "Moderate public reviews",
