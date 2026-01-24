@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import Section from "../components/Section";
 import { API_BASE } from "../config/api";
 import { formatPriceEGP } from "../utils/menu";
+import ReviewForm from "../components/ReviewForm"; // Added Import
 
 // Status sequence for the visual timeline
 const statusSteps = [
@@ -77,13 +78,20 @@ export default function OrderStatus() {
         }
         subtitle={`Reference: #${id.slice(-5).toUpperCase()}`}
       >
+        {/* --- REVIEW FORM SECTION --- */}
+        {/* Only appears when the order is 'Completed' */}
+        {order.status === "Completed" && (
+          <div className="mb-12 animate-in fade-in slide-in-from-top-6 duration-1000">
+            <ReviewForm orderId={order._id} customerName={order.customerName} />
+          </div>
+        )}
+
         {/* Progress Card */}
         <div className="glass rounded-[2.5rem] p-8 border border-white/5 shadow-2xl mb-8 relative overflow-hidden">
-          {/* Pulsing Status Glow */}
           <div className="absolute -top-24 -right-24 w-48 h-48 bg-champagne/5 blur-[100px] animate-pulse" />
 
           <div className="relative z-10">
-            <p className="text-[9px] uppercase tracking-[0.4em] text-champagne font-black mb-1">
+            <p className="text-[9px] uppercase tracking-[0.4em] text-smoke font-black mb-1">
               Current Phase
             </p>
             <h2 className="text-3xl font-bold text-mist tracking-tighter mb-10">
@@ -92,7 +100,6 @@ export default function OrderStatus() {
                 : statusSteps[currentStepIdx]?.label}
             </h2>
 
-            {/* Visual Timeline */}
             {order.status !== "Canceled" ? (
               <div className="space-y-8">
                 {statusSteps.map((step, idx) => {
@@ -148,7 +155,7 @@ export default function OrderStatus() {
           </div>
         </div>
 
-        {/* Order Details Accordion-style */}
+        {/* Order Details */}
         <div className="glass rounded-3xl p-6 border border-white/5 space-y-4">
           <p className="text-[9px] uppercase tracking-[0.3em] text-smoke/40 font-black">
             Selection Summary
