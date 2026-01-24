@@ -78,6 +78,7 @@ import AdminOrders from "./pages/AdminOrders.jsx";
 import AdminGuard from "./components/AdminGuard.jsx";
 import QR from "./pages/QR.jsx";
 import OrderStatus from "./pages/OrderStatus";
+import AdminReviews from "./pages/AdminReviews.jsx";
 
 export default function App() {
   return (
