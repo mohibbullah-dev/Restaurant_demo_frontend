@@ -81,6 +81,7 @@ import OrderStatus from "./pages/OrderStatus";
 import AdminReviews from "./pages/AdminReviews.jsx";
 import AllReviews from "./pages/AllReviews";
 import AdminReservations from "./pages/AdminReservations.jsx";
+import BookTable from "./pages/BookTable.jsx";
 
 export default function App() {
   return (
@@ -93,6 +94,7 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/status/:id" element={<OrderStatus />} />
           <Route path="/reviews" element={<AllReviews />} />
+          <Route path="/book" element={<BookTable />} />
 
           {/* Admin Login - Usually looks better inside the layout or a dedicated clean layout */}
           <Route path="/admin/login" element={<AdminLogin />} />
