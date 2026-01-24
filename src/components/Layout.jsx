@@ -238,8 +238,10 @@ export default function Layout() {
 
                 <a
                   href={`tel:${restaurant.phone}`}
-                  className="px-4 py-2 rounded-xl glass border-white/10 text-xs uppercase font-bold tracking-widest hover:bg-white/5 transition-all"
+                  // className="px-4 py-2 rounded-xl glass border border-champagne/30 text-xs uppercase font-bold tracking-widest hover:bg-white/5 transition-all"
+                  className="relative px-3 py-2 rounded-lg border border-champagne/30 text-smoke hover:text-mist transition-colors text-sm text-xs"
                 >
+                  <Phone />
                   Call
                 </a>
 
@@ -255,7 +257,7 @@ export default function Layout() {
                 {!isAdmin && (
                   <Link
                     to="/admin/login"
-                    className="p-2 rounded-xl border border-white/5 text-smoke hover:text-mist transition-colors"
+                    className="p-1 rounded-xl border border-white/5 text-smoke hover:text-mist transition-colors"
                     title="Staff Portal"
                   >
                     <svg
