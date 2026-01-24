@@ -662,6 +662,7 @@
 //     </div>
 //   );
 // }
+
 import Section from "../components/Section";
 import { restaurant } from "../config/restaurant";
 import { useEffect, useState } from "react";
@@ -804,52 +805,131 @@ export default function Home() {
       </Section>
 
       {/* --- CLEAN INFO GRID --- */}
-      <div className="max-w-7xl mx-auto px-6 py-24">
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="glass p-12 rounded-[3rem] border-white/5 space-y-8">
-            <h3 className="text-3xl font-bold gold-gradient-text italic">
-              Hours
+      <div className="max-w-7xl mx-auto px-6 py-24 relative overflow-hidden">
+        {/* Decorative background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-champagne/5 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="grid md:grid-cols-2 gap-12 relative z-10">
+          {/* Hours Card */}
+          <div className="glass-gold p-12 rounded-[3.5rem] border border-white/5 relative group overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                className="text-champagne"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+
+            <h3 className="text-4xl font-serif italic gold-gradient-text mb-10">
+              Service Hours
             </h3>
-            <div className="space-y-4">
+
+            <div className="space-y-5">
               {restaurant.hours.map((h) => (
                 <div
                   key={h.day}
-                  className="flex justify-between text-xs tracking-[0.2em] uppercase text-smoke border-b border-white/5 pb-2"
+                  className="flex justify-between items-end group/item"
                 >
-                  <span>{h.day}</span>
-                  <span className="text-mist font-bold">{h.time}</span>
+                  <span className="text-[11px] font-black uppercase tracking-[0.3em] text-smoke group-hover/item:text-champagne transition-colors">
+                    {h.day}
+                  </span>
+                  <div className="flex-1 border-b border-white/5 border-dotted mx-4 mb-1"></div>
+                  <span className="text-sm font-medium text-mist font-mono">
+                    {h.time}
+                  </span>
                 </div>
               ))}
             </div>
+
+            <p className="mt-10 text-[10px] text-smoke/40 uppercase tracking-widest text-center italic">
+              * Reservations highly recommended for evening service
+            </p>
           </div>
-          <div className="glass p-12 rounded-[3rem] border-white/5 flex flex-col justify-center space-y-4 text-center">
-            <p className="text-champagne text-[10px] font-black uppercase tracking-[0.5em]">
-              Visit Us
-            </p>
-            <p className="text-2xl font-light leading-relaxed">
-              {restaurant.addressLine}
-            </p>
-            <div className="pt-6">
-              <a
-                href={`tel:${restaurant.phone}`}
-                className="text-mist border-b border-champagne pb-1 text-sm font-bold tracking-widest uppercase"
-              >
-                {restaurant.phone}
-              </a>
+
+          {/* Location & Contact Card */}
+          <div className="glass p-12 rounded-[3.5rem] border border-white/5 flex flex-col justify-between text-center md:text-left relative overflow-hidden">
+            {/* Abstract gold line decoration */}
+            <div className="absolute top-0 left-0 w-1 h-24 bg-gradient-to-b from-champagne/40 to-transparent" />
+
+            <div className="space-y-6">
+              <p className="text-champagne text-[10px] font-black uppercase tracking-[0.5em]">
+                The Atelier
+              </p>
+              <h3 className="text-5xl font-bold tracking-tighter leading-tight text-mist">
+                Find Us in the <br />
+                <span className="italic font-serif gold-gradient-text">
+                  Heart of the City
+                </span>
+              </h3>
+              <p className="text-xl text-smoke/80 font-light leading-relaxed max-w-sm">
+                {restaurant.addressLine}
+              </p>
+            </div>
+
+            <div className="pt-12 space-y-8">
+              <div className="flex flex-col md:flex-row gap-6">
+                <a
+                  href={`tel:${restaurant.phone}`}
+                  className="flex-1 px-8 py-5 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center gap-3 hover:bg-white/10 transition-all group"
+                >
+                  <span className="text-[10px] font-black uppercase tracking-widest text-mist group-hover:text-champagne">
+                    Call Concierge
+                  </span>
+                </a>
+                <a
+                  href={restaurant.mapEmbedUrl} // or a google maps link
+                  target="_blank"
+                  className="flex-1 px-8 py-5 bg-champagne/10 border border-champagne/20 rounded-2xl flex items-center justify-center gap-3 hover:bg-champagne/20 transition-all group"
+                >
+                  <span className="text-[10px] font-black uppercase tracking-widest text-champagne">
+                    Get Directions
+                  </span>
+                </a>
+              </div>
+
+              <p className="text-[9px] text-smoke uppercase tracking-[0.4em] opacity-40">
+                ESTABLISHED 2026 • CULINARY EXCELLENCE
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* --- MINIMAL MAP --- */}
-      <div className="max-w-7xl mx-auto px-6 mb-24">
-        <div className="h-[400px] rounded-[3rem] overflow-hidden glass p-2 border-white/5">
+      <div className="max-w-7xl mx-auto px-6 mb-32 relative">
+        <div className="relative h-[500px] rounded-[4rem] overflow-hidden glass p-3 border border-white/5 shadow-3xl group">
+          {/* Decorative Corner Accents */}
+          <div className="absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-champagne/30 rounded-tl-2xl z-20" />
+          <div className="absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-champagne/30 rounded-br-2xl z-20" />
+
+          {/* Map Overlay for deep luxury feel */}
+          <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/40 pointer-events-none z-10" />
+
           <iframe
             title="map"
             src={restaurant.mapEmbedUrl}
-            className="w-full h-full rounded-[2.5rem] grayscale invert brightness-[0.5] opacity-50 hover:opacity-100 transition-opacity duration-700"
+            className="w-full h-full rounded-[3.5rem] grayscale invert brightness-[0.4] contrast-[1.2] opacity-60 group-hover:opacity-80 transition-all duration-1000 scale-[1.02] group-hover:scale-100"
             loading="lazy"
           />
+
+          {/* Floating Map Card */}
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-md">
+            <div className="glass-gold p-6 rounded-3xl border border-white/10 backdrop-blur-xl text-center shadow-2xl">
+              <p className="text-[9px] font-black uppercase tracking-[0.4em] text-champagne mb-2">
+                Private Parking Available
+              </p>
+              <p className="text-xs text-smoke">
+                Valet service is provided for all dinner guests.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
