@@ -2,83 +2,80 @@ import React from "react";
 
 const EliteBackground = () => {
   return (
-    <div className="fixed inset-0 -z-10 bg-[#060709] overflow-hidden">
-      {/* 1. Deep Vignette Spotlight (Adds Depth and focus) */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#060709_100%)] z-10 opacity-60" />
+    <div className="fixed inset-0 -z-10 bg-[#050505] overflow-hidden">
+      {/* 1. MASTER TEXTURE: Subtle noise to break digital flatness */}
+      <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-      {/* 2. Premium Noise / Grain (Increased Opacity for Texture) */}
-      <div className="absolute inset-0 opacity-[0.05] mix-blend-screen pointer-events-none">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <filter id="noise">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.8"
-              numOctaves="4"
-              stitchTiles="stitch"
-            />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#noise)" />
-        </svg>
+      {/* 2. THE VIGNETTE: Creates a professional "Frame" around your content */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(11,12,16,0)_0%,_rgba(5,5,5,1)_100%)] z-20" />
+
+      {/* 3. ARCHITECTURAL DEPTH: The Grid as a 3D floor rather than a flat wall */}
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          perspective: "1000px",
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #c5a059 1px, transparent 1px),
+              linear-gradient(to bottom, #c5a059 1px, transparent 1px)
+            `,
+            backgroundSize: "80px 80px",
+            maskImage:
+              "radial-gradient(ellipse at 50% 50%, black 20%, transparent 70%)",
+            transform: "rotateX(15deg) scale(1.2)",
+          }}
+        />
       </div>
 
-      {/* 3. High-Contrast Architectural Grid */}
-      <div className="absolute inset-0 opacity-[0.15] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_90%)]">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern
-              id="grid-gold"
-              width="100"
-              height="100"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 100 0 L 0 0 0 100"
-                fill="none"
-                stroke="url(#gold-shine)"
-                strokeWidth="0.8"
-              />
-            </pattern>
-            <linearGradient id="gold-shine" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#c5a059" stopOpacity="1" />
-              <stop offset="50%" stopColor="#8d6e42" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#c5a059" stopOpacity="0.1" />
-            </linearGradient>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid-gold)" />
-        </svg>
+      {/* 4. MOVING LIGHT (The "Luxury Hotel" Feel): 
+          This follows a slow path to simulate ambient lighting movement */}
+      <div className="absolute inset-0 z-10">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-champagne/10 blur-[120px] rounded-full animate-[ambient_20s_infinite_alternate]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-bronze/5 blur-[150px] rounded-full animate-[ambient_25s_infinite_alternate-reverse]" />
       </div>
 
-      {/* 4. Ambient Luxury Orbs (Increased Vibrancy) */}
-      <div className="absolute top-[-5%] left-[-5%] w-[60%] h-[60%] bg-champagne/10 blur-[140px] rounded-full animate-pulse" />
-      <div className="absolute bottom-[-5%] right-[-5%] w-[60%] h-[60%] bg-barolo/10 blur-[140px] rounded-full animate-pulse [animation-delay:3s]" />
+      {/* 5. THE "ETCHED GOLD" ACCENTS: Fine details at the corners */}
+      <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none z-30">
+        <defs>
+          <linearGradient id="gold-line" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="transparent" />
+            <stop offset="50%" stopColor="#c5a059" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+        </defs>
+        {/* Top Accent */}
+        <rect
+          x="10%"
+          y="40px"
+          width="80%"
+          height="0.5"
+          fill="url(#gold-line)"
+        />
+        {/* Bottom Accent */}
+        <rect
+          x="10%"
+          y="calc(100% - 40px)"
+          width="80%"
+          height="0.5"
+          fill="url(#gold-line)"
+        />
+      </svg>
 
-      {/* 5. Sharp Decorative Accents (The 'Elite' Detail) */}
-      <div className="absolute inset-0 opacity-[0.08]">
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 1000 1000"
-          preserveAspectRatio="none"
-        >
-          {/* Diagonal slash for modern feel */}
-          <line
-            x1="0"
-            y1="0"
-            x2="1000"
-            y2="1000"
-            stroke="#c5a059"
-            strokeWidth="0.5"
-          />
-          <line
-            x1="1000"
-            y1="0"
-            x2="0"
-            y2="1000"
-            stroke="#c5a059"
-            strokeWidth="0.5"
-          />
-        </svg>
-      </div>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        @keyframes ambient {
+          0% { transform: translate(-10%, -10%) scale(1); }
+          100% { transform: translate(10%, 10%) scale(1.1); }
+        }
+      `,
+        }}
+      />
     </div>
   );
 };
