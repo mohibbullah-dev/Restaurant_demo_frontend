@@ -169,6 +169,7 @@ import CartDrawer from "./CartDrawer";
 import { getToken } from "../utils/auth";
 import { Phone } from "lucide-react";
 import FloatingConcierge from "./FloatingConcierge";
+import EliteBackground from "./EliteBackground";
 
 export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -183,6 +184,7 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-transparent text-mist font-display selection:bg-champagne/30">
       {/* HEADER: Professional Glassmorphism Sticky Bar */}
+      <EliteBackground />
       <header className="sticky top-0 z-50 transition-all duration-300">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="glass-gold rounded-3xl px-6 py-3 flex items-center justify-between border-white/5 shadow-2xl">
