@@ -359,6 +359,7 @@ import Footer from "../components/Footer";
 import { FAQSection } from "../components/FAQSection";
 import HoursSection from "../components/HoursSection";
 import LocationSection from "../components/LocationSection";
+import { Hero } from "../components/Hero";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -395,7 +396,7 @@ export default function Home() {
       {/* 2. CONTENT LAYER (z-10 ensures it sits above the fixed background) */}
       <div className="relative z-10">
         {/* --- PROFESSIONAL SPLIT HERO --- */}
-        <div className="relative min-h-[70vh] flex flex-col justify-center">
+        {/* <div className="relative min-h-[70vh] flex flex-col justify-center">
           {!settings?.isOpen && (
             <div className="absolute top-24 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-xl">
               <div className="glass-gold border border-barolo/30 p-4 rounded-2xl flex items-center justify-center gap-4 animate-pulse shadow-2xl shadow-barolo/10">
@@ -474,7 +475,9 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+
+        <Hero />
 
         {/* AboutSection  */}
         <AboutSection />
