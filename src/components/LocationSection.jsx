@@ -3,7 +3,7 @@ import { restaurant } from "../config/restaurant";
 
 const LocationSection = () => {
   return (
-    <div className="space-y-8 h-full flex flex-col">
+    <div className="space-y-8 min-h-full flex flex-col">
       {/* Address & Action Card */}
       <div className="glass p-10 rounded-[3rem] border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8 hover:border-white/10 transition-colors">
         <div className="space-y-2 text-center md:text-left">
@@ -58,7 +58,8 @@ const LocationSection = () => {
       {/* The Cinematic Map */}
       <div className="relative flex-1 min-h-[400px] w-full rounded-[3rem] overflow-hidden border border-white/5 shadow-3xl group">
         {/* Overlay Gradients for 'Dark Mode' Effect */}
-        <div className="absolute inset-0 z-10 bg-obsidian/20 pointer-events-none mix-blend-overlay" />
+        <div className="absolute inset-0 z-10 bg-obsidian/20 pointer-events-none " />
+        {/* mix-blend-overlay */}
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-obsidian via-transparent to-transparent pointer-events-none" />
 
         <iframe
