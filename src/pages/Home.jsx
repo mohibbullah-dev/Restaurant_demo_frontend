@@ -11,6 +11,7 @@ import CallToAction from "../components/CallToAction";
 import { EventsSection } from "../components/EventsSection";
 import { VisualGallery } from "../components/VisualGallery";
 import { RitualSection } from "../components/RitualSection";
+import { ChefSection } from "../components/ChefSection";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -146,6 +147,10 @@ export default function Home() {
           ))}
         </div>
       </Section>
+
+      {/* ChefSection  */}
+
+      <ChefSection />
       {/* RetualSection  */}
 
       <RitualSection />
