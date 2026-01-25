@@ -94,8 +94,8 @@
 //   );
 // }
 
-import Section from "../components/Section";
-import { restaurant } from "../config/restaurant";
+// import Section from "../components/Section";
+// import { restaurant } from "../config/restaurant";
 // import { QRCodeSVG } from "qrcode.react";
 // import { useRef } from "react";
 // import html2canvas from "html2canvas";
