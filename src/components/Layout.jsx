@@ -169,7 +169,6 @@ import CartDrawer from "./CartDrawer";
 import { getToken } from "../utils/auth";
 import { Phone } from "lucide-react";
 import FloatingConcierge from "./FloatingConcierge";
-import { restaurant } from "./config/restaurant";
 
 export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
