@@ -8,6 +8,9 @@ import { useSettings } from "../context/SettingsContext"; // Added this
 import ReviewsDisplay from "../components/ReviewsDisplay";
 import AboutSection from "../components/AboutSection";
 import CallToAction from "../components/CallToAction";
+import Reservation from "../../../backend/src/models/Reservation";
+import { EventsSection } from "../components/EventsSection";
+import { VisualGallery } from "../components/VisualGallery";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -143,7 +146,9 @@ export default function Home() {
           ))}
         </div>
       </Section>
+      {/* RetualSection  */}
 
+      <Reservation />
       {/* --- CLEAN INFO GRID --- */}
       <div className="max-w-7xl mx-auto px-6 py-24 relative overflow-hidden">
         {/* Decorative background glow */}
@@ -272,6 +277,13 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* VisualGallery.jsx  */}
+
+      <VisualGallery />
+
+      {/* EventsSection  */}
+      <EventsSection />
 
       {/* review section  */}
       <ReviewsDisplay />
