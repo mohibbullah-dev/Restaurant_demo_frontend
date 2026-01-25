@@ -14,6 +14,8 @@ import { RitualSection } from "../components/RitualSection";
 import { ChefSection } from "../components/ChefSection";
 import Footer from "../components/Footer";
 import { FAQSection } from "../components/FAQSection";
+import HoursSection from "../components/HoursSection";
+import LocationSection from "../components/LocationSection";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -157,12 +159,10 @@ export default function Home() {
 
       <RitualSection />
       {/* --- CLEAN INFO GRID --- */}
-      <div className="max-w-7xl mx-auto px-6 py-24 relative overflow-hidden">
-        {/* Decorative background glow */}
+      {/* <div className="max-w-7xl mx-auto px-6 py-24 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-champagne/5 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="grid md:grid-cols-2 gap-12 relative z-10">
-          {/* Hours Card */}
           <div className="glass-gold p-12 rounded-[3.5rem] border border-white/5 relative group overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
               <svg
@@ -205,9 +205,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Location & Contact Card */}
           <div className="glass p-12 rounded-[3.5rem] border border-white/5 flex flex-col justify-between text-center md:text-left relative overflow-hidden">
-            {/* Abstract gold line decoration */}
             <div className="absolute top-0 left-0 w-1 h-24 bg-gradient-to-b from-champagne/40 to-transparent" />
 
             <div className="space-y-6">
@@ -236,7 +234,7 @@ export default function Home() {
                   </span>
                 </a>
                 <a
-                  href={restaurant.mapEmbedUrl} // or a google maps link
+                  href={restaurant.mapEmbedUrl}
                   target="_blank"
                   className="flex-1 px-8 py-5 bg-champagne/10 border border-champagne/20 rounded-2xl flex items-center justify-center gap-3 hover:bg-champagne/20 transition-all group"
                 >
@@ -254,14 +252,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* --- MINIMAL MAP --- */}
       <div className="max-w-7xl mx-auto px-6 mb-32 relative">
         <div className="relative h-[500px] rounded-[4rem] overflow-hidden glass p-3 border border-white/5 shadow-3xl group">
-          {/* Decorative Corner Accents */}
           <div className="absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-champagne/30 rounded-tl-2xl z-20" />
           <div className="absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-champagne/30 rounded-br-2xl z-20" />
 
-          {/* Map Overlay for deep luxury feel */}
           <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/40 pointer-events-none z-10" />
 
           <iframe
@@ -271,7 +266,6 @@ export default function Home() {
             loading="lazy"
           />
 
-          {/* Floating Map Card */}
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-md">
             <div className="glass-gold p-6 rounded-3xl border border-white/10 backdrop-blur-xl text-center shadow-2xl">
               <p className="text-[9px] font-black uppercase tracking-[0.4em] text-champagne mb-2">
@@ -282,6 +276,16 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </div>
+      </div> */}
+
+      {/* Hours & location section (map) */}
+      <div className="grid lg:grid-cols-12 gap-8">
+        <div className="lg:col-span-5">
+          <HoursSection />
+        </div>
+        <div className="lg:col-span-7">
+          <LocationSection />
         </div>
       </div>
 
