@@ -16,6 +16,7 @@ import Footer from "../components/Footer";
 import { FAQSection } from "../components/FAQSection";
 import HoursSection from "../components/HoursSection";
 import LocationSection from "../components/LocationSection";
+import EliteBackground from "../components/EliteBackground";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -46,6 +47,8 @@ export default function Home() {
 
   return (
     <div className="bg-obsidian min-h-screen text-mist">
+      {/* THE NEW BACKGROUND COMPONENT */}
+      <EliteBackground />
       {/* --- PROFESSIONAL SPLIT HERO --- */}
       <div className="relative min-h-[90vh] flex flex-col justify-center">
         {/* HIGHLIGHTED ALERT: Only shows when restaurant is closed */}
