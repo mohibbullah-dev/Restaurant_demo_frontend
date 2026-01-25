@@ -210,39 +210,46 @@
 import React from "react";
 
 export const ChefSection = () => {
+  // Stable, high-resolution Unsplash IDs for luxury culinary vibes
+  const chefImage =
+    "https://images.unsplash.com/photo-1583394293214-28ded15ee548?q=80&w=1200&auto=format&fit=crop";
+  const detailImage =
+    "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=800&auto=format&fit=crop";
+
   return (
     <section className="max-w-7xl mx-auto px-6 py-40 border-t border-white/5 relative overflow-hidden">
-      {/* 1. Ambient Background: Use a subtle radial gradient for 'Gallery' lighting */}
-      <div className="absolute top-0 left-1/4 w-full h-full bg-[radial-gradient(circle_at_center,_var(--color-champagne)_0%,_transparent_70%)] opacity-[0.03] blur-[120px] pointer-events-none" />
+      {/* 1. Ambient Background */}
+      <div className="absolute top-0 left-1/4 w-full h-full bg-champagne/[0.03] blur-[120px] pointer-events-none" />
 
       <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-center relative z-10">
-        {/* LEFT: Portrait Composition (The Visual Anchor) */}
+        {/* LEFT: Portrait Composition */}
         <div className="lg:col-span-5 relative group">
           <div className="relative z-20">
-            {/* Main Image: High-contrast cinematic treatment */}
-            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] transform transition-all duration-[1.5s] ease-out group-hover:border-champagne/30 group-hover:scale-[1.02]">
+            {/* Main Image */}
+            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl transform transition-all duration-[1.5s] ease-out group-hover:border-champagne/30 group-hover:scale-[1.02] bg-obsidian">
               <img
-                src="https://images.unsplash.com/photo-1577214195070-36266b739501?q=80&w=1974&auto=format&fit=crop"
-                className="w-full h-full object-cover grayscale brightness-75 contrast-[1.2] group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-[1.5s] ease-out"
+                src={chefImage}
+                className="w-full h-full object-cover grayscale brightness-75 contrast-[1.1] group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-[1.5s] ease-out"
                 alt="Executive Chef"
+                loading="lazy"
               />
-              {/* Luxury Vignette Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
             </div>
 
-            {/* Accent Detail Image: Floating 'Behind the Scenes' peek */}
-            <div className="absolute -top-10 -right-10 w-48 h-48 rounded-[2rem] overflow-hidden border border-white/10 shadow-3xl hidden xl:block animate-float group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-1000">
+            {/* Accent Detail Image */}
+            <div className="absolute -top-10 -right-10 w-48 h-48 rounded-[2rem] overflow-hidden border border-white/10 shadow-3xl hidden xl:block animate-float bg-obsidian transition-transform duration-1000 group-hover:translate-x-2">
               <img
-                src="https://images.unsplash.com/photo-1605270012917-bf157c5a9541?q=80&w=1000&auto=format&fit=crop"
+                src={detailImage}
                 className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 transition-all duration-1000"
                 alt="Culinary Detail"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-champagne/10 mix-blend-overlay" />
             </div>
           </div>
 
-          {/* Signature Badge: Switched to a more minimal, professional Pill */}
-          <div className="absolute -bottom-8 -left-8 z-30 bg-black/40 backdrop-blur-3xl px-10 py-8 rounded-[2.5rem] border border-white/10 shadow-2xl">
+          {/* Signature Badge */}
+          <div className="absolute -bottom-8 -left-8 z-30 bg-black/60 backdrop-blur-3xl px-10 py-8 rounded-[2.5rem] border border-white/10 shadow-2xl">
             <div className="space-y-1">
               <span className="block text-[10px] uppercase tracking-[0.4em] text-champagne font-black">
                 The Master
@@ -254,7 +261,7 @@ export const ChefSection = () => {
           </div>
         </div>
 
-        {/* RIGHT: The Narrative (The Storytelling) */}
+        {/* RIGHT: The Narrative */}
         <div className="lg:col-span-7 space-y-16 lg:pl-6">
           <div className="space-y-8">
             <div className="inline-flex items-center gap-4">
@@ -264,7 +271,6 @@ export const ChefSection = () => {
               </p>
             </div>
 
-            {/* Headline: Precision tracking and sizing */}
             <h2 className="text-6xl md:text-8xl font-serif italic gold-gradient-text leading-[0.85] tracking-tighter">
               The Art of <br />
               <span className="text-mist not-italic font-sans font-black uppercase text-3xl md:text-5xl block mt-6 tracking-[0.15em]">
@@ -272,7 +278,6 @@ export const ChefSection = () => {
               </span>
             </h2>
 
-            {/* Quote: Stylized with a 'Golden Cap' */}
             <div className="relative pl-10">
               <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-champagne via-champagne/20 to-transparent" />
               <blockquote className="text-smoke text-xl md:text-2xl font-light leading-relaxed italic max-w-2xl">
@@ -282,11 +287,11 @@ export const ChefSection = () => {
             </div>
           </div>
 
-          {/* Details Grid: Clean, high-contrast layouts */}
+          {/* Details Grid */}
           <div className="grid sm:grid-cols-2 gap-12 pt-12 border-t border-white/5">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                <div className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_8px_rgba(197,160,89,0.4)]" />
                 <p className="text-mist font-black uppercase tracking-[0.2em] text-xs">
                   Excellence in Origin
                 </p>
@@ -299,7 +304,7 @@ export const ChefSection = () => {
 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                <div className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_8px_rgba(197,160,89,0.4)]" />
                 <p className="text-mist font-black uppercase tracking-[0.2em] text-xs">
                   The Pedigree
                 </p>
@@ -314,7 +319,7 @@ export const ChefSection = () => {
             </div>
           </div>
 
-          {/* Luxury CTA Interaction */}
+          {/* CTA */}
           <div className="pt-4">
             <button className="group flex items-center gap-6 text-mist font-black uppercase text-[10px] tracking-[0.5em] hover:text-champagne transition-all duration-500">
               <span>Our Philosophy</span>
