@@ -1,100 +1,100 @@
-export const ChefSection = () => {
-  return (
-    <section className="max-w-7xl mx-auto px-6 py-32 border-t border-white/5 relative overflow-hidden">
-      {/* Subtle Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-champagne/5 blur-[120px] rounded-full pointer-events-none" />
+// export const ChefSection = () => {
+//   return (
+//     <section className="max-w-7xl mx-auto px-6 py-32 border-t border-white/5 relative overflow-hidden">
+//       {/* Subtle Background Glow */}
+//       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-champagne/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="grid lg:grid-cols-12 gap-16 items-center relative z-10">
-        {/* LEFT: Portrait Composition (5/12 Columns) */}
-        <div className="lg:col-span-5 relative group order-2 lg:order-1">
-          <div className="relative">
-            {/* Main Image */}
-            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 shadow-3xl transform group-hover:scale-[1.01] transition-transform duration-1000">
-              <img
-                src="https://images.unsplash.com/photo-1577214195070-36266b739501?q=80&w=1974&auto=format&fit=crop"
-                className="w-full h-full object-cover grayscale brightness-90 contrast-110 hover:grayscale-0 transition-all duration-1000"
-                alt="Executive Chef"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent" />
-            </div>
+//       <div className="grid lg:grid-cols-12 gap-16 items-center relative z-10">
+//         {/* LEFT: Portrait Composition (5/12 Columns) */}
+//         <div className="lg:col-span-5 relative group order-2 lg:order-1">
+//           <div className="relative">
+//             {/* Main Image */}
+//             <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 shadow-3xl transform group-hover:scale-[1.01] transition-transform duration-1000">
+//               <img
+//                 src="https://images.unsplash.com/photo-1577214195070-36266b739501?q=80&w=1974&auto=format&fit=crop"
+//                 className="w-full h-full object-cover grayscale brightness-90 contrast-110 hover:grayscale-0 transition-all duration-1000"
+//                 alt="Executive Chef"
+//               />
+//               <div className="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent" />
+//             </div>
 
-            {/* Accent Floating Image (Chef's Hands/Action) */}
-            <div className="absolute -top-12 -right-12 w-48 h-48 rounded-3xl overflow-hidden border border-white/10 shadow-2xl hidden xl:block animate-float">
-              <img
-                src="https://images.unsplash.com/photo-1605270012917-bf157c5a9541?q=80&w=1000&auto=format&fit=crop"
-                className="w-full h-full object-cover grayscale"
-                alt="Chef's Detail"
-              />
-            </div>
-          </div>
+//             {/* Accent Floating Image (Chef's Hands/Action) */}
+//             <div className="absolute -top-12 -right-12 w-48 h-48 rounded-3xl overflow-hidden border border-white/10 shadow-2xl hidden xl:block animate-float">
+//               <img
+//                 src="https://images.unsplash.com/photo-1605270012917-bf157c5a9541?q=80&w=1000&auto=format&fit=crop"
+//                 className="w-full h-full object-cover grayscale"
+//                 alt="Chef's Detail"
+//               />
+//             </div>
+//           </div>
 
-          {/* Signature Badge */}
-          <div className="absolute -bottom-6 -left-6 glass-gold p-8 rounded-[2.5rem] border border-white/10 shadow-3xl">
-            <p className="font-serif italic text-champagne text-4xl leading-none">
-              Aurelius
-            </p>
-            <div className="h-px w-12 bg-champagne/30 mt-4" />
-          </div>
-        </div>
+//           {/* Signature Badge */}
+//           <div className="absolute -bottom-6 -left-6 glass-gold p-8 rounded-[2.5rem] border border-white/10 shadow-3xl">
+//             <p className="font-serif italic text-champagne text-4xl leading-none">
+//               Aurelius
+//             </p>
+//             <div className="h-px w-12 bg-champagne/30 mt-4" />
+//           </div>
+//         </div>
 
-        {/* RIGHT: The Narrative (7/12 Columns) */}
-        <div className="lg:col-span-7 space-y-12 lg:pl-12 order-1 lg:order-2">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-3">
-              <span className="w-8 h-px bg-champagne/40" />
-              <p className="text-champagne text-[10px] font-black uppercase tracking-[0.5em]">
-                The Maestro
-              </p>
-            </div>
+//         {/* RIGHT: The Narrative (7/12 Columns) */}
+//         <div className="lg:col-span-7 space-y-12 lg:pl-12 order-1 lg:order-2">
+//           <div className="space-y-6">
+//             <div className="inline-flex items-center gap-3">
+//               <span className="w-8 h-px bg-champagne/40" />
+//               <p className="text-champagne text-[10px] font-black uppercase tracking-[0.5em]">
+//                 The Maestro
+//               </p>
+//             </div>
 
-            <h2 className="text-6xl md:text-8xl font-serif italic gold-gradient-text leading-[0.9] tracking-tighter">
-              Crafting <br />
-              <span className="text-mist not-italic font-sans font-bold uppercase text-4xl md:text-5xl">
-                Culinary Landmarks.
-              </span>
-            </h2>
+//             <h2 className="text-6xl md:text-8xl font-serif italic gold-gradient-text leading-[0.9] tracking-tighter">
+//               Crafting <br />
+//               <span className="text-mist not-italic font-sans font-bold uppercase text-4xl md:text-5xl">
+//                 Culinary Landmarks.
+//               </span>
+//             </h2>
 
-            <p className="text-smoke text-xl font-light leading-relaxed max-w-2xl italic">
-              "Every plate is a canvas of heritage. We do not simply prepare
-              food; we architect memories using the primitive elements of fire,
-              salt, and seasonal soul."
-            </p>
-          </div>
+//             <p className="text-smoke text-xl font-light leading-relaxed max-w-2xl italic">
+//               "Every plate is a canvas of heritage. We do not simply prepare
+//               food; we architect memories using the primitive elements of fire,
+//               salt, and seasonal soul."
+//             </p>
+//           </div>
 
-          <div className="grid sm:grid-cols-2 gap-12 pt-8 border-t border-white/5">
-            <div className="space-y-3">
-              <p className="text-mist font-bold uppercase tracking-widest text-xs">
-                Excellence in Origin
-              </p>
-              <p className="text-smoke/60 text-sm leading-relaxed font-light">
-                Chef Aurelius personally visits our heritage farms every Tuesday
-                to secure the week's prime harvest.
-              </p>
-            </div>
-            <div className="space-y-3">
-              <p className="text-mist font-bold uppercase tracking-widest text-xs">
-                The Visionary
-              </p>
-              <div className="space-y-1">
-                <p className="text-mist text-sm font-bold">Julian Aurelius</p>
-                <p className="text-champagne/60 text-[10px] uppercase tracking-widest">
-                  Two-Decade Culinary Veteran
-                </p>
-              </div>
-            </div>
-          </div>
+//           <div className="grid sm:grid-cols-2 gap-12 pt-8 border-t border-white/5">
+//             <div className="space-y-3">
+//               <p className="text-mist font-bold uppercase tracking-widest text-xs">
+//                 Excellence in Origin
+//               </p>
+//               <p className="text-smoke/60 text-sm leading-relaxed font-light">
+//                 Chef Aurelius personally visits our heritage farms every Tuesday
+//                 to secure the week's prime harvest.
+//               </p>
+//             </div>
+//             <div className="space-y-3">
+//               <p className="text-mist font-bold uppercase tracking-widest text-xs">
+//                 The Visionary
+//               </p>
+//               <div className="space-y-1">
+//                 <p className="text-mist text-sm font-bold">Julian Aurelius</p>
+//                 <p className="text-champagne/60 text-[10px] uppercase tracking-widest">
+//                   Two-Decade Culinary Veteran
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
 
-          <div className="pt-4">
-            <button className="flex items-center gap-4 text-mist font-black uppercase text-[10px] tracking-[0.4em] group">
-              Explore the Philosophy
-              <div className="h-px w-8 bg-mist group-hover:w-16 transition-all duration-500" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+//           <div className="pt-4">
+//             <button className="flex items-center gap-4 text-mist font-black uppercase text-[10px] tracking-[0.4em] group">
+//               Explore the Philosophy
+//               <div className="h-px w-8 bg-mist group-hover:w-16 transition-all duration-500" />
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
 
 // import React from "react";
 
@@ -206,3 +206,125 @@ export const ChefSection = () => {
 //     </section>
 //   );
 // };
+
+import React from "react";
+
+export const ChefSection = () => {
+  return (
+    <section className="max-w-7xl mx-auto px-6 py-40 border-t border-white/5 relative overflow-hidden">
+      {/* 1. Ambient Background: Use a subtle radial gradient for 'Gallery' lighting */}
+      <div className="absolute top-0 left-1/4 w-full h-full bg-[radial-gradient(circle_at_center,_var(--color-champagne)_0%,_transparent_70%)] opacity-[0.03] blur-[120px] pointer-events-none" />
+
+      <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-center relative z-10">
+        {/* LEFT: Portrait Composition (The Visual Anchor) */}
+        <div className="lg:col-span-5 relative group">
+          <div className="relative z-20">
+            {/* Main Image: High-contrast cinematic treatment */}
+            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] transform transition-all duration-[1.5s] ease-out group-hover:border-champagne/30 group-hover:scale-[1.02]">
+              <img
+                src="https://images.unsplash.com/photo-1577214195070-36266b739501?q=80&w=1974&auto=format&fit=crop"
+                className="w-full h-full object-cover grayscale brightness-75 contrast-[1.2] group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-[1.5s] ease-out"
+                alt="Executive Chef"
+              />
+              {/* Luxury Vignette Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+            </div>
+
+            {/* Accent Detail Image: Floating 'Behind the Scenes' peek */}
+            <div className="absolute -top-10 -right-10 w-48 h-48 rounded-[2rem] overflow-hidden border border-white/10 shadow-3xl hidden xl:block animate-float group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-1000">
+              <img
+                src="https://images.unsplash.com/photo-1605270012917-bf157c5a9541?q=80&w=1000&auto=format&fit=crop"
+                className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 transition-all duration-1000"
+                alt="Culinary Detail"
+              />
+              <div className="absolute inset-0 bg-champagne/10 mix-blend-overlay" />
+            </div>
+          </div>
+
+          {/* Signature Badge: Switched to a more minimal, professional Pill */}
+          <div className="absolute -bottom-8 -left-8 z-30 bg-black/40 backdrop-blur-3xl px-10 py-8 rounded-[2.5rem] border border-white/10 shadow-2xl">
+            <div className="space-y-1">
+              <span className="block text-[10px] uppercase tracking-[0.4em] text-champagne font-black">
+                The Master
+              </span>
+              <p className="font-serif italic text-mist text-4xl leading-tight">
+                Aurelius
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT: The Narrative (The Storytelling) */}
+        <div className="lg:col-span-7 space-y-16 lg:pl-6">
+          <div className="space-y-8">
+            <div className="inline-flex items-center gap-4">
+              <div className="w-12 h-px bg-champagne/40" />
+              <p className="text-champagne text-[10px] font-black uppercase tracking-[0.6em]">
+                Culinary Maestro
+              </p>
+            </div>
+
+            {/* Headline: Precision tracking and sizing */}
+            <h2 className="text-6xl md:text-8xl font-serif italic gold-gradient-text leading-[0.85] tracking-tighter">
+              The Art of <br />
+              <span className="text-mist not-italic font-sans font-black uppercase text-3xl md:text-5xl block mt-6 tracking-[0.15em]">
+                Curated Essence.
+              </span>
+            </h2>
+
+            {/* Quote: Stylized with a 'Golden Cap' */}
+            <div className="relative pl-10">
+              <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-champagne via-champagne/20 to-transparent" />
+              <blockquote className="text-smoke text-xl md:text-2xl font-light leading-relaxed italic max-w-2xl">
+                "We do not simply prepare food; we architect memories using the
+                primitive elements of fire, salt, and seasonal soul."
+              </blockquote>
+            </div>
+          </div>
+
+          {/* Details Grid: Clean, high-contrast layouts */}
+          <div className="grid sm:grid-cols-2 gap-12 pt-12 border-t border-white/5">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                <p className="text-mist font-black uppercase tracking-[0.2em] text-xs">
+                  Excellence in Origin
+                </p>
+              </div>
+              <p className="text-smoke/70 text-sm leading-relaxed font-light pl-4">
+                Chef Aurelius personally secures the week's prime harvest from
+                our private heritage estates every Tuesday morning.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                <p className="text-mist font-black uppercase tracking-[0.2em] text-xs">
+                  The Pedigree
+                </p>
+              </div>
+              <div className="pl-4 space-y-2">
+                <p className="text-mist text-base font-bold">Julian Aurelius</p>
+                <p className="text-smoke/50 text-[10px] uppercase tracking-[0.2em] leading-loose">
+                  Michelin Guest — Paris & Tokyo <br />
+                  22 Years Culinary Architecture
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Luxury CTA Interaction */}
+          <div className="pt-4">
+            <button className="group flex items-center gap-6 text-mist font-black uppercase text-[10px] tracking-[0.5em] hover:text-champagne transition-all duration-500">
+              <span>Our Philosophy</span>
+              <div className="relative w-16 h-px overflow-hidden bg-white/10">
+                <div className="absolute inset-0 bg-champagne -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
