@@ -504,17 +504,30 @@ export default function Home() {
         <RitualSection />
 
         {/* Hours & location section wrapper */}
-        <section className="max-w-7xl mx-auto px-6 py-24">
+        {/* <section className="max-w-7xl mx-auto px-6 py-24">
           <div className="grid lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-5 h-full">
+            <div className="lg:col-span-5">
               <HoursSection />
             </div>
             <div className="lg:col-span-7">
               <LocationSection />
             </div>
           </div>
-        </section>
+        </section> */}
+        {/* Home.jsx - Location & Hours Section */}
+        <section className="py-24 px-4 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
+            {/* LEFT SIDE: Hours */}
+            <div className="flex flex-col h-full">
+              <HoursSection />
+            </div>
 
+            {/* RIGHT SIDE: Map & Address */}
+            <div className="flex flex-col h-full">
+              <LocationSection />
+            </div>
+          </div>
+        </section>
         <VisualGallery />
         <EventsSection />
         <FAQSection />
