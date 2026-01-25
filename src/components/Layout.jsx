@@ -225,7 +225,7 @@ export default function Layout() {
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    className="px-6 py-2 border border-champagne/30 rounded-full text-champagne text-[10px] uppercase tracking-widest hover:bg-white bg-champagne hover:text-obsidian transition-all"
+                    className="px-6 py-2 border border-champagne/30 rounded-full text-obsidian text-[10px] uppercase tracking-widest hover:bg-white bg-champagne transition-all"
 
                     // className="text-champagne hover:brightness-125 flex items-center gap-2"
                   >
