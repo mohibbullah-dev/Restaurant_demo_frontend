@@ -360,6 +360,7 @@ import { FAQSection } from "../components/FAQSection";
 import HoursSection from "../components/HoursSection";
 import LocationSection from "../components/LocationSection";
 import { Hero } from "../components/Hero";
+import { useNavigate } from "react-router-dom";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -372,6 +373,7 @@ export default function Home() {
   const [current, setCurrent] = useState(0);
   const cart = useCart();
   const { settings } = useSettings();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(
@@ -484,7 +486,7 @@ export default function Home() {
 
         {/* Signature menu  */}
 
-        <Section
+        {/* <Section
           id="menu"
           title={
             <span className="gold-gradient-text">Signature Collection</span>
@@ -502,6 +504,58 @@ export default function Home() {
                 }}
               />
             ))}
+          </div>
+        </Section> */}
+
+        <Section
+          id="menu"
+          title={
+            <span className="gold-gradient-text">Signature Collection</span>
+          }
+          subtitle="The definitive selection of our finest seasonal highlights."
+        >
+          {/* GRID: Limited to 8 items, 2 rows of 4 on large screens */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {featured.slice(0, 8).map((item) => (
+              <MenuItemCard
+                key={item._id}
+                item={item}
+                onAdd={(it) => {
+                  cart.add(it);
+                  cart.open();
+                }}
+              />
+            ))}
+          </div>
+
+          {/* PREMIUM CALL TO ACTION */}
+          <div className="flex justify-center">
+            <button
+              onClick={() => navigate("/menu")}
+              className="group relative px-12 py-5 bg-transparent overflow-hidden rounded-full border border-champagne/30 transition-all duration-500 hover:border-champagne"
+            >
+              {/* Animated Shine Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+
+              <div className="flex items-center gap-4 relative z-10">
+                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-champagne group-hover:text-mist transition-colors">
+                  Explore Full Menu
+                </span>
+                <svg
+                  className="w-4 h-4 text-champagne transition-transform duration-500 group-hover:translate-x-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </div>
+            </button>
           </div>
         </Section>
 
