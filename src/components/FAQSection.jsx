@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { restaurant } from "../config/restaurant";
 
 export const FAQSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
