@@ -391,7 +391,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen text-mist">
       {/* 1. BACKGROUND LAYER */}
-      <EliteBackground />
+      {/* <EliteBackground /> */}
 
       {/* 2. CONTENT LAYER (z-10 ensures it sits above the fixed background) */}
       <div className="relative z-10">
@@ -506,7 +506,7 @@ export default function Home() {
         {/* Hours & location section wrapper */}
         <section className="max-w-7xl mx-auto px-6 py-24">
           <div className="grid lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 h-full">
               <HoursSection />
             </div>
             <div className="lg:col-span-7">
