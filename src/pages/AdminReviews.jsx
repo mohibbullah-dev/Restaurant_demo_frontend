@@ -302,48 +302,58 @@ export default function AdminReviews() {
           {reviews.map((rev) => (
             <div
               key={rev._id}
-              className="glass-gold p-5 md:p-8 rounded-3xl border border-white/5 flex flex-col lg:flex-row gap-6 lg:items-center relative"
+              className="glass-gold p-6 md:p-8 rounded-[2rem] border border-white/5 relative overflow-hidden transition-all duration-500 hover:border-champagne/20"
             >
-              {/* STATUS DOT - Positioned top-right on mobile for space */}
-              <div className="absolute top-6 right-6 lg:static">
-                <span
-                  className={`block w-2.5 h-2.5 rounded-full ${rev.isApproved ? "bg-emerald-500 shadow-[0_0_10px_#10b981]" : "bg-amber-500 animate-pulse"}`}
-                />
-              </div>
-
-              <div className="flex-1 min-w-0">
-                {" "}
-                {/* min-w-0 prevents flex items from overflowing */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
-                  <h4 className="font-bold text-mist text-lg truncate uppercase tracking-tight">
-                    {rev.customerName}
-                  </h4>
-                  <div className="flex text-champagne text-[10px] sm:ml-2">
-                    {"★".repeat(rev.rating)}
-                    {"☆".repeat(5 - rev.rating)}
+              {/* Grid Layout: Stacks on mobile, Side-by-side on large screens */}
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-8 items-start lg:items-center">
+                {/* LEFT: Content Area */}
+                <div className="space-y-4 min-w-0">
+                  {" "}
+                  {/* min-w-0 is CRITICAL to stop text from breaking grid */}
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span
+                      className={`w-2 h-2 rounded-full flex-shrink-0 ${rev.isApproved ? "bg-emerald-500 shadow-[0_0_8px_#10b981]" : "bg-amber-500 animate-pulse"}`}
+                    />
+                    <h4 className="font-serif italic text-xl text-mist truncate">
+                      {rev.customerName}
+                    </h4>
+                    <div className="flex text-champagne text-[10px] tracking-widest ml-auto lg:ml-0">
+                      {"★".repeat(rev.rating)}
+                    </div>
+                  </div>
+                  <div className="relative p-5 rounded-2xl bg-white/[0.02] border border-white/5">
+                    <p className="text-smoke text-sm font-light leading-relaxed italic break-words">
+                      "{rev.comment}"
+                    </p>
                   </div>
                 </div>
-                <p className="text-smoke text-sm font-light italic leading-relaxed break-words bg-white/[0.02] p-4 rounded-2xl border border-white/5">
-                  "{rev.comment}"
-                </p>
+
+                {/* RIGHT: Action Buttons */}
+                <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full">
+                  <button
+                    onClick={() => toggleApprove(rev._id)}
+                    className={`flex-1 py-4 lg:py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] transition-all
+            ${
+              rev.isApproved
+                ? "bg-white/5 text-mist border border-white/10 hover:bg-white/10"
+                : "bg-champagne text-obsidian shadow-lg shadow-champagne/10 hover:brightness-110"
+            }`}
+                  >
+                    {rev.isApproved ? "Hide" : "Approve"}
+                  </button>
+                  <button
+                    onClick={() => deleteReview(rev._id)}
+                    className="flex-1 py-4 lg:py-3 rounded-xl bg-red-500/5 text-red-500/60 border border-red-500/10 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-red-500 hover:text-white transition-all"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
 
-              {/* ACTION BUTTONS: Stacked on Mobile, Row on Desktop */}
-              <div className="flex flex-col sm:flex-row lg:flex-col gap-2 w-full lg:w-40">
-                <button
-                  onClick={() => toggleApprove(rev._id)}
-                  className={`flex-1 py-4 lg:py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all
-                    ${rev.isApproved ? "bg-white/10 text-mist border border-white/10" : "bg-champagne text-obsidian shadow-xl shadow-champagne/10"}`}
-                >
-                  {rev.isApproved ? "Hide" : "Approve"}
-                </button>
-                <button
-                  onClick={() => deleteReview(rev._id)}
-                  className="flex-1 py-4 lg:py-3 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 text-[10px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all"
-                >
-                  Delete
-                </button>
-              </div>
+              {/* Decorative Background Element */}
+              <span className="absolute -bottom-4 -right-2 text-8xl font-serif italic text-white/[0.02] pointer-events-none select-none">
+                {rev.rating}
+              </span>
             </div>
           ))}
         </div>
