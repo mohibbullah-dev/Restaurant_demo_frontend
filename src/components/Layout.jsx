@@ -168,6 +168,8 @@ import CartButton from "./CartButton";
 import CartDrawer from "./CartDrawer";
 import { getToken } from "../utils/auth";
 import { Phone } from "lucide-react";
+import FloatingConcierge from "./FloatingConcierge";
+import { restaurant } from "./config/restaurant";
 
 export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -366,6 +368,7 @@ export default function Layout() {
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-champagne/5 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-barolo/5 blur-[120px] rounded-full"></div>
       </div>
+      <FloatingConcierge phone={restaurant.whatsappPhone} />
     </div>
   );
 }
