@@ -7,6 +7,7 @@ import { useCart } from "../context/CartContext";
 import { useSettings } from "../context/SettingsContext"; // Added this
 import ReviewsDisplay from "../components/ReviewsDisplay";
 import AboutSection from "../components/AboutSection";
+import CallToAction from "../components/CallToAction";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
@@ -277,7 +278,7 @@ export default function Home() {
 
       {/* call-to-action */}
       {/* --- FINAL CALL TO ACTION --- */}
-      <div className="max-w-5xl mx-auto px-6 mb-32">
+      {/* <div className="max-w-5xl mx-auto px-6 mb-32">
         <div className="glass-gold rounded-[4rem] p-16 text-center border border-white/5 relative overflow-hidden">
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-champagne/10 blur-[100px]" />
           <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-barolo/5 blur-[100px]" />
@@ -301,7 +302,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+      <CallToAction />
     </div>
   );
 }
