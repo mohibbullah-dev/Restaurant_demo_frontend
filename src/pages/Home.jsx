@@ -44,9 +44,9 @@ export default function Home() {
       .then((d) => setFeatured(d.items || []))
       .catch(() => setFeatured([]));
   }, []);
-
+  // bg-obsidian
   return (
-    <div className="bg-obsidian min-h-screen text-mist">
+    <div className=" min-h-screen text-mist">
       {/* THE NEW BACKGROUND COMPONENT */}
       <EliteBackground />
       {/* --- PROFESSIONAL SPLIT HERO --- */}
