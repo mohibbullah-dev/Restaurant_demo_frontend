@@ -178,9 +178,10 @@ export default function Layout() {
   const isAdminPage = location.pathname.startsWith("/admin");
 
   const closeMobile = () => setMobileOpen(false);
+  // bg-obsidian
 
   return (
-    <div className="min-h-screen bg-obsidian text-mist font-display selection:bg-champagne/30">
+    <div className="min-h-screen bg-transparent text-mist font-display selection:bg-champagne/30">
       {/* HEADER: Professional Glassmorphism Sticky Bar */}
       <header className="sticky top-0 z-50 transition-all duration-300">
         <div className="max-w-6xl mx-auto px-4 py-4">
@@ -363,10 +364,10 @@ export default function Layout() {
       {!isAdminPage && <CartDrawer />}
 
       {/* Decorative Background Elements (Reference Image Style) */}
-      <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+      {/* <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-champagne/5 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-barolo/5 blur-[120px] rounded-full"></div>
-      </div>
+      </div> */}
       <FloatingConcierge phone={restaurant.whatsappPhone} />
     </div>
   );

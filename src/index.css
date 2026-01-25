@@ -1,16 +1,3 @@
-/* @import "tailwindcss";
-
-@theme {
-  --color-obsidian: #0b0c10;
-  --color-velvet: #1f2833;
-  --color-champagne: #c5a059;
-  --color-bronze: #8d6e42;
-  --color-barolo: #4a0404;
-  --color-mist: #e6e6e6;
-  --color-smoke: #a1a1aa;
-
-  --font-display: "Playfair Display", serif;
-} */
 @import "tailwindcss";
 
 @theme {
@@ -33,28 +20,28 @@
 
 @layer base {
   body {
-    @apply bg-obsidian text-mist antialiased;
-    background-image:
-      radial-gradient(
-        circle at 0% 0%,
-        rgba(197, 160, 89, 0.03) 0%,
-        transparent 40%
-      ),
-      radial-gradient(
-        circle at 100% 100%,
-        rgba(197, 160, 89, 0.03) 0%,
-        transparent 40%
-      );
+    /* 1. Set the solid base color as the lowest layer */
+    background-color: var(--color-obsidian);
+    @apply text-mist antialiased;
     min-height: 100vh;
+    margin: 0;
+    /* 2. Remove the old radial gradients so they don't fight with EliteBackground */
   }
 
-  /* Fix for invisible inputs shown in your screenshots */
+  /* 3. Ensure the React root doesn't block the background */
+  #root {
+    min-height: 100vh;
+    background: transparent;
+  }
+
   input,
   textarea,
   select {
     @apply bg-velvet/50 text-mist border-white/10 outline-none focus:border-champagne/50 transition-all;
   }
 }
+
+/* --- DESIGN SYSTEM UTILITIES --- */
 
 @utility glass {
   background: rgba(31, 40, 51, 0.4);
@@ -78,6 +65,8 @@
 @utility btn-gold {
   @apply bg-champagne text-obsidian font-bold py-3 px-6 rounded-xl hover:bg-bronze transition-colors uppercase tracking-widest text-xs;
 }
+
+/* --- ANIMATIONS --- */
 
 @keyframes marquee {
   0% {
