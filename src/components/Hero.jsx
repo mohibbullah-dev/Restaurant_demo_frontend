@@ -5,8 +5,8 @@ import { useSettings } from "../context/SettingsContext";
 // High-end, cohesive culinary set (Atmospheric, Dark, Textural)
 const SLIDES = [
   "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000&auto=format&fit=crop", // Fine Dining Plating
-  "https://images.unsplash.com/photo-1550966842-28c4ce126b30?q=80&w=2000&auto=format&fit=crop", // Moody Restaurant Interior
-  "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2000&auto=format&fit=crop", // Craft Cocktail/Atmosphere
+  "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000&auto=format&fit=crop", // Moody Restaurant Interior
+  "https://images.unsplash.com/photo-1550966842-28c4ce126b30?q=80&w=2000&auto=format&fit=crop", // Craft Cocktail/Atmosphere
 ];
 
 export const Hero = () => {
