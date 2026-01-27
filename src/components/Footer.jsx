@@ -194,7 +194,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-obsidian border-t border-white/5 pt-40 pb-12 overflow-hidden">
+    <footer className="relative border-t border-white/5 pt-40 pb-12 overflow-hidden">
       {/* 1. Cinematic Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-champagne/20 to-transparent" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[400px] bg-champagne/[0.03] blur-[150px] rounded-full pointer-events-none" />
