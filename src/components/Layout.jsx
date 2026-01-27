@@ -162,7 +162,7 @@
 // }
 
 import { useMemo, useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { restaurant } from "../config/restaurant";
 import CartButton from "./CartButton";
 import CartDrawer from "./CartDrawer";
