@@ -144,7 +144,7 @@ export default function Menu() {
 
   if (loading)
     return (
-      <div className="min-h-screen bg-obsidian flex items-center justify-center">
+      <div className="min-h-screen  flex items-center justify-center">
         <div className="w-10 h-10 border-2 border-champagne/10 border-t-champagne rounded-full animate-spin"></div>
       </div>
     );
@@ -165,8 +165,10 @@ export default function Menu() {
       </div>
 
       {/* --- STICKY CATEGORY NAV --- */}
-      <div className="sticky top-[72px] z-30 bg-obsidian/60 backdrop-blur-xl border-y border-white/5 py-4 overflow-x-auto no-scrollbar">
-        <div className="max-w-7xl mx-auto px-6 flex justify-center gap-10 whitespace-nowrap">
+      {/* bg-obsidian/60 */}
+      <div className="sticky top-[72px] z-30  backdrop-blur-xl border-y border-white/5 py-4 overflow-x-auto no-scrollbar">
+        {/* <div className="max-w-7xl mx-auto px-6 flex justify-center gap-10 whitespace-nowrap"> */}
+        <div className="max-w-7xl mx-auto px-6 flex justify-center gap-10">
           {categories.map((cat) => (
             <button
               key={cat.name}
