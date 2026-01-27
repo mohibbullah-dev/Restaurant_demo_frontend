@@ -214,6 +214,13 @@ export default function Layout() {
                     >
                       Digital QR
                     </Link>
+                    // Find your links array or HTML list in Navbar.jsx
+                    <Link
+                      to="/reviews"
+                      className="px-6 py-2 border border-champagne/30 rounded-full text-champagne text-[10px] uppercase tracking-widest hover:bg-champagne hover:text-obsidian transition-all"
+                    >
+                      Reviews
+                    </Link>
                     <Link
                       to="/book"
                       className="px-6 py-2 border border-champagne/30 rounded-full text-champagne text-[10px] uppercase tracking-widest hover:bg-champagne hover:text-obsidian transition-all"

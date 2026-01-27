@@ -95,6 +95,7 @@ export default function App() {
           <Route path="/status/:id" element={<OrderStatus />} />
           <Route path="/reviews" element={<AllReviews />} />
           <Route path="/book" element={<BookTable />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
 
           {/* Admin Login - Usually looks better inside the layout or a dedicated clean layout */}
           <Route path="/admin/login" element={<AdminLogin />} />
