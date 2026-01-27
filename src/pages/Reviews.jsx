@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_BASE } from "../config/api";
-import Navbar from "../components/Navbar"; // Adjust path as needed
+// import Navbar from "../components/Navbar"; // Adjust path as needed
 
 export default function ReviewsPage() {
   const [reviews, setReviews] = useState([]);
@@ -14,7 +14,7 @@ export default function ReviewsPage() {
 
   return (
     <div className="min-h-screen bg-obsidian">
-      <Navbar /> {/* Ensure Navbar is present */}
+      {/* <Navbar /> Ensure Navbar is present */}
       <div className="max-w-7xl mx-auto px-6 py-32">
         <h1 className="text-5xl md:text-7xl font-serif italic text-mist mb-4 text-center">
           The <span className="text-champagne">Registry</span>
