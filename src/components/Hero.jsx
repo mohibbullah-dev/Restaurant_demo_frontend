@@ -1,13 +1,13 @@
-// import React, { useState, useEffect } from "react";
-// import { restaurant } from "../config/restaurant";
-// import { useSettings } from "../context/SettingsContext";
+import React, { useState, useEffect } from "react";
+import { restaurant } from "../config/restaurant";
+import { useSettings } from "../context/SettingsContext";
 
-// // High-end, cohesive culinary set (Atmospheric, Dark, Textural)
-// const SLIDES = [
-//   "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000&auto=format&fit=crop", // Fine Dining Plating
-//   "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop", // Moody Restaurant Interior
-//   "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop", // Craft Cocktail/Atmosphere
-// ];
+// High-end, cohesive culinary set (Atmospheric, Dark, Textural)
+const SLIDES = [
+  "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000&auto=format&fit=crop", // Fine Dining Plating
+  "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop", // Moody Restaurant Interior
+  "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop", // Craft Cocktail/Atmosphere
+];
 
 // export const Hero = () => {
 //   const { settings } = useSettings();
