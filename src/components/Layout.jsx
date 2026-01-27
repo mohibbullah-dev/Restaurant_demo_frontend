@@ -184,7 +184,7 @@ export default function Layout() {
     <div className="min-h-screen bg-transparent text-mist font-display selection:bg-champagne/30">
       <EliteBackground />
       <header className="sticky top-0 z-50 transition-all duration-300">
-        <div className="max-w-6xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="glass-gold rounded-3xl px-6 py-3 flex items-center justify-between border-white/5 shadow-2xl">
             {/* Left: Brand */}
             <div className="flex items-center gap-8">
