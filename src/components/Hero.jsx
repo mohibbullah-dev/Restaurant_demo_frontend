@@ -146,10 +146,10 @@ export const Hero = () => {
     }, 6000);
     return () => clearInterval(timer);
   }, []);
-
+  // bg-obsidian
   return (
     // Added overflow-x-hidden to prevent the "white stripe" bug
-    <section className="relative min-h-screen flex flex-col justify-center overflow-x-hidden bg-obsidian py-20 lg:py-0">
+    <section className="relative min-h-screen flex flex-col justify-center overflow-x-hidden py-20 lg:py-0">
       {/* 1. CLOSED NOTICE: Adjusted for mobile spacing */}
       {!settings?.isOpen && (
         <div className="absolute top-24 lg:top-32 left-1/2 -translate-x-1/2 z-50 w-full px-4 max-w-xl">
