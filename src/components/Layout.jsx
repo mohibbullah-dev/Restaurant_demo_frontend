@@ -204,10 +204,10 @@ export default function Layout() {
                 <nav className="hidden lg:flex items-center gap-1">
                   {!isAdminPage && (
                     <>
-                      <NavLink to="/menu" label="Menu" />
-                      <NavLink to="/qr" label="Digital QR" />
-                      <NavLink to="/reviews" label="Reviews" />
-                      <NavLink to="/book" label="Reservations" />
+                      <Link to="/menu" label="Menu" />
+                      <Link to="/qr" label="Digital QR" />
+                      <Link to="/reviews" label="Reviews" />
+                      <Link to="/book" label="Reservations" />
                     </>
                   )}
                   {isAdmin && (
