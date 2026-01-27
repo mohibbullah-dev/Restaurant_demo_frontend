@@ -4,5 +4,5 @@ export function getCategories(items) {
 }
 
 export function formatPriceEGP(price) {
-  return `${price} EGP`;
+  return `${price} $`;
 }
