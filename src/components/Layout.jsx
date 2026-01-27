@@ -179,16 +179,14 @@ export default function Layout() {
   const isAdminPage = location.pathname.startsWith("/admin");
 
   const closeMobile = () => setMobileOpen(false);
-  // bg-obsidian
 
   return (
     <div className="min-h-screen bg-transparent text-mist font-display selection:bg-champagne/30">
-      {/* HEADER: Professional Glassmorphism Sticky Bar */}
       <EliteBackground />
       <header className="sticky top-0 z-50 transition-all duration-300">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="glass-gold rounded-3xl px-6 py-3 flex items-center justify-between border-white/5 shadow-2xl">
-            {/* Left: Brand with Gold Gradient */}
+            {/* Left: Brand */}
             <div className="flex items-center gap-8">
               <Link
                 to="/"
@@ -198,7 +196,7 @@ export default function Layout() {
                 {restaurant.name}
               </Link>
 
-              {/* Desktop Nav: Clean & Minimalist */}
+              {/* Desktop Nav */}
               <nav className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide">
                 {!isAdminPage && (
                   <>
@@ -214,7 +212,7 @@ export default function Layout() {
                     >
                       Digital QR
                     </Link>
-                    // Find your links array or HTML list in Navbar.jsx
+                    {/* Fixed Comment Syntax here */}
                     <Link
                       to="/reviews"
                       className="px-6 py-2 border border-champagne/30 rounded-full text-champagne text-[10px] uppercase tracking-widest hover:bg-champagne hover:text-obsidian transition-all"
@@ -232,84 +230,30 @@ export default function Layout() {
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    className="px-6 py-2 border border-champagne/30 rounded-full text-obsidian text-[10px] uppercase tracking-widest hover:bg-white bg-champagne transition-all"
-
-                    // className="text-champagne hover:brightness-125 flex items-center gap-2"
+                    className="px-6 py-2 border border-champagne/30 rounded-full text-obsidian text-[10px] uppercase tracking-widest hover:bg-white bg-champagne transition-all flex items-center gap-2"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-obsidian animate-pulse"></span>
                     Dashboard
                   </Link>
                 )}
               </nav>
             </div>
 
-            {/* Right: Modern Action Buttons */}
+            {/* Right: Actions */}
             <div className="flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-3">
-                {!isAdminPage && <CartButton />}
-
-                <a
-                  href={`tel:${restaurant.phone}`}
-                  // className="px-4 py-2 rounded-xl glass border border-champagne/30 text-xs uppercase font-bold tracking-widest hover:bg-white/5 transition-all"
-                  className="relative px-3 py-2 rounded-lg border border-champagne/30 text-smoke hover:text-mist transition-colors text-sm "
-                >
-                  <Phone size={17} />
-                </a>
-
-                <a
-                  href={`https://wa.me/${restaurant.whatsappPhone}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-champagne to-bronze text-obsidian text-xs uppercase font-black tracking-widest hover:scale-105 transition-all shadow-lg shadow-champagne/10"
-                >
-                  WhatsApp
-                </a>
-
-                {!isAdmin && (
-                  <Link
-                    to="/admin/login"
-                    className="p-1 rounded-xl border border-white/5 text-smoke hover:text-mist transition-colors"
-                    title="Staff Portal"
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                      />
-                    </svg>
-                  </Link>
-                )}
-              </div>
-
-              {/* Mobile: Minimalist Hamburger */}
+              {/* ... (Keep your Cart, Phone, and WhatsApp buttons here) */}
+              {/* Note: I'm omitting them for space, keep your exact code here */}
               <button
                 className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl glass border-white/10"
                 onClick={() => setMobileOpen((v) => !v)}
               >
-                <div className="space-y-1.5">
-                  <span
-                    className={`block w-5 h-0.5 bg-champagne transition-all ${mobileOpen ? "rotate-45 translate-y-2" : ""}`}
-                  ></span>
-                  <span
-                    className={`block w-3 h-0.5 bg-champagne ml-auto transition-all ${mobileOpen ? "opacity-0" : ""}`}
-                  ></span>
-                  <span
-                    className={`block w-5 h-0.5 bg-champagne transition-all ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`}
-                  ></span>
-                </div>
+                {/* Your Hamburger Icon Code */}
               </button>
             </div>
           </div>
         </div>
 
-        {/* MOBILE MENU PANEL: Blurred Overlay */}
+        {/* MOBILE MENU PANEL: Updated with Reviews and Book links */}
         {mobileOpen && (
           <div className="md:hidden fixed inset-x-4 top-24 z-50">
             <div className="glass-gold rounded-4xl p-6 border-white/10 shadow-3xl flex flex-col gap-4 animate-in fade-in zoom-in duration-300">
@@ -318,16 +262,31 @@ export default function Layout() {
                   <Link
                     to="/menu"
                     onClick={closeMobile}
-                    className="text-xl font-bold py-2 border-b border-white/5"
+                    className="text-xl font-bold py-2 border-b border-white/5 text-mist"
                   >
                     Menu
                   </Link>
                   <Link
                     to="/qr"
                     onClick={closeMobile}
-                    className="text-xl font-bold py-2 border-b border-white/5"
+                    className="text-xl font-bold py-2 border-b border-white/5 text-mist"
                   >
                     Digital QR
+                  </Link>
+                  {/* NEW MOBILE LINKS */}
+                  <Link
+                    to="/reviews"
+                    onClick={closeMobile}
+                    className="text-xl font-bold py-2 border-b border-white/5 text-mist"
+                  >
+                    Guest Reviews
+                  </Link>
+                  <Link
+                    to="/book"
+                    onClick={closeMobile}
+                    className="text-xl font-bold py-2 border-b border-white/5 text-mist"
+                  >
+                    Book a Table
                   </Link>
                   <div className="flex items-center justify-between py-2">
                     <span className="text-smoke">Your Order</span>
@@ -335,49 +294,229 @@ export default function Layout() {
                   </div>
                 </>
               )}
-              <div className="grid grid-cols-2 gap-3 pt-2">
-                <a
-                  href={`tel:${restaurant.phone}`}
-                  className="flex items-center justify-center py-4 rounded-2xl glass border-white/10 font-bold uppercase text-xs tracking-widest"
-                >
-                  Call
-                </a>
-                <a
-                  href={`https://wa.me/${restaurant.whatsappPhone}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-center py-4 rounded-2xl bg-champagne text-obsidian font-bold uppercase text-xs tracking-widest"
-                >
-                  WhatsApp
-                </a>
-              </div>
-
-              <Link
-                to={isAdmin ? "/admin" : "/admin/login"}
-                onClick={closeMobile}
-                className="text-center py-3 text-smoke text-sm"
-              >
-                {isAdmin ? "Go to Dashboard" : "Staff Login"}
-              </Link>
+              {/* ... (Keep your Call, WhatsApp, and Staff Login buttons here) */}
             </div>
           </div>
         )}
       </header>
 
-      {/* MAIN CONTENT AREA */}
       <main className="max-w-6xl mx-auto px-4 relative z-10">
         <Outlet />
       </main>
 
-      {/* Cart Drawer Overlay */}
       {!isAdminPage && <CartDrawer />}
-
-      {/* Decorative Background Elements (Reference Image Style) */}
-      {/* <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-champagne/5 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-barolo/5 blur-[120px] rounded-full"></div>
-      </div> */}
       <FloatingConcierge phone={restaurant.whatsappPhone} />
     </div>
   );
 }
+
+// export default function Layout() {
+//   const [mobileOpen, setMobileOpen] = useState(false);
+//   const location = useLocation();
+
+//   const isAdmin = useMemo(() => !!getToken(), []);
+//   const isAdminPage = location.pathname.startsWith("/admin");
+
+//   const closeMobile = () => setMobileOpen(false);
+//   // bg-obsidian
+
+//   return (
+//     <div className="min-h-screen bg-transparent text-mist font-display selection:bg-champagne/30">
+//       {/* HEADER: Professional Glassmorphism Sticky Bar */}
+//       <EliteBackground />
+//       <header className="sticky top-0 z-50 transition-all duration-300">
+//         <div className="max-w-6xl mx-auto px-4 py-4">
+//           <div className="glass-gold rounded-3xl px-6 py-3 flex items-center justify-between border-white/5 shadow-2xl">
+//             {/* Left: Brand with Gold Gradient */}
+//             <div className="flex items-center gap-8">
+//               <Link
+//                 to="/"
+//                 className="font-bold text-xl tracking-tighter gold-gradient-text"
+//                 onClick={closeMobile}
+//               >
+//                 {restaurant.name}
+//               </Link>
+
+//               {/* Desktop Nav: Clean & Minimalist */}
+//               <nav className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide">
+//                 {!isAdminPage && (
+//                   <>
+//                     <Link
+//                       to="/menu"
+//                       className="px-6 py-2 border border-champagne/30 rounded-full text-champagne text-[10px] uppercase tracking-widest hover:bg-champagne hover:text-obsidian transition-all"
+//                     >
+//                       Menu
+//                     </Link>
+//                     <Link
+//                       to="/qr"
+//                       className="px-6 py-2 border border-champagne/30 rounded-full text-champagne text-[10px] uppercase tracking-widest hover:bg-champagne hover:text-obsidian transition-all"
+//                     >
+//                       Digital QR
+//                     </Link>
+//                     // Find your links array or HTML list in Navbar.jsx
+//                     <Link
+//                       to="/reviews"
+//                       className="px-6 py-2 border border-champagne/30 rounded-full text-champagne text-[10px] uppercase tracking-widest hover:bg-champagne hover:text-obsidian transition-all"
+//                     >
+//                       Reviews
+//                     </Link>
+//                     <Link
+//                       to="/book"
+//                       className="px-6 py-2 border border-champagne/30 rounded-full text-champagne text-[10px] uppercase tracking-widest hover:bg-champagne hover:text-obsidian transition-all"
+//                     >
+//                       Reservations
+//                     </Link>
+//                   </>
+//                 )}
+//                 {isAdmin && (
+//                   <Link
+//                     to="/admin"
+//                     className="px-6 py-2 border border-champagne/30 rounded-full text-obsidian text-[10px] uppercase tracking-widest hover:bg-white bg-champagne transition-all"
+
+//                     // className="text-champagne hover:brightness-125 flex items-center gap-2"
+//                   >
+//                     <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse"></span>
+//                     Dashboard
+//                   </Link>
+//                 )}
+//               </nav>
+//             </div>
+
+//             {/* Right: Modern Action Buttons */}
+//             <div className="flex items-center gap-3">
+//               <div className="hidden md:flex items-center gap-3">
+//                 {!isAdminPage && <CartButton />}
+
+//                 <a
+//                   href={`tel:${restaurant.phone}`}
+//                   // className="px-4 py-2 rounded-xl glass border border-champagne/30 text-xs uppercase font-bold tracking-widest hover:bg-white/5 transition-all"
+//                   className="relative px-3 py-2 rounded-lg border border-champagne/30 text-smoke hover:text-mist transition-colors text-sm "
+//                 >
+//                   <Phone size={17} />
+//                 </a>
+
+//                 <a
+//                   href={`https://wa.me/${restaurant.whatsappPhone}`}
+//                   target="_blank"
+//                   rel="noreferrer"
+//                   className="px-5 py-2 rounded-xl bg-gradient-to-r from-champagne to-bronze text-obsidian text-xs uppercase font-black tracking-widest hover:scale-105 transition-all shadow-lg shadow-champagne/10"
+//                 >
+//                   WhatsApp
+//                 </a>
+
+//                 {!isAdmin && (
+//                   <Link
+//                     to="/admin/login"
+//                     className="p-1 rounded-xl border border-white/5 text-smoke hover:text-mist transition-colors"
+//                     title="Staff Portal"
+//                   >
+//                     <svg
+//                       className="w-5 h-5"
+//                       fill="none"
+//                       stroke="currentColor"
+//                       viewBox="0 0 24 24"
+//                     >
+//                       <path
+//                         strokeLinecap="round"
+//                         strokeLinejoin="round"
+//                         strokeWidth="1.5"
+//                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+//                       />
+//                     </svg>
+//                   </Link>
+//                 )}
+//               </div>
+
+//               {/* Mobile: Minimalist Hamburger */}
+//               <button
+//                 className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl glass border-white/10"
+//                 onClick={() => setMobileOpen((v) => !v)}
+//               >
+//                 <div className="space-y-1.5">
+//                   <span
+//                     className={`block w-5 h-0.5 bg-champagne transition-all ${mobileOpen ? "rotate-45 translate-y-2" : ""}`}
+//                   ></span>
+//                   <span
+//                     className={`block w-3 h-0.5 bg-champagne ml-auto transition-all ${mobileOpen ? "opacity-0" : ""}`}
+//                   ></span>
+//                   <span
+//                     className={`block w-5 h-0.5 bg-champagne transition-all ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`}
+//                   ></span>
+//                 </div>
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* MOBILE MENU PANEL: Blurred Overlay */}
+//         {mobileOpen && (
+//           <div className="md:hidden fixed inset-x-4 top-24 z-50">
+//             <div className="glass-gold rounded-4xl p-6 border-white/10 shadow-3xl flex flex-col gap-4 animate-in fade-in zoom-in duration-300">
+//               {!isAdminPage && (
+//                 <>
+//                   <Link
+//                     to="/menu"
+//                     onClick={closeMobile}
+//                     className="text-xl font-bold py-2 border-b border-white/5"
+//                   >
+//                     Menu
+//                   </Link>
+//                   <Link
+//                     to="/qr"
+//                     onClick={closeMobile}
+//                     className="text-xl font-bold py-2 border-b border-white/5"
+//                   >
+//                     Digital QR
+//                   </Link>
+//                   <div className="flex items-center justify-between py-2">
+//                     <span className="text-smoke">Your Order</span>
+//                     <CartButton />
+//                   </div>
+//                 </>
+//               )}
+//               <div className="grid grid-cols-2 gap-3 pt-2">
+//                 <a
+//                   href={`tel:${restaurant.phone}`}
+//                   className="flex items-center justify-center py-4 rounded-2xl glass border-white/10 font-bold uppercase text-xs tracking-widest"
+//                 >
+//                   Call
+//                 </a>
+//                 <a
+//                   href={`https://wa.me/${restaurant.whatsappPhone}`}
+//                   target="_blank"
+//                   rel="noreferrer"
+//                   className="flex items-center justify-center py-4 rounded-2xl bg-champagne text-obsidian font-bold uppercase text-xs tracking-widest"
+//                 >
+//                   WhatsApp
+//                 </a>
+//               </div>
+
+//               <Link
+//                 to={isAdmin ? "/admin" : "/admin/login"}
+//                 onClick={closeMobile}
+//                 className="text-center py-3 text-smoke text-sm"
+//               >
+//                 {isAdmin ? "Go to Dashboard" : "Staff Login"}
+//               </Link>
+//             </div>
+//           </div>
+//         )}
+//       </header>
+
+//       {/* MAIN CONTENT AREA */}
+//       <main className="max-w-6xl mx-auto px-4 relative z-10">
+//         <Outlet />
+//       </main>
+
+//       {/* Cart Drawer Overlay */}
+//       {!isAdminPage && <CartDrawer />}
+
+//       {/* Decorative Background Elements (Reference Image Style) */}
+//       {/* <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+//         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-champagne/5 blur-[120px] rounded-full"></div>
+//         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-barolo/5 blur-[120px] rounded-full"></div>
+//       </div> */}
+//       <FloatingConcierge phone={restaurant.whatsappPhone} />
+//     </div>
+//   );
+// }
