@@ -231,7 +231,7 @@ export const Hero = () => {
             ))}
 
             {/* Pagination */}
-            <div className="absolute bottom-6 lg:bottom-10 left-6 lg:left-10 right-6 lg:right-10 flex gap-2 lg:gap-3 z-20">
+            {/* <div className="absolute bottom-6 lg:bottom-10 left-6 lg:left-10 right-6 lg:right-10 flex gap-2 lg:gap-3 z-20">
               {SLIDES.map((_, i) => (
                 <button
                   key={i}
@@ -243,7 +243,7 @@ export const Hero = () => {
                   )}
                 </button>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Floating Element: Hidden on small screens to prevent overflow */}
