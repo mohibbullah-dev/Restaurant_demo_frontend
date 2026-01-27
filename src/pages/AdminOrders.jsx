@@ -1343,9 +1343,9 @@ export default function AdminOrders() {
         o._id.toLowerCase().includes(term)
       );
     });
-
+  // bg-obsidian
   return (
-    <div className="pb-20 min-h-screen bg-obsidian">
+    <div className="pb-20 min-h-screen ">
       <Section
         title={
           <span className="gold-gradient-text italic font-display text-4xl">

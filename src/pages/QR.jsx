@@ -25,9 +25,9 @@ export default function QR() {
 
     // ... rest of your PDF logic
   }
-
+  // bg-obsidian
   return (
-    <div className="pb-24 bg-obsidian min-h-screen text-mist">
+    <div className="pb-24 min-h-screen text-mist">
       <Section
         title={<span className="gold-gradient-text italic">Brand Assets</span>}
         subtitle="Generate high-fidelity QR touchpoints for your physical atelier."

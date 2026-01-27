@@ -466,9 +466,9 @@ export default function Checkout() {
   }
   const inputClass =
     "w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-mist placeholder:text-white/10 outline-none focus:border-champagne/40 focus:bg-white/10 transition-all";
-
+  // bg-obsidian
   return (
-    <div className="pb-24 bg-obsidian min-h-screen text-mist">
+    <div className="pb-24  min-h-screen text-mist">
       <Section
         title={
           <span className="gold-gradient-text italic">Finalize Order</span>

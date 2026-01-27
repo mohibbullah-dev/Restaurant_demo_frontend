@@ -11,9 +11,10 @@ export default function ReviewsPage() {
       .then((data) => setReviews(data))
       .catch((err) => console.error(err));
   }, []);
+  // bg-obsidian
 
   return (
-    <div className="min-h-screen bg-obsidian">
+    <div className="min-h-screen">
       {/* <Navbar /> Ensure Navbar is present */}
       <div className="max-w-7xl mx-auto px-6 py-32">
         <h1 className="text-5xl md:text-7xl font-serif italic text-mist mb-4 text-center">
