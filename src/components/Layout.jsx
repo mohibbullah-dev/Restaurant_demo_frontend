@@ -240,14 +240,45 @@ export default function Layout() {
             </div>
 
             {/* Right: Actions */}
-            <div className="flex items-center gap-3">
-              {/* ... (Keep your Cart, Phone, and WhatsApp buttons here) */}
-              {/* Note: I'm omitting them for space, keep your exact code here */}
+            <div className="flex items-center gap-2">
+              {/* Desktop actions */}
+              <div className="hidden md:flex items-center gap-2">
+                {!isAdminPage && <CartButton />}
+
+                <a
+                  href={`tel:${restaurant.phone}`}
+                  className="px-3 py-2 rounded-lg border text-sm"
+                >
+                  Call
+                </a>
+
+                <a
+                  href={`https://wa.me/${restaurant.whatsappPhone}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-2 rounded-lg bg-black text-white text-sm"
+                >
+                  WhatsApp
+                </a>
+
+                {/* If not admin logged in, show Admin Login */}
+                {!isAdmin && (
+                  <Link
+                    to="/admin/login"
+                    className="px-3 py-2 rounded-lg border text-sm"
+                  >
+                    Admin
+                  </Link>
+                )}
+              </div>
+
+              {/* Mobile: hamburger */}
               <button
-                className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl glass border-white/10"
+                className="md:hidden px-3 py-2 rounded-lg border text-sm"
                 onClick={() => setMobileOpen((v) => !v)}
+                aria-label="Toggle menu"
               >
-                {/* Your Hamburger Icon Code */}
+                {mobileOpen ? "Close" : "Menu"}
               </button>
             </div>
           </div>
