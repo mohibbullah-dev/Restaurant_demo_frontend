@@ -82,6 +82,7 @@ import AdminReviews from "./pages/AdminReviews.jsx";
 import AllReviews from "./pages/AllReviews";
 import AdminReservations from "./pages/AdminReservations.jsx";
 import BookTable from "./pages/BookTable.jsx";
+import ReviewsPage from "./pages/Reviews.jsx";
 
 export default function App() {
   return (
