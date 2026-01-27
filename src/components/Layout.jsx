@@ -300,7 +300,7 @@ export default function Layout() {
         )}
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 relative z-10">
+      <main className="max-w-7xl mx-auto px-4 relative z-10">
         <Outlet />
       </main>
 
