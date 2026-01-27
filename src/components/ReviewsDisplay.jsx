@@ -12,9 +12,9 @@ export default function ReviewsDisplay() {
   }, []);
 
   if (reviews.length === 0) return null;
-
+  // bg-obsidian
   return (
-    <section className="py-32 bg-obsidian overflow-hidden border-t border-white/5">
+    <section className="py-32 overflow-hidden border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 mb-16 flex flex-col md:flex-row justify-between items-center md:items-end gap-6">
         <div className="text-center md:text-left">
           <h2 className="text-5xl font-extralight text-white tracking-tighter">
