@@ -239,7 +239,6 @@ export default function Menu() {
   const cart = useCart();
   const sectionRefs = useRef({});
 
-  // 1. Fetch and Group Menu Items
   useEffect(() => {
     fetch(`${API_BASE}/api/menu`)
       .then((r) => r.json())
@@ -263,11 +262,10 @@ export default function Menu() {
       .catch(() => setLoading(false));
   }, []);
 
-  // 2. Active Section Tracking (Intersection Observer)
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-20% 0px -70% 0px", // Triggers when section is in upper-middle of screen
+      rootMargin: "-25% 0px -65% 0px",
       threshold: 0,
     };
 
@@ -279,8 +277,7 @@ export default function Menu() {
       });
     }, observerOptions);
 
-    const currentRefs = sectionRefs.current;
-    Object.values(currentRefs).forEach((section) => {
+    Object.values(sectionRefs.current).forEach((section) => {
       if (section) observer.observe(section);
     });
 
@@ -319,21 +316,21 @@ export default function Menu() {
         </p>
       </div>
 
-      {/* --- PREMIUM STICKY CATEGORY NAV --- */}
+      {/* --- PREMIUM STICKY NAV (NO SCROLLBAR) --- */}
       <div className="sticky top-[90px] z-30 transition-all duration-500">
         <div className="max-w-4xl mx-auto px-4">
-          <div className="relative glass-gold border border-white/10 rounded-full shadow-2xl overflow-hidden backdrop-blur-xl">
-            {/* Mobile Scroll Masks */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-obsidian/40 to-transparent z-10 md:hidden pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-obsidian/40 to-transparent z-10 md:hidden pointer-events-none" />
-
-            <div className="flex items-center md:justify-center gap-2 overflow-x-auto no-scrollbar py-3 px-6 scroll-smooth">
+          <div className="relative glass-gold border border-white/10 rounded-[2rem] md:rounded-full shadow-2xl backdrop-blur-xl p-1.5">
+            {/* FIXED: Removed 'overflow-x-auto' and 'no-scrollbar'.
+                ADDED: 'flex-wrap' to allow items to move to a new line.
+                ADDED: 'justify-center' to keep it balanced.
+            */}
+            <div className="flex flex-wrap items-center justify-center gap-1 md:gap-2 px-2 py-1">
               {categories.map((cat) => (
                 <button
                   key={cat.name}
                   onClick={() => scrollToCategory(cat.name)}
                   className={`
-                    flex-shrink-0 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500
+                    px-4 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500
                     ${
                       activeCat === cat.name
                         ? "bg-champagne text-obsidian shadow-lg shadow-champagne/20 scale-105"
@@ -358,7 +355,6 @@ export default function Menu() {
             ref={(el) => (sectionRefs.current[cat.name] = el)}
             className="scroll-mt-40"
           >
-            {/* Minimalist Category Header */}
             <div className="flex items-center gap-8 mb-16">
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase tracking-[0.4em] text-champagne mb-2">
@@ -371,7 +367,6 @@ export default function Menu() {
               <div className="h-px flex-1 bg-gradient-to-r from-champagne/30 via-white/5 to-transparent"></div>
             </div>
 
-            {/* Grid for MenuItemCards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
               {cat.items.map((item) => (
                 <MenuItemCard
@@ -387,16 +382,6 @@ export default function Menu() {
           </div>
         ))}
       </div>
-
-      {/* --- EMPTY STATE --- */}
-      {categories.length === 0 && (
-        <div className="py-40 text-center">
-          <div className="w-12 h-px bg-champagne/30 mx-auto mb-8" />
-          <p className="font-serif italic text-xl tracking-widest text-smoke/50">
-            The kitchen is preparing new masterpieces...
-          </p>
-        </div>
-      )}
     </div>
   );
 }
